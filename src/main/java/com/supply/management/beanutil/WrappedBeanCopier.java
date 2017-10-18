@@ -12,9 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import static java.lang.String.format;
 
-/**
- * 对Cglib BeanCopier 做了封装 便于简化开发 Created by duanmu on 8/21/16.
- */
+
 public class WrappedBeanCopier
 {
 	private static final Map<String, BeanCopier> beanCopierCache = new ConcurrentHashMap<>();
