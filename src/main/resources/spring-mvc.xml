@@ -1,0 +1,70 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:tx="http://www.springframework.org/schema/tx"  
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/context
+						http://www.springframework.org/schema/context/spring-context-2.5.xsd
+						http://www.springframework.org/schema/mvc 
+						http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+						http://www.springframework.org/schema/tx 
+						http://www.springframework.org/schema/tx/spring-tx-4.0.xsd ">
+
+	<context:annotation-config />
+	<context:component-scan base-package="com.ly.beauty" />
+
+	<bean id="namedParameterJdbcTemplate"
+		class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+		<!-- <property name="dataSource" ref="dataSource" /> -->
+		<constructor-arg ref="dataSource" />
+	</bean>
+
+	<!-- 配置bonecp -->
+	<bean id="dataSource" class="com.jolbox.bonecp.BoneCPDataSource"
+		destroy-method="close">
+		<property name="driverClass" value="${jdbc.driverClassName}" />
+		<property name="jdbcUrl" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+
+		<property name="idleConnectionTestPeriod" value="60" />
+		<property name="idleMaxAge" value="240" />
+		<property name="maxConnectionsPerPartition" value="30" />
+		<property name="minConnectionsPerPartition" value="10" />
+		<property name="partitionCount" value="3" />
+		<property name="acquireIncrement" value="5" />
+		<property name="statementsCacheSize" value="100" />
+		<property name="releaseHelperThreads" value="3" />
+	</bean>
+
+	<!-- 配置jdbc.properties的路径 -->
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:jdbc.properties</value>
+			</list>
+		</property>
+	</bean>
+
+
+ <!-- 添加事务管理器组件DataSourceTransactionManager -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <!-- 使用set方法注入数据源 -->
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+    <!-- 开启基于注解声明式事务
+        注意配置transaction-manager属性，它引用了我们事务管理组件对象，这里要和事务管理器组件id一致
+        默认是transactionManager
+    -->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+<!-- 	<bean -->
+<!-- 		class="springfox.documentation.swagger2.configuration.Swagger2DocumentationConfiguration" -->
+<!-- 		id="swagger2Config" /> -->
+
+<!-- 	<mvc:resources location="classpath:/META-INF/resources/" -->
+<!-- 		mapping="swagger-ui.html" /> -->
+<!-- 	<mvc:resources location="classpath:/META-INF/resources/webjars/" -->
+<!-- 		mapping="/webjars/**" /> -->
+</beans>
