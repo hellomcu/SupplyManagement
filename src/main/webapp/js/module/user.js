@@ -1,9 +1,12 @@
-var jsonParams = {
-	"password" : "admin123456",
-	"type" : 1,
-	"username" : "admin"
-};
-function userLogin() {
+
+function userLogin(username, password, type) {
+
+	var jsonParams = {
+		"password" : password,
+		"type" : type,
+		"username" : username
+	};
+
 	$.ajax({
 		url : BASE_URL + 'user/user_login',
 		contentType : "application/json; charset=utf-8",

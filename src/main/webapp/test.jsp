@@ -20,7 +20,7 @@ body {
 
 </head>
 <body>
-	<input type="button" value="登录" onclick="userLogin();"/>
+	<input type="button" value="登录" onclick="userLogin('admin', 'admin123456', 1);"/>
 </body>
 </html>
 <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
