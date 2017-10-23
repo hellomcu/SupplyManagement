@@ -12,7 +12,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = {"com.supply.management"})
+@ComponentScan(basePackages = {"com.e.management"})
 public class WebConfig extends WebMvcConfigurerAdapter
 {
 	/**
