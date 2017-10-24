@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 
@@ -17,6 +19,8 @@ public class UserRepositoryJdbcImpl implements UserRepository
 	private NamedParameterJdbcTemplate mNamedParameterJdbcTemplate;
 
 	private static final String SQL_QUERY_BY_USERNAMAE_TYPE = "SELECT id, password, store_id, true_name, phone, email FROM t_user WHERE username=:username AND user_type = :user_type AND status=0";
+	
+	private static final String SQL_SAVE = "INSERT INTO t_user (store_id, username, password, user_type) VALUES(:store_id, :username, :password, :user_type)";
 	
 	
 	@Autowired
@@ -45,5 +49,18 @@ public class UserRepositoryJdbcImpl implements UserRepository
 			return user;
 		}
 		return null;
+	}
+
+	@Override
+	public int save(UserPo user)
+	{
+		MapSqlParameterSource paramSource = new MapSqlParameterSource();
+		paramSource.addValue("store_id", user.getStoreId());
+		paramSource.addValue("username", user.getUsername());
+		paramSource.addValue("password", user.getPassword());
+		paramSource.addValue("user_type", user.getUserType().ordinal());
+		int effectedRows = this.mNamedParameterJdbcTemplate.update(SQL_SAVE, paramSource);
+		
+		return effectedRows;
 	}
 }

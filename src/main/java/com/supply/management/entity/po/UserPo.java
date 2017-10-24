@@ -2,6 +2,7 @@ package com.supply.management.entity.po;
 
 import java.sql.Timestamp;
 
+import com.supply.management.config.contants.UserType;
 import com.supply.management.entity.base.BasePo;
 
 public class UserPo extends BasePo
@@ -21,7 +22,7 @@ public class UserPo extends BasePo
 	private String email;
 	private int sex;
 	private boolean isOnline;
-	private int userType;
+	private UserType userType;
 	private String loginIp;
 	private String loginMac;
 	private Timestamp loginTime;
@@ -97,11 +98,11 @@ public class UserPo extends BasePo
 	{
 		this.isOnline = isOnline;
 	}
-	public int getUserType()
+	public UserType getUserType()
 	{
 		return userType;
 	}
-	public void setUserType(int userType)
+	public void setUserType(UserType userType)
 	{
 		this.userType = userType;
 	}

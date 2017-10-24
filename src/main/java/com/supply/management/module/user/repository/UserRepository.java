@@ -6,4 +6,6 @@ import com.supply.management.entity.po.UserPo;
 public interface UserRepository extends Repository
 {
 	UserPo findOneByUsernameAndType(String username, int type);
+	
+	int save(UserPo user);
 }
