@@ -25,6 +25,10 @@ public class StoreRepositoryJdbcImpl implements StoreRepository
 	
 	private static final String SQL_QUERY = "SELECT id, store_name, store_place, contacts, description, create_time FROM t_store WHERE status=0 ORDER BY create_time DESC LIMIT :start, :num";
 	
+	private static final String SQL_DELETE = "UPDATE t_store SET status = 1 WHERE id=:id";
+	
+	private static final String SQL_UPDATE = "UPDATE t_store SET store_name=:store_name, store_place=:store_place, contacts=:contacts, description=:description WHERE status=0 AND id=:id";
+	
 	private NamedParameterJdbcTemplate mNamedParameterJdbcTemplate;
 
 	
@@ -72,5 +76,27 @@ public class StoreRepositoryJdbcImpl implements StoreRepository
 			stores.add(store);
 		}
 		return stores;
+	}
+
+	@Override
+	public int delete(long id)
+	{
+		MapSqlParameterSource paramSource = new MapSqlParameterSource();
+		paramSource.addValue("id", id);
+		int effectedRows = this.mNamedParameterJdbcTemplate.update(SQL_DELETE, paramSource);
+		return effectedRows;
+	}
+
+	@Override
+	public int update(StorePo store)
+	{
+		MapSqlParameterSource paramSource = new MapSqlParameterSource();
+		paramSource.addValue("store_name", store.getStoreName());
+		paramSource.addValue("store_place", store.getStorePlace());
+		paramSource.addValue("contacts", store.getContacts());
+		paramSource.addValue("description", store.getDescription());
+		paramSource.addValue("id", store.getId());
+		int effectedRows = this.mNamedParameterJdbcTemplate.update(SQL_UPDATE, paramSource);
+		return effectedRows;
 	}
 }

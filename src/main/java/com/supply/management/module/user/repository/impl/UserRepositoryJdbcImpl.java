@@ -1,5 +1,7 @@
 package com.supply.management.module.user.repository.impl;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -21,7 +23,7 @@ public class UserRepositoryJdbcImpl implements UserRepository
 	private static final String SQL_QUERY_BY_USERNAMAE_TYPE = "SELECT id, password, store_id, true_name, phone, email FROM t_user WHERE username=:username AND user_type = :user_type AND status=0";
 	
 	private static final String SQL_SAVE = "INSERT INTO t_user (store_id, username, password, user_type) VALUES(:store_id, :username, :password, :user_type)";
-	
+
 	
 	@Autowired
 	public UserRepositoryJdbcImpl(
@@ -61,6 +63,24 @@ public class UserRepositoryJdbcImpl implements UserRepository
 		paramSource.addValue("user_type", user.getUserType().ordinal());
 		int effectedRows = this.mNamedParameterJdbcTemplate.update(SQL_SAVE, paramSource);
 		
+		return effectedRows;
+	}
+
+	@Override
+	public int update(Map<String, Object> fields, long id)
+	{
+		StringBuffer sb = new StringBuffer("UPDATE t_user SET ");
+		MapSqlParameterSource paramSource = new MapSqlParameterSource();
+		paramSource.addValue("id", id);
+		for (String key : fields.keySet())
+		{
+			paramSource.addValue(key, fields.get(key));
+			sb.append(key).append("=:").append(key).append(",");
+		}
+		sb = new StringBuffer(sb.substring(0, sb.lastIndexOf(",")));
+		sb.append(" WHERE id=:id");
+		int effectedRows = this.mNamedParameterJdbcTemplate.update(sb.toString(), paramSource);
+
 		return effectedRows;
 	}
 }

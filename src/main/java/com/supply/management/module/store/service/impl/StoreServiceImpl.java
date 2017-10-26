@@ -1,6 +1,8 @@
 package com.supply.management.module.store.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -60,6 +62,28 @@ public class StoreServiceImpl implements StoreService
 		return mStoreRepository.findAll(page);
 	}
 	
+	@Override
+	public void deleteStore(long id)
+	{
+		int rows = mStoreRepository.delete(id);
+		if (rows != 1)
+		{
+			throw new SupplyException("删除门店失败,请稍后重试");
+		}
+	}
+	
+	
+	//@Transactional
+	@Override
+	public void updateStore(StorePo store, UserPo user)
+	{
+		int rows = mStoreRepository.update(store);
+		if (rows != 1)
+		{
+			throw new SupplyException("更新门店失败,请稍后重试");
+		}
+	}
+	
 	
 	@Resource(name="storeRepository")
 	public void setStoreRepository(StoreRepository storeRepository)
@@ -72,6 +96,10 @@ public class StoreServiceImpl implements StoreService
 	{
 		this.mUserRepository = userRepository;
 	}
+
+
+
+
 
 	
 

@@ -11,4 +11,8 @@ public interface StoreRepository extends Repository
 	int save(StorePo store);
 	
 	List<StorePo> findAll(PageInfo pageInfo);
+	
+	int delete(long id);
+	
+	int update(StorePo store);
 }

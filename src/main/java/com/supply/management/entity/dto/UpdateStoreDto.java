@@ -2,22 +2,22 @@ package com.supply.management.entity.dto;
 
 import com.supply.management.entity.base.BaseDto;
 
-public class AddStoreDto extends BaseDto
+public class UpdateStoreDto extends BaseDto
 {
 
 	
 
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -1696295671283400201L;
-
+	private static final long serialVersionUID = 7178853844919349139L;
+	private long id;
 	private String storeName;
 	private String storePlace;
 	private String contacts;
 	private String description;
-	private String username;
-	private String password;
+
 	public String getStoreName()
 	{
 		return storeName;
@@ -50,22 +50,12 @@ public class AddStoreDto extends BaseDto
 	{
 		this.description = description;
 	}
-	public String getUsername()
+	public long getId()
 	{
-		return username;
+		return id;
 	}
-	public void setUsername(String username)
+	public void setId(long id)
 	{
-		this.username = username;
+		this.id = id;
 	}
-	public String getPassword()
-	{
-		return password;
-	}
-	public void setPassword(String password)
-	{
-		this.password = password;
-	}
-	
-	
 }
