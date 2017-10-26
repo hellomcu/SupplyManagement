@@ -1,4 +1,4 @@
-package com.supply.management.module.store.controller;
+package com.supply.management.module.category.controller;
 
 import java.util.List;
 
@@ -14,67 +14,67 @@ import com.supply.management.base.controller.BaseController;
 import com.supply.management.beanutil.WrappedBeanCopier;
 import com.supply.management.entity.PageInfo;
 import com.supply.management.entity.base.BaseResponse;
-import com.supply.management.entity.dto.AddCategoryDto;
 import com.supply.management.entity.dto.AddStoreDto;
 import com.supply.management.entity.dto.StoreDto;
 import com.supply.management.entity.dto.UpdateStoreDto;
 import com.supply.management.entity.po.StorePo;
 import com.supply.management.entity.po.UserPo;
+import com.supply.management.module.category.service.CategoryService;
 import com.supply.management.module.store.service.StoreService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-@Api(tags = "门店相关")
+@Api(tags = "分类相关")
 @RestController
-@RequestMapping("/admin/store")
-public class StoreController extends BaseController
+@RequestMapping("/admin/category")
+public class CategoryController extends BaseController
 {
 
-	private StoreService mStoreService;
+	private CategoryService mCategoryService;
 
 	@Autowired
-	public StoreController(StoreService storeService)
+	public CategoryController(CategoryService categoryService)
 	{
-		this.mStoreService = storeService;
+		this.mCategoryService = categoryService;
 	}
 
 	
 	
 	@RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	@ApiOperation(httpMethod = "PUT", value = "添加门店", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ApiOperation(httpMethod = "PUT", value = "添加一个分类", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public BaseResponse<Void> addStore(@RequestBody AddStoreDto addStoreDto)
 	{
-		StorePo store = new StorePo();
-		UserPo user = new UserPo();
-		store.setStoreName(addStoreDto.getStoreName());
-		store.setStorePlace(addStoreDto.getStorePlace());
-		store.setContacts(addStoreDto.getContacts());
-		store.setDescription(addStoreDto.getDescription());
-		user.setUsername(addStoreDto.getUsername());
-		user.setPassword(addStoreDto.getPassword());
-		mStoreService.addStore(store, user);
+//		StorePo store = new StorePo();
+//		UserPo user = new UserPo();
+//		store.setStoreName(addStoreDto.getStoreName());
+//		store.setStorePlace(addStoreDto.getStorePlace());
+//		store.setContacts(addStoreDto.getContacts());
+//		store.setDescription(addStoreDto.getDescription());
+//		user.setUsername(addStoreDto.getUsername());
+//		user.setPassword(addStoreDto.getPassword());
+//		mStoreService.addStore(store, user);
 		return getResponse();
 	}
 	
-	@ApiOperation(httpMethod = "GET", value = "获取所有门店", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	@RequestMapping(method = RequestMethod.GET, value="/stores", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public BaseResponse<List<StoreDto>> findAllStores( @RequestParam("page") long page, @RequestParam("num") int num)
-	{
-		PageInfo pageInfo = new PageInfo();
-		pageInfo.setCurrentPage(page);
-		pageInfo.setItemNum(num);
-
-		List<StorePo> stores = mStoreService.findAllStore(pageInfo);
-		return getResponse(WrappedBeanCopier.copyPropertiesOfList(stores, StoreDto.class));
-	}
+//	@ApiOperation(httpMethod = "GET", value = "获取所有门店", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+//	@RequestMapping(method = RequestMethod.GET, value="/stores", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+//	public BaseResponse<List<StoreDto>> findAllStores( @RequestParam("page") long page, @RequestParam("num") int num)
+//	{
+//		PageInfo pageInfo = new PageInfo();
+//		pageInfo.setCurrentPage(page);
+//		pageInfo.setItemNum(num);
+//
+//		List<StorePo> stores = mStoreService.findAllStore(pageInfo);
+//		return getResponse(WrappedBeanCopier.copyPropertiesOfList(stores, StoreDto.class));
+//	}
 	
 	
 	@ApiOperation(httpMethod = "DELETE", value = "根据id删除门店", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@RequestMapping(method = RequestMethod.DELETE, value="/stores", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public BaseResponse<Void> deleteStore( @RequestParam("id") long id)
 	{
-		mStoreService.deleteStore(id);
+		//mStoreService.deleteStore(id);
 		return getResponse();
 	}
 	
@@ -91,7 +91,7 @@ public class StoreController extends BaseController
 		store.setContacts(updateStoreDto.getContacts());
 		store.setDescription(updateStoreDto.getDescription());
 
-		mStoreService.updateStore(store, null);
+		//mStoreService.updateStore(store, null);
 		return getResponse();
 	}
 }
