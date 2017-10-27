@@ -15,20 +15,11 @@ public class AddAllCategoryDto extends BaseDto
 	 */
 	private static final long serialVersionUID = -4856384357452193394L;
 	
-	
-	private long id;
-	private String categoryName;
+
+	private String childName;
 	private String parentName;
 	
-	
-	public long getId()
-	{
-		return id;
-	}
-	public void setId(long id)
-	{
-		this.id = id;
-	}
+
 	public String getParentName()
 	{
 		return parentName;
@@ -37,13 +28,13 @@ public class AddAllCategoryDto extends BaseDto
 	{
 		this.parentName = parentName;
 	}
-	public String getCategoryName()
+	public String getChildName()
 	{
-		return categoryName;
+		return childName;
 	}
-	public void setCategoryName(String categoryName)
+	public void setChildName(String childName)
 	{
-		this.categoryName = categoryName;
+		this.childName = childName;
 	}
 	
 }

@@ -26,7 +26,7 @@ public class CategoryServiceImpl implements CategoryService
 	@Override
 	public void addCategory(CategoryPo category, CategoryPo childCategory)
 	{
-
+		//先保存父分类
 		int rows = mCategoryRepository.save(category);
 		if (rows != 1)
 		{
