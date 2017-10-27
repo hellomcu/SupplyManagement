@@ -58,6 +58,28 @@ public abstract class BasePo extends BaseEntity
 	{
 		this.remark = remark;
 	}
+	@Override
+	public int hashCode()
+	{
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (id ^ (id >>> 32));
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		BasePo other = (BasePo) obj;
+		if (id != other.id)
+			return false;
+		return true;
+	}
 	
 	/**
      * 返回易读的时间格式
@@ -76,4 +98,6 @@ public abstract class BasePo extends BaseEntity
 //            return difference / 3600000 + "小时前";
 //        return createTime.toString();
 //    }
+	
+	
 }

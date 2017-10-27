@@ -1,5 +1,9 @@
 package com.supply.management.module.category.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,12 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.supply.management.base.controller.BaseController;
 import com.supply.management.beanutil.WrappedBeanCopier;
+import com.supply.management.entity.PageInfo;
 import com.supply.management.entity.base.BaseResponse;
 import com.supply.management.entity.dto.AddAllCategoryDto;
 import com.supply.management.entity.dto.AddCategoryDto;
-import com.supply.management.entity.dto.UpdateStoreDto;
+import com.supply.management.entity.dto.CategoryDto;
 import com.supply.management.entity.po.CategoryPo;
-import com.supply.management.entity.po.StorePo;
 import com.supply.management.module.category.service.CategoryService;
 
 import io.swagger.annotations.Api;
@@ -59,17 +63,26 @@ public class CategoryController extends BaseController
 		return getResponse();
 	}
 	
-//	@ApiOperation(httpMethod = "GET", value = "获取所有门店", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-//	@RequestMapping(method = RequestMethod.GET, value="/stores", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-//	public BaseResponse<List<StoreDto>> findAllStores( @RequestParam("page") long page, @RequestParam("num") int num)
-//	{
-//		PageInfo pageInfo = new PageInfo();
-//		pageInfo.setCurrentPage(page);
-//		pageInfo.setItemNum(num);
-//
-//		List<StorePo> stores = mStoreService.findAllStore(pageInfo);
-//		return getResponse(WrappedBeanCopier.copyPropertiesOfList(stores, StoreDto.class));
-//	}
+	@ApiOperation(httpMethod = "GET", value = "获取所有分类", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@RequestMapping(method = RequestMethod.GET, value="/categories", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public BaseResponse<List<CategoryDto>> findAllCategories( @RequestParam("page") long page, @RequestParam("num") int num)
+	{
+		PageInfo pageInfo = new PageInfo();
+		pageInfo.setCurrentPage(page);
+		pageInfo.setItemNum(num);
+
+		Map<CategoryPo, List<CategoryPo>> map = mCategoryService.findAll(pageInfo);
+		List<CategoryDto> result = new ArrayList<CategoryDto>();
+		for (CategoryPo key : map.keySet())
+		{
+			CategoryDto parent = WrappedBeanCopier.copyProperties(key, CategoryDto.class);
+			List<CategoryDto> children = WrappedBeanCopier.copyPropertiesOfList(map.get(key), CategoryDto.class);
+			parent.setChildren(children);
+			result.add(parent);
+		}
+	
+		return getResponse(result);
+	}
 	
 	
 //	@ApiOperation(httpMethod = "DELETE", value = "根据id删除门店", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
