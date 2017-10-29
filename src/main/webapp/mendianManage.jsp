@@ -20,17 +20,36 @@
 <link rel="stylesheet" href="css/mendian.css" type="text/css" />
 
 <script type="text/javascript">
-function  addMenDian() {
-	window.location.href="./addMenDian.jsp"; 
-}
+	function addMenDian() {
+		window.location.href = "./addMenDian.jsp";
+	}
 
-function getAllStore(num) {
-	getStore(num);
-}
+	function getAllStore(num) {
+		getStore(num);
+	}
 </script>
 </head>
 <body onload="getAllStore(1);">
-<input type="button" class="button05" value="添加门店" onclick="addMenDian();"/>
+	<input type="button" class="button05" value="添加门店"
+		onclick="addMenDian();" />
+
+	<br />
+	<br />
+
+	<br />
+	<div class="table-b">
+		<table id="myTable"  
+cellspacing="30">
+			<tr>
+				<th>编号</th>
+				<th>名称</th>
+				<th>地址</th>
+				<th>电话</th>
+				<th>操作</th>
+			</tr>
+
+		</table>
+	</div>
 </body>
 </html>
 

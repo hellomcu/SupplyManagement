@@ -31,6 +31,9 @@ function mendian() {
 function goods() {
 	window.location.href="./goodsManage.jsp"; 
 }
+function goodsClassification() {
+	window.location.href="./goodsClassificationManage.html"; 
+}
 
 </script>
 </head>
@@ -42,6 +45,10 @@ function goods() {
 	<br />
 	<input type="button" value="货品管理	►"
 		style="width: 100%; height: auto; padding: 20px;" class="button05" onclick="goods();">
+		<br />
+	<br />
+	<input type="button" value="货品分类管理	►"
+		style="width: 100%; height: auto; padding: 20px;" class="button05" onclick="goodsClassification();">
 
 </body>
 </html>
