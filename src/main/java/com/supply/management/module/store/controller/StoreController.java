@@ -71,7 +71,7 @@ public class StoreController extends BaseController
 	
 	
 	@ApiOperation(httpMethod = "DELETE", value = "根据id删除门店", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	@RequestMapping(method = RequestMethod.DELETE, value="/stores", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@RequestMapping(method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public BaseResponse<Void> deleteStore( @RequestParam("id") long id)
 	{
 		mStoreService.deleteStore(id);
