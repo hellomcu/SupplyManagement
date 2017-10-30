@@ -14,6 +14,7 @@ import com.supply.management.base.controller.BaseController;
 import com.supply.management.beanutil.WrappedBeanCopier;
 import com.supply.management.entity.PageInfo;
 import com.supply.management.entity.base.BaseResponse;
+import com.supply.management.entity.dto.AddCategoryDto;
 import com.supply.management.entity.dto.AddStoreDto;
 import com.supply.management.entity.dto.StoreDto;
 import com.supply.management.entity.dto.UpdateStoreDto;
@@ -70,7 +71,7 @@ public class StoreController extends BaseController
 	
 	
 	@ApiOperation(httpMethod = "DELETE", value = "根据id删除门店", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	@RequestMapping(method = RequestMethod.DELETE, value="/stores", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@RequestMapping(method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public BaseResponse<Void> deleteStore( @RequestParam("id") long id)
 	{
 		mStoreService.deleteStore(id);
@@ -94,3 +95,4 @@ public class StoreController extends BaseController
 		return getResponse();
 	}
 }
+

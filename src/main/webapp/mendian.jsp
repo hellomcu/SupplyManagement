@@ -53,7 +53,7 @@ function  toLogin() {
 	
 	
 	
-	userLogin(userName, passWord, 1);
+	userLogin(userName, passWord, 2);
 	//userLogin('admin','admin123456', 1);
 	
 }
@@ -67,7 +67,7 @@ function  toLogin() {
 	<!-- //Head -->
 
 	<!-- Body -->
-	<!-- <body background="./images/b2.jpg"> -->
+	<!-- <body background="./images/b3.jpg"> -->
 <body>
 		<h1>
 			小和农场信息管理系统
@@ -75,10 +75,10 @@ function  toLogin() {
 
 		<div class="w3layoutscontaineragileits">
 			<h2>
-				总部登录
+				门店登录
 			</h2>
 			<form action="#" method="post">
-				<input type="text" Name="Username" placeholder="总部帐号" required=""
+				<input type="text" Name="Username" placeholder="门店帐号" required=""
 					id="userName" value="">
 				<input type="password" Name="Password" placeholder="密码" required=""
 					id="passWord" value="">
