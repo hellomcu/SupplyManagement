@@ -5,7 +5,6 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.supply.management.base.controller.BaseController;
@@ -13,9 +12,7 @@ import com.supply.management.beanutil.WrappedBeanCopier;
 import com.supply.management.entity.base.BaseResponse;
 import com.supply.management.entity.dto.AddAllCategoryDto;
 import com.supply.management.entity.dto.AddCategoryDto;
-import com.supply.management.entity.dto.UpdateStoreDto;
 import com.supply.management.entity.po.CategoryPo;
-import com.supply.management.entity.po.StorePo;
 import com.supply.management.module.category.service.CategoryService;
 
 import io.swagger.annotations.Api;

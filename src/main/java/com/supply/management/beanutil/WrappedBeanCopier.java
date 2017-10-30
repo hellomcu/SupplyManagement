@@ -15,8 +15,6 @@ import static java.lang.String.format;
 
 public class WrappedBeanCopier
 {
-	private static final Map<String, BeanCopier> beanCopierCache = new ConcurrentHashMap<>();
-	private static final Map<String, ConstructorAccess> constructorAccessCache = new ConcurrentHashMap<>();
 
 	private static void copyProperties(Object source, Object target)
 	{
@@ -24,8 +22,9 @@ public class WrappedBeanCopier
 		copier.copy(source, target, null);
 	}
 
-	private static BeanCopier getBeanCopier(Class sourceClass, Class targetClass)
+	private static BeanCopier getBeanCopier(Class<?> sourceClass, Class<?> targetClass)
 	{
+		Map<String, BeanCopier> beanCopierCache = new ConcurrentHashMap<>();
 		String beanKey = generateKey(sourceClass, targetClass);
 		BeanCopier copier = null;
 		if (!beanCopierCache.containsKey(beanKey))
@@ -87,6 +86,7 @@ public class WrappedBeanCopier
 
 	private static <T> ConstructorAccess<T> getConstructorAccess(Class<T> targetClass)
 	{
+		Map<String, ConstructorAccess<T>> constructorAccessCache = new ConcurrentHashMap<>();
 		ConstructorAccess<T> constructorAccess = constructorAccessCache.get(targetClass.toString());
 		if (constructorAccess != null)
 		{

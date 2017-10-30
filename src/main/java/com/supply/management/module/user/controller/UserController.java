@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.supply.management.base.controller.BaseController;
-import com.supply.management.beanutil.WrappedBeanCopier;
 import com.supply.management.entity.base.BaseResponse;
 import com.supply.management.entity.dto.UserLoginDto;
 import com.supply.management.entity.po.UserPo;
