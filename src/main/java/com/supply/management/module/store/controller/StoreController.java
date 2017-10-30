@@ -14,7 +14,6 @@ import com.supply.management.base.controller.BaseController;
 import com.supply.management.beanutil.WrappedBeanCopier;
 import com.supply.management.entity.PageInfo;
 import com.supply.management.entity.base.BaseResponse;
-import com.supply.management.entity.dto.AddCategoryDto;
 import com.supply.management.entity.dto.AddStoreDto;
 import com.supply.management.entity.dto.StoreDto;
 import com.supply.management.entity.dto.UpdateStoreDto;

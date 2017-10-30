@@ -18,7 +18,6 @@ import com.supply.management.entity.dto.AddProductDto;
 import com.supply.management.entity.dto.ProductDto;
 import com.supply.management.entity.dto.UpdateProductDto;
 import com.supply.management.entity.po.ProductPo;
-import com.supply.management.entity.po.StorePo;
 import com.supply.management.module.product.service.ProductService;
 
 import io.swagger.annotations.Api;
