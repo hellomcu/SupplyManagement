@@ -36,9 +36,6 @@ public class OrderController extends BaseController
 	}
 
 	
-	
-
-	
 	@ApiOperation(httpMethod = "GET", value = "获取所有订单", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@RequestMapping(method = RequestMethod.GET, value="/orders", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public BaseResponse<List<OrderDto>> findAllStores( @RequestParam("page") long page, @RequestParam("num") int num)
