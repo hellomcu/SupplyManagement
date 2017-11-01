@@ -95,8 +95,8 @@
 		默认是transactionManager -->
 	<tx:annotation-driven transaction-manager="transactionManager" />
 
+	<!-- 处理responseBody 里面日期类型 -->
 	<mvc:annotation-driven>
-		<!-- 处理responseBody 里面日期类型 -->
 		<mvc:message-converters>
 			<bean
 				class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
@@ -112,5 +112,5 @@
 			</bean>
 		</mvc:message-converters>
 	</mvc:annotation-driven>
-	
+
 </beans>
