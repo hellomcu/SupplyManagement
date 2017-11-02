@@ -80,9 +80,9 @@ public class CategoryRepositoryJdbcImpl implements CategoryRepository
 			CategoryPo parent = new CategoryPo();
 			long parentId = rowSet.getLong("parent_id");
 			parent.setId(parentId);
-			parent.setCategoryName(rowSet.getString("parent_name"));
 			if (!map.containsKey(parent))
 			{
+				parent.setCategoryName(rowSet.getString("parent_name"));
 				map.put(parent, null);
 			}
 			long childId = rowSet.getLong("child_id");
