@@ -50,7 +50,7 @@ public class ProductController extends BaseController
 	
 	@ApiOperation(httpMethod = "GET", value = "获取所有产品", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@RequestMapping(method = RequestMethod.GET, value="/products", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public BaseResponse<List<ProductDto>> findAllStores( @RequestParam("page") long page, @RequestParam("num") int num)
+	public BaseResponse<List<ProductDto>> findAllProducts( @RequestParam("page") long page, @RequestParam("num") int num)
 	{
 		PageInfo pageInfo = new PageInfo();
 		pageInfo.setCurrentPage(page);
