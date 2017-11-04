@@ -56,6 +56,7 @@ public class ProductServiceImpl implements ProductService
 		fields.put("total_num", product.getTotalNum());
 		fields.put("product_num", product.getProductNum());
 		fields.put("product_price", product.getProductPrice());
+		fields.put("product_unit", product.getProductUnit());
 		fields.put("product_place", product.getProductPlace());
 		fields.put("product_date", product.getProductDate());
 		fields.put("quality_guarantee_period", product.getQualityGuaranteePeriod());

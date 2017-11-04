@@ -3,6 +3,7 @@ package com.supply.management.entity.dto;
 import java.math.BigDecimal;
 import java.sql.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.supply.management.entity.base.BaseDto;
 
 public class AddProductDto extends BaseDto
@@ -17,10 +18,13 @@ public class AddProductDto extends BaseDto
 	private String productName;
 	private int productNum;
 	private BigDecimal productPrice;
+	private String productUnit;
 	private String productPlace;
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date productDate;
 	private String qualityGuaranteePeriod;
 	private String description;
+	
 	public long getCategoryId()
 	{
 		return categoryId;
@@ -92,6 +96,14 @@ public class AddProductDto extends BaseDto
 	public void setProductNum(int productNum)
 	{
 		this.productNum = productNum;
+	}
+	public String getProductUnit()
+	{
+		return productUnit;
+	}
+	public void setProductUnit(String productUnit)
+	{
+		this.productUnit = productUnit;
 	}
 	
 	

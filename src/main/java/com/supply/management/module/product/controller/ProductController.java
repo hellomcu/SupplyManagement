@@ -18,7 +18,7 @@ import com.supply.management.entity.dto.AddProductDto;
 import com.supply.management.entity.dto.ProductDto;
 import com.supply.management.entity.dto.UpdateProductDto;
 import com.supply.management.entity.po.ProductPo;
-import com.supply.management.entity.po.StorePo;
+import com.supply.management.exception.SupplyException;
 import com.supply.management.module.product.service.ProductService;
 
 import io.swagger.annotations.Api;
@@ -50,7 +50,7 @@ public class ProductController extends BaseController
 	
 	@ApiOperation(httpMethod = "GET", value = "获取所有产品", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@RequestMapping(method = RequestMethod.GET, value="/products", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public BaseResponse<List<ProductDto>> findAllStores( @RequestParam("page") long page, @RequestParam("num") int num)
+	public BaseResponse<List<ProductDto>> findAllProducts( @RequestParam("page") long page, @RequestParam("num") int num)
 	{
 		PageInfo pageInfo = new PageInfo();
 		pageInfo.setCurrentPage(page);
@@ -74,6 +74,11 @@ public class ProductController extends BaseController
 	@ApiOperation(httpMethod = "POST", value = "更新产品", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public BaseResponse<Void> updateStore(@RequestBody UpdateProductDto updateProductDto)
 	{
+		if (updateProductDto.getProductNum() > updateProductDto.getTotalNum())
+		{
+			throw new SupplyException("产品当前数量不能大于总数量");
+		}
+	
 		ProductPo product = WrappedBeanCopier.copyProperties(updateProductDto, ProductPo.class);
 		mProductService.updateProduct(product);
 		return getResponse();

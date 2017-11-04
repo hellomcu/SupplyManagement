@@ -19,6 +19,7 @@ public class ProductDto extends BaseDto
 	private int totalNum;
 	private int productNum;
 	private BigDecimal productPrice;
+	private String productUnit;
 	private String productPlace;
 	private Date productDate;
 	private String qualityGuaranteePeriod;
@@ -139,6 +140,14 @@ public class ProductDto extends BaseDto
 	public void setId(long id)
 	{
 		this.id = id;
+	}
+	public String getProductUnit()
+	{
+		return productUnit;
+	}
+	public void setProductUnit(String productUnit)
+	{
+		this.productUnit = productUnit;
 	}
 	
 	

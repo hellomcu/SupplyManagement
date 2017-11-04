@@ -1,19 +1,17 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:mvc="http://www.springframework.org/schema/mvc"
-	xmlns:tx="http://www.springframework.org/schema/tx"  
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
                         http://www.springframework.org/schema/beans/spring-beans.xsd
 						http://www.springframework.org/schema/context
-						http://www.springframework.org/schema/context/spring-context-2.5.xsd
+						http://www.springframework.org/schema/context/spring-context-3.2.xsd
 						http://www.springframework.org/schema/mvc 
-						http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+						http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
 						http://www.springframework.org/schema/tx 
 						http://www.springframework.org/schema/tx/spring-tx-4.0.xsd ">
 
 	<context:annotation-config />
 	<context:component-scan base-package="com.supply.management" />
-
 
 	<bean id="namedParameterJdbcTemplate"
 		class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
@@ -22,22 +20,59 @@
 	</bean>
 
 	<!-- 配置bonecp -->
-	<bean id="dataSource" class="com.jolbox.bonecp.BoneCPDataSource"
-		destroy-method="close">
-		<property name="driverClass" value="${jdbc.driverClassName}" />
-		<property name="jdbcUrl" value="${jdbc.url}" />
+	<!-- <bean id="dataSource" class="com.jolbox.bonecp.BoneCPDataSource" -->
+	<!-- destroy-method="close"> -->
+	<!-- <property name="driverClass" value="${jdbc.driverClassName}" /> -->
+	<!-- <property name="jdbcUrl" value="${jdbc.url}" /> -->
+	<!-- <property name="username" value="${jdbc.username}" /> -->
+	<!-- <property name="password" value="${jdbc.password}" /> -->
+
+	<!-- <property name="idleConnectionTestPeriod" value="60" /> -->
+	<!-- <property name="idleMaxAge" value="240" /> -->
+	<!-- <property name="maxConnectionsPerPartition" value="30" /> -->
+	<!-- <property name="minConnectionsPerPartition" value="10" /> -->
+	<!-- <property name="partitionCount" value="3" /> -->
+	<!-- <property name="acquireIncrement" value="5" /> -->
+	<!-- <property name="statementsCacheSize" value="100" /> -->
+	<!-- <property name="releaseHelperThreads" value="3" /> -->
+	<!-- </bean> -->
+
+	<!-- 配置Druid -->
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+		init-method="init" destroy-method="close">
+		<!-- 基本属性 url、user、password -->
+		<property name="url" value="${jdbc.url}" />
 		<property name="username" value="${jdbc.username}" />
 		<property name="password" value="${jdbc.password}" />
 
-		<property name="idleConnectionTestPeriod" value="60" />
-		<property name="idleMaxAge" value="240" />
-		<property name="maxConnectionsPerPartition" value="30" />
-		<property name="minConnectionsPerPartition" value="10" />
-		<property name="partitionCount" value="3" />
-		<property name="acquireIncrement" value="5" />
-		<property name="statementsCacheSize" value="100" />
-		<property name="releaseHelperThreads" value="3" />
+		<!-- 配置初始化大小、最小、最大 -->
+		<property name="initialSize" value="5" />
+		<property name="minIdle" value="5" />
+		<property name="maxActive" value="50" />
+
+		<!-- 配置获取连接等待超时的时间 -->
+		<property name="maxWait" value="60000" />
+
+		<!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+		<property name="timeBetweenEvictionRunsMillis" value="60000" />
+
+		<!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+		<property name="minEvictableIdleTimeMillis" value="300000" />
+
+		<property name="validationQuery" value="SELECT 'x'" />
+		<property name="testWhileIdle" value="true" />
+		<property name="testOnBorrow" value="false" />
+		<property name="testOnReturn" value="false" />
+
+		<!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+		<property name="poolPreparedStatements" value="false" />
+		<property name="maxPoolPreparedStatementPerConnectionSize"
+			value="20" />
+
+		<!-- 配置监控统计拦截的filters -->
+		<property name="filters" value="stat,log4j" />
 	</bean>
+
 
 	<!-- 配置jdbc.properties的路径 -->
 	<bean id="propertyConfigurer"
@@ -50,22 +85,32 @@
 	</bean>
 
 
- <!-- 添加事务管理器组件DataSourceTransactionManager -->
-    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <!-- 使用set方法注入数据源 -->
-        <property name="dataSource" ref="dataSource"></property>
-    </bean>
-    <!-- 开启基于注解声明式事务
-        注意配置transaction-manager属性，它引用了我们事务管理组件对象，这里要和事务管理器组件id一致
-        默认是transactionManager
-    -->
-    <tx:annotation-driven transaction-manager="transactionManager"/>
-<!-- 	<bean -->
-<!-- 		class="springfox.documentation.swagger2.configuration.Swagger2DocumentationConfiguration" -->
-<!-- 		id="swagger2Config" /> -->
+	<!-- 添加事务管理器组件DataSourceTransactionManager -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<!-- 使用set方法注入数据源 -->
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	<!-- 开启基于注解声明式事务 注意配置transaction-manager属性，它引用了我们事务管理组件对象，这里要和事务管理器组件id一致 
+		默认是transactionManager -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
 
-<!-- 	<mvc:resources location="classpath:/META-INF/resources/" -->
-<!-- 		mapping="swagger-ui.html" /> -->
-<!-- 	<mvc:resources location="classpath:/META-INF/resources/webjars/" -->
-<!-- 		mapping="/webjars/**" /> -->
+	<!-- 处理responseBody 里面日期类型 -->
+	<mvc:annotation-driven>
+		<mvc:message-converters>
+			<bean
+				class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+				<property name="objectMapper">
+					<bean class="com.fasterxml.jackson.databind.ObjectMapper">
+						<property name="dateFormat">
+							<bean class="java.text.SimpleDateFormat">
+								<constructor-arg type="java.lang.String" value="yyyy-MM-dd HH:mm:ss" />
+							</bean>
+						</property>
+					</bean>
+				</property>
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+
 </beans>

@@ -9,7 +9,7 @@ import com.supply.management.config.contants.ServerConfig;
 
 public class Md5
 {
-	private final static String MD5_KEY = "PuYang!!!!XiaoHe";
+	public final static String MD5_KEY = "PuYang!!!!XiaoHe";
 
 	/** 
 	 * Md5加密 

@@ -24,9 +24,17 @@ public class CategoryRepositoryJdbcImpl implements CategoryRepository
 {
 	private static final String SQL_SAVE = "INSERT INTO t_category (parent_id, category_name, create_time) VALUES (:parent_id, :category_name, :create_time)";
 
-	private static final String SQL_QUERY = "SELECT p.id parent_id, p.category_name parent_name, c.id child_id, c.category_name child_name" + 
-			" FROM t_category p LEFT JOIN t_category c ON p.id = c.parent_id AND c.status = 0 WHERE p.parent_id IS NULL AND p.status = 0 LIMIT :start, :num";
-	
+	// private static final String SQL_QUERY = "SELECT p.id parent_id,
+	// p.category_name parent_name, c.id child_id, c.category_name child_name" +
+	// " FROM t_category p LEFT JOIN t_category c ON p.id = c.parent_id AND
+	// c.status = 0 WHERE p.parent_id IS NULL AND p.status = 0 LIMIT :start,
+	// :num";
+
+	private static final String SQL_QUERY = "SELECT p.id parent_id, p.category_name parent_name, c.id child_id, c.category_name child_name"
+			+ " FROM t_category p" + " LEFT JOIN t_category c" + " ON p.id = c.parent_id AND c.status = 0"
+			+ " WHERE p.parent_id IS NULL AND p.status = 0"
+			+ " AND p.id IN (SELECT t.id FROM (SELECT id FROM t_category WHERE t_category.parent_id IS NULL AND t_category.status = 0 LIMIT :start, :num)AS t)";
+
 	private NamedParameterJdbcTemplate mNamedParameterJdbcTemplate;
 
 	@Autowired
@@ -50,7 +58,7 @@ public class CategoryRepositoryJdbcImpl implements CategoryRepository
 		{
 			paramSource.addValue("parent_id", parentId);
 		}
-	
+
 		paramSource.addValue("category_name", category.getCategoryName());
 		paramSource.addValue("create_time", TimeUtil.getCurrentTimestamp());
 		int effectedRows = this.mNamedParameterJdbcTemplate.update(SQL_SAVE, paramSource, keyHolder,
@@ -72,10 +80,10 @@ public class CategoryRepositoryJdbcImpl implements CategoryRepository
 			CategoryPo parent = new CategoryPo();
 			long parentId = rowSet.getLong("parent_id");
 			parent.setId(parentId);
-			parent.setCategoryName(rowSet.getString("parent_name"));
 			if (!map.containsKey(parent))
 			{
-				map.put(parent, null);	
+				parent.setCategoryName(rowSet.getString("parent_name"));
+				map.put(parent, null);
 			}
 			long childId = rowSet.getLong("child_id");
 			if (childId != 0)
@@ -92,7 +100,7 @@ public class CategoryRepositoryJdbcImpl implements CategoryRepository
 				}
 				list.add(child);
 			}
-			
+
 		}
 		return map;
 	}

@@ -70,6 +70,14 @@
 	height: auto;
 	padding: 10px;
 	font-size: 20px;
-	float:left;
+	float: left;
 	border: 3px #000 soild;
+}
+
+.table-b table {
+	border: 1px solid #000;
+	
+}
+.table-b table th{
+	float: none;
 }

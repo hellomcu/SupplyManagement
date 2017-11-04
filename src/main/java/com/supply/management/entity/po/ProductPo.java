@@ -17,6 +17,7 @@ public class ProductPo extends BasePo
 	private int totalNum;
 	private int productNum;
 	private BigDecimal productPrice;
+	private String productUnit;
 	private String productPlace;
 	private Date productDate;
 	private String qualityGuaranteePeriod;
@@ -129,6 +130,14 @@ public class ProductPo extends BasePo
 	public void setParentName(String parentName)
 	{
 		this.parentName = parentName;
+	}
+	public String getProductUnit()
+	{
+		return productUnit;
+	}
+	public void setProductUnit(String productUnit)
+	{
+		this.productUnit = productUnit;
 	}
 	
 	

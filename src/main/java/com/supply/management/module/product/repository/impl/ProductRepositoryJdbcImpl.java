@@ -20,10 +20,10 @@ import com.supply.management.util.TimeUtil;
 public class ProductRepositoryJdbcImpl implements ProductRepository
 {
 
-	private static final String SQL_SAVE = "INSERT INTO t_product (category_id, user_id, product_name, total_num, product_num, product_price, product_place, product_date, quality_guarantee_period, description, create_time) values(:category_id, :user_id, :product_name, :total_num, :product_num, :product_price, :product_place, :product_date, :quality_guarantee_period, :description, :create_time)";
+	private static final String SQL_SAVE = "INSERT INTO t_product (category_id, user_id, product_name, total_num, product_num, product_price, product_unit, product_place, product_date, quality_guarantee_period, description, create_time) values(:category_id, :user_id, :product_name, :total_num, :product_num, :product_price, :product_unit, :product_place, :product_date, :quality_guarantee_period, :description, :create_time)";
 	
 	private static final String SQL_QUERY = "SELECT p.id product_id, p.product_name product_name, p.total_num total_num," + 
-			"p.product_num product_num, p.product_price product_price, p.product_place product_place, p.description description, p.create_time create_time," + 
+			"p.product_num product_num, p.product_price product_price, p.product_unit, p.product_place product_place, p.description description, p.create_time create_time," + 
 			"c.id category_id,c.category_name category_name," + 
 			"c2.id parent_id, c2.category_name parent_name" + 
 			" FROM t_product p LEFT JOIN t_category c ON p.category_id = c.id" + 
@@ -33,6 +33,7 @@ public class ProductRepositoryJdbcImpl implements ProductRepository
 	
 	private static final String SQL_DELETE = "UPDATE t_product SET status = 1 WHERE id=:id";
 	
+	//private static final String SQL_UPDATE = "UPDATE t_store SET store_name=:store_name, store_place=:store_place, contacts=:contacts, description=:description WHERE status=0 AND id=:id";
 	
 	private NamedParameterJdbcTemplate mNamedParameterJdbcTemplate;
 
@@ -55,6 +56,7 @@ public class ProductRepositoryJdbcImpl implements ProductRepository
 		paramSource.addValue("total_num", product.getTotalNum());
 		paramSource.addValue("product_num", product.getProductNum());
 		paramSource.addValue("product_price", product.getProductPrice());
+		paramSource.addValue("product_unit", product.getProductUnit());
 		paramSource.addValue("product_place", product.getProductPlace());
 		paramSource.addValue("product_date", product.getProductDate());
 		paramSource.addValue("quality_guarantee_period", product.getQualityGuaranteePeriod());
@@ -82,6 +84,7 @@ public class ProductRepositoryJdbcImpl implements ProductRepository
 			product.setTotalNum(rowSet.getInt("total_num"));
 			product.setProductNum(rowSet.getInt("product_num"));
 			product.setProductPrice(rowSet.getBigDecimal("product_price"));
+			product.setProductUnit(rowSet.getString("product_unit"));
 			product.setProductPlace(rowSet.getString("product_place"));
 			product.setDescription(rowSet.getString("description"));
 			product.setCreateTime(rowSet.getTimestamp("create_time"));
@@ -122,3 +125,4 @@ public class ProductRepositoryJdbcImpl implements ProductRepository
 		return effectedRows;
 	}
 }
+
