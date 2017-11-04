@@ -13,7 +13,6 @@ import org.springframework.stereotype.Repository;
 
 import com.supply.management.entity.PageInfo;
 import com.supply.management.entity.po.ProductPo;
-import com.supply.management.entity.po.StorePo;
 import com.supply.management.module.product.repository.ProductRepository;
 import com.supply.management.util.TimeUtil;
 
@@ -34,7 +33,6 @@ public class ProductRepositoryJdbcImpl implements ProductRepository
 	
 	private static final String SQL_DELETE = "UPDATE t_product SET status = 1 WHERE id=:id";
 	
-	private static final String SQL_UPDATE = "UPDATE t_store SET store_name=:store_name, store_place=:store_place, contacts=:contacts, description=:description WHERE status=0 AND id=:id";
 	
 	private NamedParameterJdbcTemplate mNamedParameterJdbcTemplate;
 
