@@ -26,7 +26,7 @@
 
 <script type="text/javascript">
 function mendian() {
-	window.location.href="./mendianManage.jsp"; 
+	window.location.href="./mendianManage.html"; 
 }
 function goods() {
 	window.location.href="./goodsManage.jsp"; 

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>添加门店</title>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta http-equiv="X-UA-COMPATIBLE" content="IE=edge">
+
+<link rel="stylesheet" type="text/css"
+	href="bootstrap-3.3.7/css/bootstrap.min.css">
+<script src="js/jquery-2.1.4.min.js"></script>
+<script src="bootstrap-3.3.7/js/bootstrap.min.js"></script>
+
+<link rel="stylesheet" href="css/mendian.css" type="text/css" />
+
+<script type="text/javascript">
+	function addMenDian() {
+		window.location.href = "./addMenDian.jsp";
+	}
+	function addMenDian() {
+		var storeName = document.getElementById("storeName").value;
+		var storeAddress = document.getElementById("storeAddress").value;
+		var callNumber = document.getElementById("callNumber").value;
+		var userName = document.getElementById("userName").value;
+		var passWord = document.getElementById("passWord").value;
+
+		var beizhu = document.getElementById("beizhu").value;
+
+		if (storeName == "" || storeAddress == "" || callNumber == ""
+				|| userName == "" || passWord == "") {
+			alert("信息填写不完整");
+		} else {
+			addStore(storeName, storeAddress, callNumber, userName, passWord,
+					beizhu);
+		}
+	}
+</script>
+</head>
+<body>
+	<!-- <input type="text" class="text05" value="" placeholder="é¨åºåç§°" id="storeName"/></br></br></br> -->
+	<!-- <input type="text" class="text05" value="" placeholder="é¨åºå°å" id="storeAddress"/></br></br></br> -->
+	<!-- <input type="text" class="text05" value="" placeholder="é¨åºèç³»çµè¯"id="callNumber"/></br></br></br> -->
+	<!-- <input type="text" class="text05" value="" placeholder="é¨åºå¸å·"id="userName"/></br></br></br> -->
+	<!-- <input type="text" class="text05" value="" placeholder="é¨åºèå¸å·å¯ç "id="passWord"/></br></br></br> -->
+	<!-- <textarea rows="5" cols="" style="width: 100%;font-size: 20px;font-family: å¾®è½¯éé»;padding: 10px;" placeholder="å¤æ³¨" id="beizhu"></textarea></br></br> -->
+
+	<!-- <center><input type="button" class="button05" value="ç¡®å®æ·»å " onclick="addMenDian();"/></center> -->
+
+	<div class="container">
+		<br/>
+		<form role="form"
+			class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-12 col-md-offset-0 col-lg-12  col-lg-offset-0">
+			<div class="form-group">
+				<input type="text" class="form-control" id="storeName"
+					placeholder="输入门店名称" />
+			</div>
+			<div class="form-group">
+				<input type="text" class="form-control" id="storeAddress"
+					placeholder="输入门店地址" />
+			</div>
+			<div class="form-group">
+				<input type="text" class="form-control" id="callNumber"
+					placeholder="输入门店联系方式" />
+			</div>
+			<div class="form-group">
+				<input type="text" class="form-control" id="userName"
+					placeholder="输入门店登录帐号" />
+			</div>
+			<div class="form-group">
+				<input type="text" class="form-control" id="passWord"
+					placeholder="输入门店登录密码" />
+			</div>
+			<div class="form-group">
+				<textarea class="form-control" rows="5" cols="" id="beizhu"
+					placeholder="输入备注信息"></textarea>
+			</div>
+			<div class="form-group">
+				<button type='button' class="btn btn-info btn-block"
+					onclick="addMenDian();">添加</button>
+			</div>
+		</form>
+	</div>
+</body>
+
+<script type="text/javascript" src="js/global.js"></script>
+<script type="text/javascript" src="js/module/store.js"></script>
+</html>

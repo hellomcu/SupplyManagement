@@ -18,7 +18,7 @@ function addStore(storeName, storeAddress, callNumber, userName, passWord,
 		cache : false,
 		dataType : 'json',
 		success : function(data) {
-			window.location.href="./mendianManage.jsp"; 
+			window.location.href = "./mendianManage.html";
 			alert("添加成功！");
 
 		},
@@ -31,8 +31,7 @@ function addStore(storeName, storeAddress, callNumber, userName, passWord,
 function getStore(num) {
 
 	/*
-	 * var jsonParams = { "page" : num, "num" : 10,
-	 *  };
+	 * var jsonParams = { "page" : num, "num" : 10, };
 	 */
 
 	$.ajax({
@@ -59,31 +58,31 @@ function getStore(num) {
 
 function initData(data) {
 	for (var i = 0; i < data.length; i++) {
-//alert(JSON.stringify(data[i].createTime));
-		
-		 var x=document.getElementById('myTable').insertRow(i+1)
-		  var y=x.insertCell(0)
-		  var z=x.insertCell(1)
-		  
-		   var a=x.insertCell(2)
-		  var b=x.insertCell(3)
-		  var c=x.insertCell(4)
-		  y.innerHTML=i+1
-		  z.innerHTML='<a href="http://www.baidu.com">'+data[i].storeName+'</a>'
-		  
-		  a.innerHTML=data[i].storePlace
-		  b.innerHTML=data[i].contacts
-		  
-		  c.innerHTML='<input type="button" value="删除" onclick="deleteStore('+data[i].id+')"/>'
+		// alert(JSON.stringify(data[i].createTime));
+
+		var x = document.getElementById('tb').insertRow(i);
+		var y = x.insertCell(0);
+		var z = x.insertCell(1);
+
+		var a = x.insertCell(2);
+		var b = x.insertCell(3);
+		var c = x.insertCell(4);
+		y.innerHTML = i + 1;
+		z.innerHTML = '<a href="http://www.baidu.com">' + data[i].storeName
+				+ '</a>';
+
+		a.innerHTML = data[i].storePlace;
+		b.innerHTML = data[i].contacts;
+
+		c.innerHTML = "<button type='button' class='btn btn-danger' onclick=deleteStore("+ data[i].id + ")>删除</button>";
 	}
 }
 function deleteStore(id) {
-	var r=confirm("要删除它吗？");
-	if (r == true){
-		
+	var r = confirm("要删除它吗？");
+	if (r == true) {
 
 		$.ajax({
-			url : 'admin/store?id='+id,
+			url : 'admin/store?id=' + id,
 			// contentType : "application/json; charset=utf-8",
 			// data : JSON.stringify(jsonParams),
 			type : 'delete',
@@ -94,7 +93,7 @@ function deleteStore(id) {
 
 				// alert(JSON.stringify(data.data));
 
-				window.location.href="./mendianManage.jsp"; 
+				window.location.href = "./mendianManage.jsp";
 
 			},
 			error : function() {
@@ -102,12 +101,7 @@ function deleteStore(id) {
 			}
 		});
 
+	} else {
 
-		
-		
-		
-		
-	}else{
-		
 	}
 }
