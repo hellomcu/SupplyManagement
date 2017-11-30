@@ -1,6 +1,6 @@
 package com.supply.management.entity.po;
 
-import com.supply.management.entity.base.BasePo;
+import com.supply.entity.base.BasePo;
 
 
 public class CategoryPo extends BasePo

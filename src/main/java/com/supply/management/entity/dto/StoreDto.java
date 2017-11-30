@@ -2,7 +2,7 @@ package com.supply.management.entity.dto;
 
 import java.sql.Timestamp;
 
-import com.supply.management.entity.base.BaseDto;
+import com.supply.entity.base.BaseDto;
 
 public class StoreDto extends BaseDto
 {

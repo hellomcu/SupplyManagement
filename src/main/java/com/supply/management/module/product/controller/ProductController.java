@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.supply.management.base.controller.BaseController;
+import com.supply.base.controller.BaseController;
+import com.supply.entity.PageInfo;
+import com.supply.entity.base.BaseResponse;
 import com.supply.management.beanutil.WrappedBeanCopier;
-import com.supply.management.entity.PageInfo;
-import com.supply.management.entity.base.BaseResponse;
 import com.supply.management.entity.dto.AddProductDto;
 import com.supply.management.entity.dto.ProductDto;
 import com.supply.management.entity.dto.UpdateProductDto;

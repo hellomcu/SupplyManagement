@@ -3,7 +3,7 @@ package com.supply.management.entity.dto;
 import java.math.BigDecimal;
 import java.sql.Date;
 
-import com.supply.management.entity.base.BaseDto;
+import com.supply.entity.base.BaseDto;
 
 public class ProductDto extends BaseDto
 {

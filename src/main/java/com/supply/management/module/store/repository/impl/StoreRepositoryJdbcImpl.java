@@ -12,7 +12,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 
-import com.supply.management.entity.PageInfo;
+import com.supply.entity.PageInfo;
 import com.supply.management.entity.po.StorePo;
 import com.supply.management.module.store.repository.StoreRepository;
 import com.supply.management.util.TimeUtil;

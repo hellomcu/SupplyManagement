@@ -2,7 +2,7 @@ package com.supply.management.entity.dto;
 
 import java.util.List;
 
-import com.supply.management.entity.base.BaseDto;
+import com.supply.entity.base.BaseDto;
 
 
 public class CategoryDto extends BaseDto

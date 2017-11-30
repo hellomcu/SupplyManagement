@@ -11,7 +11,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 
-import com.supply.management.entity.PageInfo;
+import com.supply.entity.PageInfo;
 import com.supply.management.entity.po.ProductPo;
 import com.supply.management.module.product.repository.ProductRepository;
 import com.supply.management.util.TimeUtil;

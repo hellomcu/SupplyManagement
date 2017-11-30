@@ -1,6 +1,6 @@
 package com.supply.management.entity.dto;
 
-import com.supply.management.entity.base.BaseDto;
+import com.supply.entity.base.BaseDto;
 
 /**
  * 添加类别(当parentId=0时,为添加父类别)

@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.sql.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.supply.management.entity.base.BaseDto;
+import com.supply.entity.base.BaseDto;
 
 public class UpdateProductDto extends BaseDto
 {

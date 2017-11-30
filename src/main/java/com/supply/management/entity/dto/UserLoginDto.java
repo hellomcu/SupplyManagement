@@ -1,6 +1,6 @@
 package com.supply.management.entity.dto;
 
-import com.supply.management.entity.base.BaseDto;
+import com.supply.entity.base.BaseDto;
 
 public class UserLoginDto extends BaseDto
 {

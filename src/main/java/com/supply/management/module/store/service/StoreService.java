@@ -2,8 +2,8 @@ package com.supply.management.module.store.service;
 
 import java.util.List;
 
-import com.supply.management.base.service.BaseService;
-import com.supply.management.entity.PageInfo;
+import com.supply.base.service.BaseService;
+import com.supply.entity.PageInfo;
 import com.supply.management.entity.po.StorePo;
 import com.supply.management.entity.po.UserPo;
 

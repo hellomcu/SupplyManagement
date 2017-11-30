@@ -3,7 +3,7 @@ package com.supply.management.entity.po;
 import java.math.BigDecimal;
 import java.sql.Date;
 
-import com.supply.management.entity.base.BasePo;
+import com.supply.entity.base.BasePo;
 
 public class ProductPo extends BasePo
 {

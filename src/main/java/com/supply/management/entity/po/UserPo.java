@@ -2,8 +2,8 @@ package com.supply.management.entity.po;
 
 import java.sql.Timestamp;
 
+import com.supply.entity.base.BasePo;
 import com.supply.management.config.contants.UserType;
-import com.supply.management.entity.base.BasePo;
 
 public class UserPo extends BasePo
 {

@@ -8,9 +8,8 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.supply.management.entity.PageInfo;
+import com.supply.entity.PageInfo;
 import com.supply.management.entity.po.ProductPo;
-
 import com.supply.management.exception.SupplyException;
 import com.supply.management.module.product.repository.ProductRepository;
 import com.supply.management.module.product.service.ProductService;

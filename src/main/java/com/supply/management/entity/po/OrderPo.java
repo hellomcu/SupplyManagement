@@ -2,8 +2,8 @@ package com.supply.management.entity.po;
 
 import java.math.BigDecimal;
 
+import com.supply.entity.base.BasePo;
 import com.supply.management.config.contants.OrderStatus;
-import com.supply.management.entity.base.BasePo;
 
 public class OrderPo extends BasePo
 {
