@@ -4,8 +4,8 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.supply.management.entity.po.UserPo;
-import com.supply.management.exception.SupplyException;
+import com.supply.entity.po.UserPo;
+import com.supply.exception.SupplyException;
 import com.supply.management.module.user.repository.UserRepository;
 import com.supply.management.module.user.service.UserService;
 import com.supply.management.util.Md5;

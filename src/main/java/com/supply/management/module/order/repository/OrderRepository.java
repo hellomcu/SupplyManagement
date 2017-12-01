@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.supply.base.repository.Repository;
 import com.supply.entity.PageInfo;
-import com.supply.management.entity.po.OrderPo;
+import com.supply.entity.po.OrderPo;
 
 public interface OrderRepository extends Repository
 {

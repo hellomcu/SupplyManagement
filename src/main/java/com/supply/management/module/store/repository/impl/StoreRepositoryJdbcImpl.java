@@ -13,7 +13,7 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 
 import com.supply.entity.PageInfo;
-import com.supply.management.entity.po.StorePo;
+import com.supply.entity.po.StorePo;
 import com.supply.management.module.store.repository.StoreRepository;
 import com.supply.management.util.TimeUtil;
 

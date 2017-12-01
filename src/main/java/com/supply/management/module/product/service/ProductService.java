@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.supply.base.service.BaseService;
 import com.supply.entity.PageInfo;
-import com.supply.management.entity.po.ProductPo;
+import com.supply.entity.po.ProductPo;
 
 public interface ProductService extends BaseService
 {

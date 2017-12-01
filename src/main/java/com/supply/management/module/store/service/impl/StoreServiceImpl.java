@@ -7,11 +7,11 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.supply.contant.UserType;
 import com.supply.entity.PageInfo;
-import com.supply.management.config.contants.UserType;
-import com.supply.management.entity.po.StorePo;
-import com.supply.management.entity.po.UserPo;
-import com.supply.management.exception.SupplyException;
+import com.supply.entity.po.StorePo;
+import com.supply.entity.po.UserPo;
+import com.supply.exception.SupplyException;
 import com.supply.management.module.store.repository.StoreRepository;
 import com.supply.management.module.store.service.StoreService;
 import com.supply.management.module.user.repository.UserRepository;

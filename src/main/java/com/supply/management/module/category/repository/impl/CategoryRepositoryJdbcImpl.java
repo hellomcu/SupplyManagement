@@ -15,7 +15,7 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 
 import com.supply.entity.PageInfo;
-import com.supply.management.entity.po.CategoryPo;
+import com.supply.entity.po.CategoryPo;
 import com.supply.management.module.category.repository.CategoryRepository;
 import com.supply.management.util.TimeUtil;
 

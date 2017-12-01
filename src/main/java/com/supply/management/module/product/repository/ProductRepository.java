@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.supply.base.repository.Repository;
 import com.supply.entity.PageInfo;
-import com.supply.management.entity.po.ProductPo;
+import com.supply.entity.po.ProductPo;
 
 public interface ProductRepository extends Repository
 {

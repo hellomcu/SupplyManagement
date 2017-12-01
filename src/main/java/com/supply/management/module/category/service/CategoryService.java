@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.supply.base.service.BaseService;
 import com.supply.entity.PageInfo;
-import com.supply.management.entity.po.CategoryPo;
+import com.supply.entity.po.CategoryPo;
 
 public interface CategoryService extends BaseService
 {

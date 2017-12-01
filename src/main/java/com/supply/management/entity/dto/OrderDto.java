@@ -3,8 +3,8 @@ package com.supply.management.entity.dto;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
+import com.supply.contant.OrderStatus;
 import com.supply.entity.base.BaseDto;
-import com.supply.management.config.contants.OrderStatus;
 
 public class OrderDto extends BaseDto
 {

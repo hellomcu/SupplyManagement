@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.supply.base.repository.Repository;
 import com.supply.entity.PageInfo;
-import com.supply.management.entity.po.StorePo;
+import com.supply.entity.po.StorePo;
 
 public interface StoreRepository extends Repository
 {

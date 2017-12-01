@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.supply.entity.PageInfo;
-import com.supply.management.entity.po.CategoryPo;
-import com.supply.management.exception.SupplyException;
+import com.supply.entity.po.CategoryPo;
+import com.supply.exception.SupplyException;
 import com.supply.management.module.category.repository.CategoryRepository;
 import com.supply.management.module.category.service.CategoryService;
 

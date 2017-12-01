@@ -1,7 +1,7 @@
 package com.supply.management.module.user.service;
 
 import com.supply.base.service.BaseService;
-import com.supply.management.entity.po.UserPo;
+import com.supply.entity.po.UserPo;
 
 public interface UserService extends BaseService
 {

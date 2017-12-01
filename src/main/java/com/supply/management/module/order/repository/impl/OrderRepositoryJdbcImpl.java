@@ -11,9 +11,9 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 
+import com.supply.contant.OrderStatus;
 import com.supply.entity.PageInfo;
-import com.supply.management.config.contants.OrderStatus;
-import com.supply.management.entity.po.OrderPo;
+import com.supply.entity.po.OrderPo;
 import com.supply.management.module.order.repository.OrderRepository;
 
 @Repository(value="orderRepository")
