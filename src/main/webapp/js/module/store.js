@@ -93,7 +93,7 @@ function deleteStore(id) {
 
 				// alert(JSON.stringify(data.data));
 
-				window.location.href = "./mendianManage.jsp";
+				window.location.href = "./mendianManage.html";
 
 			},
 			error : function() {
