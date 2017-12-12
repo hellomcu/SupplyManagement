@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.supply.base.controller.BaseController;
-import com.supply.beanutil.WrappedBeanCopier;
 import com.supply.entity.PageInfo;
 import com.supply.entity.base.BaseResponse;
 import com.supply.entity.po.StorePo;
@@ -20,6 +19,7 @@ import com.supply.management.entity.dto.AddStoreDto;
 import com.supply.management.entity.dto.StoreDto;
 import com.supply.management.entity.dto.UpdateStoreDto;
 import com.supply.management.module.store.service.StoreService;
+import com.supply.management.util.WrappedBeanCopier;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
