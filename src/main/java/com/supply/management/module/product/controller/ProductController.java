@@ -2,6 +2,8 @@ package com.supply.management.module.product.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,7 +16,9 @@ import com.supply.base.controller.BaseController;
 import com.supply.entity.PageInfo;
 import com.supply.entity.base.BaseResponse;
 import com.supply.entity.po.ProductPo;
+import com.supply.entity.po.UserPo;
 import com.supply.exception.SupplyException;
+import com.supply.management.auth.util.JwtUtil;
 import com.supply.management.entity.dto.AddProductDto;
 import com.supply.management.entity.dto.ProductDto;
 import com.supply.management.entity.dto.UpdateProductDto;
@@ -42,9 +46,18 @@ public class ProductController extends BaseController
 	
 	@RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ApiOperation(httpMethod = "PUT", value = "添加产品", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public BaseResponse<Void> addProduct(@RequestBody AddProductDto addProductDto)
+	public BaseResponse<Void> addProduct(@RequestBody AddProductDto addProductDto, HttpServletRequest request)
 	{
-		mProductService.addProduct(WrappedBeanCopier.copyProperties(addProductDto, ProductPo.class));
+		UserPo loginUser = JwtUtil.getLoginUserFromJwt(request);
+		if (loginUser == null)
+		{
+			BaseResponse<Void> response = new BaseResponse<>();
+			response.setMessage("请先登录");
+			return response;
+		}
+		ProductPo product = WrappedBeanCopier.copyProperties(addProductDto, ProductPo.class);
+		product.setUserId(loginUser.getId());
+		mProductService.addProduct(product);
 		return getResponse();
 	}
 	

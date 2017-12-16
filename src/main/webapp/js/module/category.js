@@ -9,7 +9,7 @@ function getCategories(num) {
 				if (data.code != 1) {
 					alert(data.message);
 				} else {
-					initData(data.data);
+					initCategory(data.data);
 				}
 			});
 
@@ -31,7 +31,7 @@ function getCategories(num) {
 //        }
 //      ]
 //    },
-function initData(data) {
+function initCategory(data) {
 
 	var childArray = {};
 	for (var i = 0; i < data.length; i++) {
@@ -45,8 +45,7 @@ function initData(data) {
 		}
 	
 	}
-	console.log(childArray);
-	
+
 	var children = data[0].children;
 	for (var j=0; j<children.length; j++) {
 		var child = children[j];
@@ -63,26 +62,7 @@ function initData(data) {
 			$('#category-child').append("<option value='" + child.id + "'>" + child.categoryName + "</option>");
 		}
     }); 
+	
+	
 }
 
-function getMyOrderDetail(order, products) {
-	for (var i = 0; i < products.length; i++) {
-		// alert(JSON.stringify(data[i].createTime));
-
-		var newRow = document.getElementById('tb').insertRow(i);
-		var no = newRow.insertCell(0);
-		var prod = newRow.insertCell(1);
-		var unit = newRow.insertCell(2);
-		var num = newRow.insertCell(3);
-		var total = newRow.insertCell(4);
-		
-		no.innerHTML = i + 1;
-		prod.innerHTML = products[i].productName;
-		var unitPrice = products[i].unitPrice;
-		unit.innerHTML = unitPrice;
-		var productNum = products[i].productNum;
-		num.innerHTML = productNum;
-		total.innerHTML = unitPrice * productNum;
-	}
-
-}

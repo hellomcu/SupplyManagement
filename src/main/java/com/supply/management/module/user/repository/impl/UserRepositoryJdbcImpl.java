@@ -18,7 +18,7 @@ public class UserRepositoryJdbcImpl implements UserRepository
 {
 	private NamedParameterJdbcTemplate mNamedParameterJdbcTemplate;
 
-	private static final String SQL_QUERY_BY_USERNAMAE_TYPE = "SELECT id, password, store_id, true_name, phone, email FROM t_user WHERE username=:username AND user_type = :user_type AND status=0";
+	private static final String SQL_QUERY_BY_USERNAMAE_TYPE = "SELECT id, password, store_id FROM t_user WHERE username=:username AND user_type = :user_type AND status=0";
 	
 	private static final String SQL_SAVE = "INSERT INTO t_user (store_id, username, password, user_type) VALUES(:store_id, :username, :password, :user_type)";
 
@@ -43,9 +43,6 @@ public class UserRepositoryJdbcImpl implements UserRepository
 			user.setId(rowSet.getLong("id"));
 			user.setPassword(rowSet.getString("password"));
 			user.setStoreId(rowSet.getLong("store_id"));
-			user.setTrueName(rowSet.getString("true_name"));
-			user.setPhone(rowSet.getString("phone"));
-			user.setEmail(rowSet.getString("email"));
 			return user;
 		}
 		return null;

@@ -29,6 +29,8 @@ public class UserServiceImpl implements UserService
 		{
 			throw new SupplyException("登录失败，此用户名或密码不正确");
 		}
+		loginUser.setUsername(username);
+		loginUser.setPassword(null);
 		return loginUser;
 	}
 

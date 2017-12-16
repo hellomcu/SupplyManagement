@@ -14,7 +14,6 @@ public class AddProductDto extends BaseDto
 	 */
 	private static final long serialVersionUID = 773043171136018827L;
 	private long categoryId;
-	private long userId;
 	private String productName;
 	private int productNum;
 	private BigDecimal productPrice;
@@ -32,14 +31,6 @@ public class AddProductDto extends BaseDto
 	public void setCategoryId(long categoryId)
 	{
 		this.categoryId = categoryId;
-	}
-	public long getUserId()
-	{
-		return userId;
-	}
-	public void setUserId(long userId)
-	{
-		this.userId = userId;
 	}
 	public String getProductName()
 	{

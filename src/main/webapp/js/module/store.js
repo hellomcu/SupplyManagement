@@ -9,51 +9,28 @@ function addStore(storeName, storeAddress, callNumber, userName, passWord,
 		"password" : passWord,
 		"description" : beizhu
 	};
+	$.myAjax('admin/store', 'PUT', JSON.stringify(jsonParams),
+			function(data) {
+				if (data.code != 1) {
+					alert(data.message);
+				} else {
+					alert("添加成功！");
+					window.location.href = "./mendianManage.html";
+				}
+			});
 
-	$.ajax({
-		url : 'admin/store',
-		contentType : "application/json; charset=utf-8",
-		data : JSON.stringify(jsonParams),
-		type : 'put',
-		cache : false,
-		dataType : 'json',
-		success : function(data) {
-			window.location.href = "./mendianManage.html";
-			alert("添加成功！");
-
-		},
-		error : function() {
-			alert("异常");
-		}
-	});
 }
 
 function getStore(num) {
 
-	/*
-	 * var jsonParams = { "page" : num, "num" : 10, };
-	 */
-
-	$.ajax({
-		url : 'admin/store/stores?page=' + num + '&num=10',
-		// contentType : "application/json; charset=utf-8",
-		// data : JSON.stringify(jsonParams),
-		type : 'get',
-		cache : false,
-		dataType : 'json',
-		success : function(data) {
-			// alert(JSON.stringify(data));
-
-			// alert(JSON.stringify(data.data));
-
-			initData(data.data);
-
-		},
-		error : function() {
-			alert("异常");
-		}
-	});
-
+	$.myAjax('admin/store/stores?page=' + num + '&num=10', 'GET', null,
+			function(data) {
+				if (data.code != 1) {
+					alert(data.message);
+				} else {
+					initData(data.data);
+				}
+			});
 }
 
 function initData(data) {
@@ -80,26 +57,14 @@ function initData(data) {
 function deleteStore(id) {
 	var r = confirm("要删除它吗？");
 	if (r == true) {
-
-		$.ajax({
-			url : 'admin/store?id=' + id,
-			// contentType : "application/json; charset=utf-8",
-			// data : JSON.stringify(jsonParams),
-			type : 'delete',
-			cache : false,
-			dataType : 'json',
-			success : function(data) {
-				// alert(JSON.stringify(data));
-
-				// alert(JSON.stringify(data.data));
-
-				window.location.href = "./mendianManage.html";
-
-			},
-			error : function() {
-				alert("异常");
-			}
-		});
+		$.myAjax('admin/store?id=' + id, 'DELETE', null,
+				function(data) {
+					if (data.code != 1) {
+						alert(data.message);
+					} else {
+						window.location.href = "./mendianManage.html";
+					}
+				});
 
 	} else {
 

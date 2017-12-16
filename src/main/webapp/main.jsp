@@ -29,7 +29,7 @@ function mendian() {
 	window.location.href="./mendianManage.html"; 
 }
 function goods() {
-	window.location.href="./add_product.html"; 
+	window.location.href="./product_manage.html"; 
 }
 function goodsClassification() {
 	window.location.href="./goodsClassificationManage.html"; 
