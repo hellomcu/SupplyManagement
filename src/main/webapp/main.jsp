@@ -32,7 +32,7 @@ function goods() {
 	window.location.href="./product_manage.html"; 
 }
 function goodsClassification() {
-	window.location.href="./goodsClassificationManage.html"; 
+	window.location.href="./category_manage.html"; 
 }
 
 </script>
