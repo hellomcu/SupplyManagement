@@ -34,7 +34,9 @@ function goods() {
 function goodsClassification() {
 	window.location.href="./category_manage.html"; 
 }
-
+function orders() {
+	window.location.href="./order_manage.html"; 
+}
 </script>
 </head>
 <body>
@@ -49,6 +51,11 @@ function goodsClassification() {
 	<br />
 	<input type="button" value="货品分类管理	►"
 		style="width: 100%; height: auto; padding: 20px;" class="button05" onclick="goodsClassification();">
+		
+			<br />
+	<br />
+	<input type="button" value="订单管理	►"
+		style="width: 100%; height: auto; padding: 20px;" class="button05" onclick="orders();">
 
 </body>
 </html>

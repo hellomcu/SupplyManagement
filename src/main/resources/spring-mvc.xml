@@ -91,6 +91,16 @@
 		<!-- 使用set方法注入数据源 -->
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
+
+	<bean id="eee"
+		class="org.springframework.beans.factory.config.FieldRetrievingFactoryBean">
+		<property name="staticField"
+			value="com.fasterxml.jackson.databind.SerializationFeature.WRITE_ENUMS_USING_INDEX" />
+	</bean>
+
+
+	<bean id="myObjectMapper" class="com.supply.management.config.MyObjectMapper"></bean>
+
 	<!-- 开启基于注解声明式事务 注意配置transaction-manager属性，它引用了我们事务管理组件对象，这里要和事务管理器组件id一致 
 		默认是transactionManager -->
 	<tx:annotation-driven transaction-manager="transactionManager" />
@@ -100,14 +110,23 @@
 		<mvc:message-converters>
 			<bean
 				class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
-				<property name="objectMapper">
-					<bean class="com.fasterxml.jackson.databind.ObjectMapper">
-						<property name="dateFormat">
-							<bean class="java.text.SimpleDateFormat">
-								<constructor-arg type="java.lang.String" value="yyyy-MM-dd HH:mm:ss" />
-							</bean>
-						</property>
-					</bean>
+				<property name="objectMapper" ref="myObjectMapper">
+			
+					<!-- <bean class="com.fasterxml.jackson.databind.ObjectMapper"> -->
+
+					<!-- <property name="dateFormat"> -->
+					<!-- <bean class="java.text.SimpleDateFormat"> -->
+					<!-- <constructor-arg type="java.lang.String" value="yyyy-MM-dd HH:mm:ss" 
+						/> -->
+					<!-- </bean> -->
+					<!-- </property> -->
+
+					<!-- <property name="configure"> -->
+					<!-- <bean class="com.fasterxml.jackson.databind.SerializationFeature"> -->
+					<!-- <property name="id" ref="eee"></property> -->
+					<!-- </bean> -->
+
+					<!-- </property> -->
 				</property>
 			</bean>
 		</mvc:message-converters>

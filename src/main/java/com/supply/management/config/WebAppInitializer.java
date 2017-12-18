@@ -7,7 +7,7 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.XmlWebApplicationContext;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-public class BeautyWebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer
+public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer
 {
 	@Override
 	protected WebApplicationContext createServletApplicationContext()
@@ -24,23 +24,22 @@ public class BeautyWebAppInitializer extends AbstractAnnotationConfigDispatcherS
 	}
 
 	@Override
-	protected Class<?>[] getRootConfigClasses()
-	{
-		return new Class<?>[] { RootConfig.class };
-	}
-
-	@Override
 	protected Class<?>[] getServletConfigClasses()
 	{
 		return new Class<?>[] { WebConfig.class };
 	}
 
+	
+
+	
 	@Override
 	protected void customizeRegistration(ServletRegistration.Dynamic registration)
 	{
 		registration.setMultipartConfig(getMultipartConfigElement());
 	}
 
+	
+	
 	private MultipartConfigElement getMultipartConfigElement()
 	{
 		MultipartConfigElement multipartConfigElement = new MultipartConfigElement(LOCATION, MAX_FILE_SIZE,
@@ -49,8 +48,8 @@ public class BeautyWebAppInitializer extends AbstractAnnotationConfigDispatcherS
 	}
 
 	private static final String LOCATION = "/tmp"; // Temporary location
-														// where files will be
-														// stored
+													// where files will be
+													// stored
 
 	private static final long MAX_FILE_SIZE = 5242880; // 5MB : Max file size.
 														// Beyond that size
@@ -64,4 +63,10 @@ public class BeautyWebAppInitializer extends AbstractAnnotationConfigDispatcherS
 	private static final int FILE_SIZE_THRESHOLD = 0; // Size threshold after
 														// which files will be
 														// written to disk
+
+	@Override
+	protected Class<?>[] getRootConfigClasses()
+	{
+		return null;
+	}
 }
