@@ -4,6 +4,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.supply.contant.UserType;
 import com.supply.entity.po.UserPo;
 import com.supply.exception.SupplyException;
 import com.supply.management.module.user.repository.UserRepository;
@@ -31,6 +32,7 @@ public class UserServiceImpl implements UserService
 		}
 		loginUser.setUsername(username);
 		loginUser.setPassword(null);
+		loginUser.setUserType(UserType.TYPE_ADMIN);
 		return loginUser;
 	}
 

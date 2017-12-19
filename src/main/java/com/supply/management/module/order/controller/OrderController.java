@@ -2,6 +2,8 @@ package com.supply.management.module.order.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,9 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.supply.base.controller.BaseController;
 import com.supply.contant.OrderStatus;
+import com.supply.contant.UserType;
 import com.supply.entity.PageInfo;
 import com.supply.entity.base.BaseResponse;
 import com.supply.entity.po.OrderPo;
+import com.supply.entity.po.UserPo;
+import com.supply.management.auth.util.JwtUtil;
 import com.supply.management.entity.dto.OrderDto;
 import com.supply.management.module.order.service.OrderService;
 import com.supply.management.util.WrappedBeanCopier;
@@ -38,7 +43,7 @@ public class OrderController extends BaseController
 	
 	@ApiOperation(httpMethod = "GET", value = "获取所有订单", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@RequestMapping(method = RequestMethod.GET, value="/orders", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public BaseResponse<List<OrderDto>> findAllStores( @RequestParam("page") long page, @RequestParam("num") int num)
+	public BaseResponse<List<OrderDto>> findAllOrders( @RequestParam("page") long page, @RequestParam("num") int num)
 	{
 		PageInfo pageInfo = new PageInfo();
 		pageInfo.setCurrentPage(page);
@@ -50,10 +55,28 @@ public class OrderController extends BaseController
 	
 	@RequestMapping(method = RequestMethod.POST, value="/status", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ApiOperation(httpMethod = "POST", value = "更新订单状态", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public BaseResponse<Void> updateStore(@RequestParam("status") int status, @RequestParam("long") int id)
+	public BaseResponse<Void> updateOrderStatus(@RequestParam("status") int status, @RequestParam("id") long id, HttpServletRequest request)
 	{
-	
-		mOrderService.updateOrderStatus(OrderStatus.values()[status], id);;
+		UserPo loginUser = JwtUtil.getLoginUserFromJwt(request);
+		if (loginUser == null)
+		{
+			BaseResponse<Void> response = new BaseResponse<>();
+			response.setMessage("请先登录");
+			return response;
+		}
+		if (loginUser.getUserType().ordinal() != UserType.TYPE_ADMIN.ordinal())
+		{
+			BaseResponse<Void> response = new BaseResponse<>();
+			response.setMessage("您没有权限操作");
+			return response;
+		}
+		if (status < 1 || status > 5)
+		{
+			BaseResponse<Void> response = new BaseResponse<>();
+			response.setMessage("订单状态不正确");
+			return response;
+		}
+		mOrderService.updateOrderStatus(OrderStatus.values()[status], id);
 		return getResponse();
 	}
 }

@@ -40,7 +40,8 @@ function initData(data) {
 		var status = order.orderStatus;
 		var statusStr = '未知';
 		var btnStr = '';
-		var btnClass = 'btn-info';
+		var btnClass = 'btn-default';
+		var btnDisabled = '';
 		
 		if (status === 1) {
 			statusStr = '已下单';
@@ -49,25 +50,25 @@ function initData(data) {
 		} else if (status === 2) {
 			statusStr = '出货中';
 			btnStr = '发货';
-			btnClass = 'btn-primary';
+			btnClass = 'btn-warning';
 		} else if (status === 3) {
 			statusStr = '配送中';
 			btnStr = '到达';
-			btnClass = 'btn-warning';
+			btnClass = 'btn-info';
 		} else if (status === 4) {
 			statusStr = '已到达';
 			btnStr = '收货';
-			btnClass = 'btn-default';
+			btnClass = 'btn-primary';
 		} else if (status === 5) {
 			statusStr = '已收货';
 			btnStr = '完成';
 			btnClass = 'btn-success';
+			btnDisabled = 'disabled=\'disabled\'';
 		}
 		statusCol.innerHTML = statusStr;
 		var params = 'order=' + encodeURI(encodeURI(JSON.stringify(order)));
 
-		oper.innerHTML = "<button type='button' class='btn " + btnClass + "' onclick='javascript:window.location.href=\"my_order_detail.html?"
-				+ params + "\"'>" + btnStr + "</button>";
+		oper.innerHTML = "<button type='button' " + btnDisabled + " class='btn " + btnClass + "' onclick='updateOrderStatus(" + order.id + "," + (status + 1) + ");'>" + btnStr + "</button>";
 	}
 }
 
@@ -91,4 +92,16 @@ function getMyOrderDetail(order, products) {
 		total.innerHTML = unitPrice * productNum;
 	}
 
+}
+
+function updateOrderStatus(id, status) {
+
+	$.myAjax('admin/order/status?id=' + id + '&status=' + status, 'POST', null, function(data) {
+		if (data.code != 1) {
+			alert(data.message);
+		} else {
+			alert("订单状态更新成功");
+			window.location.href = './order_manage.html';
+		}
+	});
 }

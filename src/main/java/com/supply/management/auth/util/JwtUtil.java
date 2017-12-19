@@ -9,6 +9,7 @@ import java.util.stream.Stream;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
+import com.supply.contant.UserType;
 import com.supply.entity.po.UserPo;
 import com.supply.management.config.contants.ServerConfig;
 
@@ -59,6 +60,7 @@ public class JwtUtil
 		loginUser.setId(Long.parseLong(map.get("id").toString()));
 		loginUser.setUsername(map.get("username").toString());
 		loginUser.setStoreId(Long.parseLong(map.get("storeId").toString()));
+		loginUser.setUserType(Enum.valueOf(UserType.class, map.get("userType").toString()));
 		return loginUser;
 	}
 
