@@ -1,71 +1,29 @@
-function getCategories(num) {
-
-	/*
-	 * var jsonParams = { "page" : num, "num" : 10, };
-	 */
-
+function requestCategory(num, callback) {
 	$.myAjax('admin/category/categories?page=' + num + '&num=100000', 'GET',
 			null, function(data) {
 				if (data.code != 1) {
 					alert(data.message);
 				} else {
-					initCategory(data.data);
+					callback(data.data);
 				}
 			});
-	console.log('vaaaaav');
-	var nodes = [
-		 {
-		 text: "Parent 1",
-		 nodes: [
-		  {
-		  text: "Child 1",
-		  nodes: [
-		   {
-		   text: "Grandchild 1"
-		   },
-		   {
-		   text: "Grandchild 2"
-		   }
-		  ]
-		  },
-		  {
-		  text: "Child 2"
-		  }
-		 ]
-		 },
-		 {
-		 text: "Parent 2"
-		 },
-		 {
-		 text: "Parent 3"
-		 },
-		 {
-		 text: "Parent 4"
-		 },
-		 {
-		 text: "Parent 5"
-		 }
-		];
-	var tree = {
-		text : "Node 1",
-		icon : "glyphicon glyphicon-stop",
-		selectedIcon : "glyphicon glyphicon-stop",
-		color : "#000000",
-		backColor : "#FFFFFF",
-		selectable : false,
-		multiSelect: false,    //多选
-		showCheckbox: false,
-		state : {
-			checked : false,
-			disabled : false,
-			expanded : false,
-			selected : false
-		},
-		data : nodes
-	};
-	console.log('vv');
-	$('#category-tree').treeview(tree);
-	console.log('cc');
+}
+
+
+
+function getCategories(num) {
+
+	requestCategory(num, function(data) {
+		initCategory(data);
+	});
+//	$.myAjax('admin/category/categories?page=' + num + '&num=100000', 'GET',
+//			null, function(data) {
+//				if (data.code != 1) {
+//					alert(data.message);
+//				} else {
+//					initCategory(data.data);
+//				}
+//			});
 }
 // "data": [
 // {
@@ -123,4 +81,37 @@ function initCategory(data) {
 				}
 			});
 
+}
+
+function categoryManage(num) {
+	requestCategory(num, function(data) {
+		showCategories(data);
+	});
+}
+
+function showCategories(data) {
+	
+	for (var i = 0; i < data.length; i++) {
+		var parent = data[i];
+		var parentId = parent.id;
+		$('#category-tree').append("<li class='closed'><span class='folder' id='" + parentId + "'>" + parent.categoryName + "</span><ul></ul>");
+		
+		$('#' + parentId).next().append("<li><span class='file'><a href='javascript:showAddCategoryDialog(" + parentId + ");'>+添加</a></span></li>");   
+		
+		var children = parent.children;
+		for (var j = 0; j < children.length; j++) {
+			var child = children[j];
+			$('#' + parentId).next().append("<li><span class='file' id='" + child.id + "'>" + child.categoryName + "</span></li>");   
+		}
+	}
+	
+	$("#category-tree").treeview({
+		toggle : function() {
+			console.log("%s was toggled.", $(this).find(">span").text());
+		}
+	});
+}
+
+function showAddCategoryDialog(parentId){
+	$('#my-modal').modal('show');
 }

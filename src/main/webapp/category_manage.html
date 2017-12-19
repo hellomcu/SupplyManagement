@@ -18,6 +18,10 @@
 <script src="js/loading/jquery.mloading.js"></script>
 <link rel="stylesheet" href="js/loading/jquery.mloading.css"
 	type="text/css" />
+
+<script src="jquery-treeview/jquery.treeview.js"></script>
+<link rel="stylesheet" href="jquery-treeview/jquery.treeview.css"
+	type="text/css" />
 <!--[if !IE]><!-->
 <style type="text/css">
 .table th, .table td {
@@ -25,10 +29,11 @@
 	vertical-align: middle !important;
 }
 </style>
-
+<script type="text/javascript" src="js/module/category.js"></script>
+<script type="text/javascript" src="js/global.js"></script>
 <script type="text/javascript">
 	$(function() {
-		getCategories(1);
+		categoryManage(1);
 	});
 </script>
 
@@ -37,24 +42,46 @@
 
 	<div class="container">
 		<br />
-		<form role="form"
-			class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-12 col-md-offset-0 col-lg-12  col-lg-offset-0">
-			<div class="form-group">
-				<div class="input-group">
-					<div class="input-group-addon  success">商品分类</div>
-					<select id="category-parent" class="form-control">
-					</select> <select id="category-child" class="form-control">
-					</select>
-				</div>
-			</div>
-			<div class="form-group">
-				<div class="input-group">
-					<div id="category-tree"></div>
-				</div>
-			</div>
-		</form>
+		<h3>商品分类管理</h3>
+		<br />
+		<div id="main">
+			<ul id="category-tree" class="filetree treeview-famfamfam">
+
+			</ul>
+
+		</div>
+
 	</div>
 </body>
-<script type="text/javascript" src="js/module/category.js"></script>
-<script type="text/javascript" src="js/global.js"></script>
+<div class="modal fade" tabindex="-1" role="dialog" id="my-modal">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title">添加商品分类</h4>
+			</div>
+			<div class="modal-body">
+				<form role="form">
+					<div class="form-group">
+						<div class="input-group ">
+							<div class="input-group-addon  success">分类名称</div>
+							<input type="text" class="form-control" id="productName"
+								placeholder="请输入分类名称" />
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+				<button type="button" class="btn btn-primary" onclick="addCategory();">确定</button>
+			</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
 </html>
