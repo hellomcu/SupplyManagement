@@ -9,21 +9,19 @@ function requestCategory(num, callback) {
 			});
 }
 
-
-
 function getCategories(num) {
 
 	requestCategory(num, function(data) {
 		initCategory(data);
 	});
-//	$.myAjax('admin/category/categories?page=' + num + '&num=100000', 'GET',
-//			null, function(data) {
-//				if (data.code != 1) {
-//					alert(data.message);
-//				} else {
-//					initCategory(data.data);
-//				}
-//			});
+	// $.myAjax('admin/category/categories?page=' + num + '&num=100000', 'GET',
+	// null, function(data) {
+	// if (data.code != 1) {
+	// alert(data.message);
+	// } else {
+	// initCategory(data.data);
+	// }
+	// });
 }
 // "data": [
 // {
@@ -90,21 +88,27 @@ function categoryManage(num) {
 }
 
 function showCategories(data) {
-	
+
 	for (var i = 0; i < data.length; i++) {
 		var parent = data[i];
 		var parentId = parent.id;
-		$('#category-tree').append("<li class='closed'><span class='folder' id='" + parentId + "'>" + parent.categoryName + "</span><ul></ul>");
-		
-		$('#' + parentId).next().append("<li><span class='file'><a href='javascript:showAddCategoryDialog(" + parentId + ");'>+添加</a></span></li>");   
-		
+		$('#category-tree').append(
+				"<li class='closed'><span class='folder' id='" + parentId
+						+ "'>" + parent.categoryName + "</span><ul></ul>");
+
+		$('#' + parentId).next().append(
+				"<li><span class='file'><a href='javascript:showAddCategoryDialog("
+						+ parentId + ");'>+添加</a></span></li>");
+
 		var children = parent.children;
 		for (var j = 0; j < children.length; j++) {
 			var child = children[j];
-			$('#' + parentId).next().append("<li><span class='file' id='" + child.id + "'>" + child.categoryName + "</span></li>");   
+			$('#' + parentId).next().append(
+					"<li><span class='file' id='" + child.id + "'>"
+							+ child.categoryName + "</span></li>");
 		}
 	}
-	
+
 	$("#category-tree").treeview({
 		toggle : function() {
 			console.log("%s was toggled.", $(this).find(">span").text());
@@ -112,6 +116,42 @@ function showCategories(data) {
 	});
 }
 
-function showAddCategoryDialog(parentId){
+function showAddCategoryDialog(parentId) {
 	$('#my-modal').modal('show');
+	$('#my-modal').on('shown.bs.modal', function() {
+		$('#btn-add-category').unbind("click");
+		$('#btn-add-category').bind("click", function() {
+			var name = $("#category-name").val();
+			if (name === '') {
+				alert("名称不能为空");
+				return;
+			}
+			requestAddCategory(parentId, name, function(data){
+				$('#my-modal').modal('hide');
+				alert("添加成功");
+				window.location.href = './category_manage.html';
+			});
+		});
+	});
+	$('#my-modal').on('hidden.bs.modal', function() {
+		// $('#btn-add-category').bind("click", null);
+		// $('#btn-add-category').unbind("click");
+		console.log('unbind');
+	});
+}
+
+function requestAddCategory(parentId, categoryName, callback) {
+
+	var body = {
+		"categoryName" : categoryName,
+		"parentId" : parentId
+	};
+
+	$.myAjax('admin/category', 'PUT', JSON.stringify(body), function(data) {
+		if (data.code != 1) {
+			alert(data.message);
+		} else {
+			callback(data.data);
+		}
+	});
 }
