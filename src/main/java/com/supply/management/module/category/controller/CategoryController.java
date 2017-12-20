@@ -18,6 +18,7 @@ import com.supply.entity.base.BaseResponse;
 import com.supply.entity.po.CategoryPo;
 import com.supply.management.entity.dto.AddAllCategoryDto;
 import com.supply.management.entity.dto.AddCategoryDto;
+import com.supply.management.entity.dto.AddCategoryResultDto;
 import com.supply.management.entity.dto.CategoryDto;
 import com.supply.management.module.category.service.CategoryService;
 import com.supply.management.util.WrappedBeanCopier;
@@ -43,11 +44,11 @@ public class CategoryController extends BaseController
 	
 	@RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ApiOperation(httpMethod = "PUT", value = "添加一个分类(当parentId为0时,添加子分类)", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public BaseResponse<Void> addCategory(@RequestBody AddCategoryDto addCategoryDto)
+	public BaseResponse<AddCategoryResultDto> addCategory(@RequestBody AddCategoryDto addCategoryDto)
 	{
 		CategoryPo category = WrappedBeanCopier.copyProperties(addCategoryDto, CategoryPo.class);
-		mCategoryService.addCategory(category);
-		return getResponse();
+		
+		return getResponse(WrappedBeanCopier.copyProperties(mCategoryService.addCategory(category), AddCategoryResultDto.class));
 	}
 	
 	

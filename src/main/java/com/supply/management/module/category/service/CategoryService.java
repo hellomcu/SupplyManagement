@@ -9,7 +9,7 @@ import com.supply.entity.po.CategoryPo;
 
 public interface CategoryService extends BaseService
 {
-	void addCategory(CategoryPo category);
+	CategoryPo addCategory(CategoryPo category);
 	
 	void addCategory(CategoryPo category, CategoryPo childCategory);
 	

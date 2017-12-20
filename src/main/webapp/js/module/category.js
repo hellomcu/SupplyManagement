@@ -93,8 +93,7 @@ function showCategories(data) {
 		var parent = data[i];
 		var parentId = parent.id;
 		$('#category-tree').append(
-				"<li class='closed'><span class='folder' id='" + parentId
-						+ "'>" + parent.categoryName + "</span><ul></ul>");
+				"<li class='closed'><span class='folder' id='" + parentId+ "'>" + parent.categoryName + "</span><ul></ul>");
 		var parentNode = $('#' + parentId).next();
 		parentNode.append("<li><span class='file'><a href='javascript:showAddCategoryDialog("
 				+ parentId + ");'>+添加</a></span></li>");
@@ -116,7 +115,7 @@ function showCategories(data) {
 }
 
 function showAddCategoryDialog(parentId) {
-
+	console.log("parentId:" + parentId);
 	$('#my-modal').modal('show');
 	$('#my-modal').on('shown.bs.modal', function() {
 		$('#btn-add-category').unbind("click");
@@ -129,16 +128,28 @@ function showAddCategoryDialog(parentId) {
 			requestAddCategory(parentId, name, function(data){
 				$('#my-modal').modal('hide');
 				alert("添加成功");
-				$('#' + parentId).next().append(
-						"<li><span class='file' id='" + 1 + "'>"
-								+ name + "</span></li>");
+				if (parentId === 0) {
+					$('#category-tree').append(
+							"<li class='closed'><span class='folder' id='" + data.id + "'>" + name + "</span><ul><li><span class='file'><a href='javascript:showAddCategoryDialog("
+							+ data.id + ");'>+添加</a></span></li></ul>");
+					$("#category-tree").treeview({
+					});
+				} else {
+			        $('#' + parentId).next().after("<li><span class='file' id='" + data.id + "'>"
+							+ name + "</span></li>"); 
+//					$('#' + parentId).next().prepend(
+//							"<li><span class='file' id='" + data.id + "'>"
+//									+ name + "</span></li>");
+					
+				}
+				
 			});
 		});
 	});
 	$('#my-modal').on('hidden.bs.modal', function() {
 		// $('#btn-add-category').bind("click", null);
 		// $('#btn-add-category').unbind("click");
-		console.log('unbind');
+		$('#category-form')[0].reset();
 	});
 }
 

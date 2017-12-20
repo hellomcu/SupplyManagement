@@ -21,9 +21,14 @@ public class CategoryServiceImpl implements CategoryService
 	private CategoryRepository mCategoryRepository;
 
 	@Override
-	public void addCategory(CategoryPo category)
+	public CategoryPo addCategory(CategoryPo category)
 	{
-		mCategoryRepository.save(category);
+		int rows = mCategoryRepository.save(category);
+		if (rows != 1)
+		{
+			throw new SupplyException("添加类别失败,请稍后重试");
+		}
+		return category;
 	}
 
 	@Transactional

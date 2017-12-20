@@ -1,7 +1,7 @@
 package com.supply.management.module.category.repository.impl;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,7 +33,7 @@ public class CategoryRepositoryJdbcImpl implements CategoryRepository
 	private static final String SQL_QUERY = "SELECT p.id parent_id, p.category_name parent_name, c.id child_id, c.category_name child_name"
 			+ " FROM t_category p" + " LEFT JOIN t_category c" + " ON p.id = c.parent_id AND c.status = 0"
 			+ " WHERE p.parent_id IS NULL AND p.status = 0"
-			+ " AND p.id IN (SELECT t.id FROM (SELECT id FROM t_category WHERE t_category.parent_id IS NULL AND t_category.status = 0 LIMIT :start, :num)AS t)";
+			+ " AND p.id IN (SELECT t.id FROM (SELECT id FROM t_category WHERE t_category.parent_id IS NULL AND t_category.status = 0 LIMIT :start, :num)AS t) ORDER BY p.create_time DESC, c.create_time DESC";
 
 	private NamedParameterJdbcTemplate mNamedParameterJdbcTemplate;
 
@@ -70,7 +70,7 @@ public class CategoryRepositoryJdbcImpl implements CategoryRepository
 	@Override
 	public Map<CategoryPo, List<CategoryPo>> findAll(PageInfo page)
 	{
-		Map<CategoryPo, List<CategoryPo>> map = new HashMap<CategoryPo, List<CategoryPo>>();
+		Map<CategoryPo, List<CategoryPo>> map = new LinkedHashMap<CategoryPo, List<CategoryPo>>();
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
 		paramSource.addValue("start", page.getStartItemNum());
 		paramSource.addValue("num", page.getItemNum());
