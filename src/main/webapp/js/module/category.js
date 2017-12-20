@@ -93,7 +93,7 @@ function showCategories(data) {
 		var parent = data[i];
 		var parentId = parent.id;
 		$('#category-tree').append(
-				"<li class='closed'><span class='folder' id='" + parentId+ "'>" + parent.categoryName + "</span><ul></ul>");
+				"<li class='closed'><span class='folder' id='" + parentId+ "'>" + parent.categoryName + "</span><ul></ul></li>");
 		var parentNode = $('#' + parentId).next();
 		parentNode.append("<li><span class='file'><a href='javascript:showAddCategoryDialog("
 				+ parentId + ");'>+添加</a></span></li>");
@@ -129,18 +129,14 @@ function showAddCategoryDialog(parentId) {
 				$('#my-modal').modal('hide');
 				alert("添加成功");
 				if (parentId === 0) {
-					$('#category-tree').append(
-							"<li class='closed'><span class='folder' id='" + data.id + "'>" + name + "</span><ul><li><span class='file'><a href='javascript:showAddCategoryDialog("
-							+ data.id + ");'>+添加</a></span></li></ul>");
+					//添加父分类
+					$('#category-tree').prepend("<li class='closed'><span class='folder' id='" + data.id + "'>" + name + "</span><ul><li><span class='file'><a href='javascript:showAddCategoryDialog(" + data.id + ");'>+添加</a></span></li></ul></li>");
 					$("#category-tree").treeview({
 					});
 				} else {
-			        $('#' + parentId).next().after("<li><span class='file' id='" + data.id + "'>"
-							+ name + "</span></li>"); 
-//					$('#' + parentId).next().prepend(
-//							"<li><span class='file' id='" + data.id + "'>"
-//									+ name + "</span></li>");
-					
+					//添加子分类
+					$('#' + parentId).next().children("li:first-child").after("<li><span class='file' id='" + data.id + "'>"+ name + "</span></li>"); 
+
 				}
 				
 			});
