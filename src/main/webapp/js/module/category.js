@@ -95,28 +95,28 @@ function showCategories(data) {
 		$('#category-tree').append(
 				"<li class='closed'><span class='folder' id='" + parentId
 						+ "'>" + parent.categoryName + "</span><ul></ul>");
-
-		$('#' + parentId).next().append(
-				"<li><span class='file'><a href='javascript:showAddCategoryDialog("
-						+ parentId + ");'>+添加</a></span></li>");
-
+		var parentNode = $('#' + parentId).next();
+		parentNode.append("<li><span class='file'><a href='javascript:showAddCategoryDialog("
+				+ parentId + ");'>+添加</a></span></li>");
+		
 		var children = parent.children;
 		for (var j = 0; j < children.length; j++) {
 			var child = children[j];
-			$('#' + parentId).next().append(
+			parentNode.append(
 					"<li><span class='file' id='" + child.id + "'>"
 							+ child.categoryName + "</span></li>");
 		}
 	}
 
 	$("#category-tree").treeview({
-		toggle : function() {
-			console.log("%s was toggled.", $(this).find(">span").text());
-		}
+//		toggle : function() {
+//			console.log("%s was toggled.", $(this).find(">span").text());
+//		}
 	});
 }
 
 function showAddCategoryDialog(parentId) {
+
 	$('#my-modal').modal('show');
 	$('#my-modal').on('shown.bs.modal', function() {
 		$('#btn-add-category').unbind("click");
@@ -129,7 +129,9 @@ function showAddCategoryDialog(parentId) {
 			requestAddCategory(parentId, name, function(data){
 				$('#my-modal').modal('hide');
 				alert("添加成功");
-				window.location.href = './category_manage.html';
+				$('#' + parentId).next().append(
+						"<li><span class='file' id='" + 1 + "'>"
+								+ name + "</span></li>");
 			});
 		});
 	});
