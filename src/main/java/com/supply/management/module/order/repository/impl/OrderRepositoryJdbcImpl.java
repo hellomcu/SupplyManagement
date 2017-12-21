@@ -1,6 +1,7 @@
 package com.supply.management.module.order.repository.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,6 +28,9 @@ public class OrderRepositoryJdbcImpl implements OrderRepository
 			" FROM t_order o LEFT JOIN t_store s ON o.store_id = s.id AND s.status = 0 WHERE o.status = 0 ORDER BY o.create_time DESC LIMIT :start, :num";
 	
 
+	private static final String SQL_COUNT = "SELECT COUNT(o.id)" +
+			" FROM t_order o WHERE o.status = 0";
+	
 	private NamedParameterJdbcTemplate mNamedParameterJdbcTemplate;
 
 	
@@ -65,6 +69,12 @@ public class OrderRepositoryJdbcImpl implements OrderRepository
 		return orders;
 	}
 
+	@Override
+	public long count()
+	{
+		return this.mNamedParameterJdbcTemplate.queryForObject(SQL_COUNT, new HashMap<>(), Long.class);
+	}
+	
 	@Override
 	public int update(Map<String, Object> fields, long id)
 	{

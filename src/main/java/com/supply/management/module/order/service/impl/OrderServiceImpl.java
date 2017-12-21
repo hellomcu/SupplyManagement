@@ -22,9 +22,17 @@ public class OrderServiceImpl implements OrderService
 	
 	
 	@Override
-	public List<OrderPo> findOrders(PageInfo page)
+	public PageInfo<OrderPo> findOrders(PageInfo page)
 	{
-		return mOrderRepository.findAll(page);
+		PageInfo<OrderPo> result = new PageInfo<>();
+		List<OrderPo> list = mOrderRepository.findAll(page);
+		long count = mOrderRepository.count();
+		result.setList(list);
+		result.setTotalNum(count);
+		result.setItemNum(page.getItemNum());
+		result.setTotalPage(result.calcTotalPage());
+		result.setCurrentPage(page.getCurrentPage());
+		return result;
 	}
 
 	@Override

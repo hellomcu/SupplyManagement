@@ -1,7 +1,5 @@
 package com.supply.management.module.order.controller;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,22 +38,41 @@ public class OrderController extends BaseController
 		this.mOrderService = orderService;
 	}
 
-	
 	@ApiOperation(httpMethod = "GET", value = "获取所有订单", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	@RequestMapping(method = RequestMethod.GET, value="/orders", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public BaseResponse<List<OrderDto>> findAllOrders( @RequestParam("page") long page, @RequestParam("num") int num)
+	@RequestMapping(method = RequestMethod.GET, value = "/orders", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public BaseResponse<PageInfo<OrderDto>> findAllOrders(@RequestParam("page") long page, @RequestParam("num") int num, HttpServletRequest request)
 	{
-		PageInfo pageInfo = new PageInfo();
+		UserPo loginUser = JwtUtil.getLoginUserFromJwt(request);
+		if (loginUser == null)
+		{
+			BaseResponse<PageInfo<OrderDto>> response = new BaseResponse<>();
+			response.setMessage("请先登录");
+			return response;
+		}
+		if (loginUser.getUserType().ordinal() != UserType.TYPE_ADMIN.ordinal())
+		{
+			BaseResponse<PageInfo<OrderDto>> response = new BaseResponse<>();
+			response.setMessage("您没有权限操作");
+			return response;
+		}
+		PageInfo<Void> pageInfo = new PageInfo<Void>();
 		pageInfo.setCurrentPage(page);
 		pageInfo.setItemNum(num);
 
-		List<OrderPo> products = mOrderService.findOrders(pageInfo);
-		return getResponse(WrappedBeanCopier.copyPropertiesOfList(products, OrderDto.class));
+		PageInfo<OrderPo> orderPos = mOrderService.findOrders(pageInfo);
+		PageInfo<OrderDto> result = new PageInfo<OrderDto>();
+		result.setCurrentPage(orderPos.getCurrentPage());
+		result.setTotalNum(orderPos.getTotalNum());
+		result.setTotalPage(orderPos.getTotalPage());
+		result.setItemNum(orderPos.getItemNum());
+		result.setList(WrappedBeanCopier.copyPropertiesOfList(orderPos.getList(), OrderDto.class));
+		return getResponse(result);
 	}
-	
-	@RequestMapping(method = RequestMethod.POST, value="/status", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+
+	@RequestMapping(method = RequestMethod.POST, value = "/status", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ApiOperation(httpMethod = "POST", value = "更新订单状态", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public BaseResponse<Void> updateOrderStatus(@RequestParam("status") int status, @RequestParam("id") long id, HttpServletRequest request)
+	public BaseResponse<Void> updateOrderStatus(@RequestParam("status") int status, @RequestParam("id") long id,
+			HttpServletRequest request)
 	{
 		UserPo loginUser = JwtUtil.getLoginUserFromJwt(request);
 		if (loginUser == null)

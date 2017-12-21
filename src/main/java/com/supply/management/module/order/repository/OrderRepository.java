@@ -12,5 +12,7 @@ public interface OrderRepository extends Repository
 	
 	List<OrderPo> findAll(PageInfo pageInfo);
 	
+	long count();
+	
 	int update(Map<String, Object> fields, long id);
 }

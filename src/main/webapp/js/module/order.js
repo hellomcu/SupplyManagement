@@ -1,10 +1,10 @@
-function getOrders(num) {
-
+function getOrders(page) {
+	
 	/*
 	 * var jsonParams = { "page" : num, "num" : 10, };
 	 */
 
-	$.myAjax('admin/order/orders?page=' + num + '&num=100000', 'GET', null,
+	$.myAjax('admin/order/orders?page=' + page + '&num=10', 'GET', null,
 			function(data) {
 				// alert(JSON.stringify(data.data));
 
@@ -15,13 +15,21 @@ function getOrders(num) {
 				}
 			});
 
+//	$("#order-status").change(function() {
+//		var status = $(this).children('option:selected').val();
+//		getByStatus(status);
+//	});
 }
 
+
 function initData(data) {
+	console.log(data);
+	var datas = data.list;
+	var tbody = document.getElementById('tb');
+	$(tbody).empty();
+	for (var i = 0; i < datas.length; i++) {
 
-	for (var i = 0; i < data.length; i++) {
-
-		var newRow = document.getElementById('tb').insertRow(i);
+		var newRow = tbody.insertRow(i);
 		var no = newRow.insertCell(0);
 		var store = newRow.insertCell(1);
 		var contact = newRow.insertCell(2);
@@ -31,7 +39,7 @@ function initData(data) {
 		var oper = newRow.insertCell(6);
 
 		no.innerHTML = i + 1;
-		var order = data[i];
+		var order = datas[i];
 		store.innerHTML = order.storeName;
 		contact.innerHTML = order.contacts;
 		total.innerHTML = order.totalPrice;
@@ -42,7 +50,7 @@ function initData(data) {
 		var btnStr = '';
 		var btnClass = 'btn-default';
 		var btnDisabled = '';
-		
+
 		if (status === 1) {
 			statusStr = '已下单';
 			btnStr = '出货';
@@ -65,10 +73,64 @@ function initData(data) {
 			btnClass = 'btn-success';
 			btnDisabled = 'disabled=\'disabled\'';
 		}
+		statusCol.name = status;
 		statusCol.innerHTML = statusStr;
 		var params = 'order=' + encodeURI(encodeURI(JSON.stringify(order)));
 
-		oper.innerHTML = "<button type='button' " + btnDisabled + " class='btn " + btnClass + "' onclick='updateOrderStatus(" + order.id + "," + (status + 1) + ");'>" + btnStr + "</button>";
+		oper.innerHTML = "<button type='button' " + btnDisabled
+				+ " class='btn " + btnClass + "' onclick='updateOrderStatus("
+				+ order.id + "," + (status + 1) + ");'>" + btnStr + "</button>";
+	}
+
+	var totalPage = data.totalPage;
+	$('#pagination').pagination({
+        items: data.totalPage,
+        itemOnPage: data.itemNum,
+        currentPage: data.currentPage,
+        cssStyle: '',
+        prevText: '上一页',
+        nextText: '下一页',
+        onInit: function () {
+            // fire first page loading
+        },
+        onPageClick: function (page, evt) {
+        	console.log(page);
+        	getOrders(page);
+//            $('#alt-style-pagination-content').text('Page ' + page);
+        }
+    });
+//	window.pagObj = $('#pagination').twbsPagination({
+//		totalPages : totalPage,
+//		visiblePages : 8,
+//		first : '首页',
+//		prev : '上一页',
+//		next : '下一页',
+//		last : '末页',
+//		cssStyle: '',
+//		 prevText: '<span aria-hidden="true">&laquo;</span>',
+//	        nextText: '<span aria-hidden="true">&raquo;</span>',
+//		onPageClick : function(event, page) {
+//			console.info(page + ' (from options)');
+//		}
+//	}).on('page', function(event, page) {
+//		getOrders(page);
+//		console.info(page + ' (from event listening)');
+//	});
+
+}
+
+function getByStatus(status) {
+	var tab = document.getElementById('tb');
+	var rows = tab.rows;
+	for (var i = 0; i < rows.length; i++) { // 遍历Table的所有Row
+		var row = rows[i];
+		var cells = row.cells;
+
+		if (cells[5].name === parseInt(status) || 0 === parseInt(status)) {
+			row.style.display = "";
+		} else {
+			row.style.display = "none";
+		}
 	}
 }
 
@@ -96,12 +158,13 @@ function getMyOrderDetail(order, products) {
 
 function updateOrderStatus(id, status) {
 
-	$.myAjax('admin/order/status?id=' + id + '&status=' + status, 'POST', null, function(data) {
-		if (data.code != 1) {
-			alert(data.message);
-		} else {
-			alert("订单状态更新成功");
-			window.location.href = './order_manage.html';
-		}
-	});
+	$.myAjax('admin/order/status?id=' + id + '&status=' + status, 'POST', null,
+			function(data) {
+				if (data.code != 1) {
+					alert(data.message);
+				} else {
+					alert("订单状态更新成功");
+					window.location.href = './order_manage.html';
+				}
+			});
 }

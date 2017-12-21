@@ -130,7 +130,7 @@ function showAddCategoryDialog(parentId) {
 				alert("添加成功");
 				if (parentId === 0) {
 					//添加父分类
-					$('#category-tree').prepend("<li class='closed'><span class='folder' id='" + data.id + "'>" + name + "</span><ul><li><span class='file'><a href='javascript:showAddCategoryDialog(" + data.id + ");'>+添加</a></span></li></ul></li>");
+					$('#category-tree').prepend("<li><span class='folder' id='" + data.id + "'>" + name + "</span><ul><li><span class='file'><a href='javascript:showAddCategoryDialog(" + data.id + ");'>+添加</a></span></li></ul></li>");
 					$("#category-tree").treeview({
 					});
 				} else {
