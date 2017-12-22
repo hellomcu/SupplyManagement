@@ -55,9 +55,17 @@ public class StoreServiceImpl implements StoreService
 	
 
 	@Override
-	public List<StorePo> findAllStore(PageInfo page)
+	public PageInfo<StorePo> findAllStore(PageInfo<Void> page)
 	{
-		return mStoreRepository.findAll(page);
+		PageInfo<StorePo> result = new PageInfo<>();
+		List<StorePo> list = mStoreRepository.findAll(page);
+		long count = mStoreRepository.count();
+		result.setList(list);
+		result.setTotalNum(count);
+		result.setItemNum(page.getItemNum());
+		result.setTotalPage(result.calcTotalPage());
+		result.setCurrentPage(page.getCurrentPage());
+		return result;
 	}
 	
 	@Override

@@ -15,6 +15,10 @@
 <link rel="stylesheet" href="css/mendian.css" type="text/css" />
 
 <script type="text/javascript">
+	$(function() {
+		$('#header-div').load('./common/header.html');
+	});
+
 	function addMenDian() {
 		window.location.href = "./addMenDian.jsp";
 	}
@@ -46,7 +50,7 @@
 	<!-- <textarea rows="5" cols="" style="width: 100%;font-size: 20px;font-family: å¾®è½¯éé»;padding: 10px;" placeholder="å¤æ³¨" id="beizhu"></textarea></br></br> -->
 
 	<!-- <center><input type="button" class="button05" value="ç¡®å®æ·»å " onclick="addMenDian();"/></center> -->
-
+	<div id="header-div"></div>
 	<div class="container">
 		<br />
 		<form role="form"

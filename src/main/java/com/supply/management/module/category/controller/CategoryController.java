@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,9 +15,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.supply.base.controller.BaseController;
+import com.supply.contant.UserType;
 import com.supply.entity.PageInfo;
 import com.supply.entity.base.BaseResponse;
 import com.supply.entity.po.CategoryPo;
+import com.supply.entity.po.UserPo;
+import com.supply.management.auth.util.JwtUtil;
 import com.supply.management.entity.dto.AddAllCategoryDto;
 import com.supply.management.entity.dto.AddCategoryDto;
 import com.supply.management.entity.dto.AddCategoryResultDto;
@@ -44,8 +49,22 @@ public class CategoryController extends BaseController
 	
 	@RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ApiOperation(httpMethod = "PUT", value = "添加一个分类(当parentId为0时,添加子分类)", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public BaseResponse<AddCategoryResultDto> addCategory(@RequestBody AddCategoryDto addCategoryDto)
+	public BaseResponse<AddCategoryResultDto> addCategory(@RequestBody AddCategoryDto addCategoryDto, HttpServletRequest request)
 	{
+		
+		UserPo loginUser = JwtUtil.getLoginUserFromJwt(request);
+		if (loginUser == null)
+		{
+			BaseResponse<AddCategoryResultDto> response = new BaseResponse<>();
+			response.setMessage("请先登录");
+			return response;
+		}
+		if (loginUser.getUserType().ordinal() != UserType.TYPE_ADMIN.ordinal())
+		{
+			BaseResponse<AddCategoryResultDto> response = new BaseResponse<>();
+			response.setMessage("您没有权限操作");
+			return response;
+		}
 		CategoryPo category = WrappedBeanCopier.copyProperties(addCategoryDto, CategoryPo.class);
 		
 		return getResponse(WrappedBeanCopier.copyProperties(mCategoryService.addCategory(category), AddCategoryResultDto.class));
@@ -66,8 +85,22 @@ public class CategoryController extends BaseController
 	
 	@ApiOperation(httpMethod = "GET", value = "获取所有分类", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@RequestMapping(method = RequestMethod.GET, value="/categories", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public BaseResponse<List<CategoryDto>> findAllCategories( @RequestParam("page") long page, @RequestParam("num") int num)
+	public BaseResponse<List<CategoryDto>> findAllCategories( @RequestParam("page") long page, @RequestParam("num") int num, HttpServletRequest request)
 	{
+		UserPo loginUser = JwtUtil.getLoginUserFromJwt(request);
+		if (loginUser == null)
+		{
+			BaseResponse<List<CategoryDto>> response = new BaseResponse<>();
+			response.setMessage("请先登录");
+			return response;
+		}
+		if (loginUser.getUserType().ordinal() != UserType.TYPE_ADMIN.ordinal())
+		{
+			BaseResponse<List<CategoryDto>> response = new BaseResponse<>();
+			response.setMessage("您没有权限操作");
+			return response;
+		}
+		
 		PageInfo pageInfo = new PageInfo();
 		pageInfo.setCurrentPage(page);
 		pageInfo.setItemNum(num);

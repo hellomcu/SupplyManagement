@@ -12,7 +12,11 @@
 	href="bootstrap-3.3.7/css/bootstrap.min.css">
 <script src="js/jquery-2.1.4.min.js"></script>
 <script src="bootstrap-3.3.7/js/bootstrap.min.js"></script>
-
+<script src="bootstrap-3.3.7/js/jquery.twbsPagination.min.js"></script>
+<script src="bootstrap-3.3.7/js/jquery.simplePagination.js"></script>
+<script src="js/loading/jquery.mloading.js"></script>
+<link rel="stylesheet" href="js/loading/jquery.mloading.css"
+	type="text/css" />
 <style type="text/css">
 .table th, .table td {
 	text-align: center;
@@ -24,12 +28,15 @@
 		window.location.href = "./addMenDian.html";
 	}
 
-	function getAllStore(num) {
-		getStore(num);
-	}
+	$(function(){
+		$('#header-div').load('./common/header.html');
+		getStore(1);
+	});
 </script>
+
 </head>
-<body onload="getAllStore(1);">
+<body>
+	<div id="header-div"></div>
 	<!-- 	<input type="button" class="button05" value="添加门店" -->
 	<!-- 		onclick="addMenDian();" /> -->
 	<div class="container">
@@ -56,10 +63,14 @@
 
 			</tbody>
 		</table>
+			<nav aria-label="Page navigation" style="text-align: center">
+			<ul class="pagination" id="pagination">
+			</ul>
+		</nav>
 	</div>
 	<!-- 	</div> -->
 </body>
-</html>
-
+<script type="text/javascript" src="js/util.js"></script>
 <script type="text/javascript" src="js/global.js"></script>
 <script type="text/javascript" src="js/module/store.js"></script>
+</html>

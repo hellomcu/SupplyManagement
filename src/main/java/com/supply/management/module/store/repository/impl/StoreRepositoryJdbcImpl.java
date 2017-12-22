@@ -1,7 +1,10 @@
 package com.supply.management.module.store.repository.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+
+import javax.print.attribute.HashAttributeSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -24,6 +27,8 @@ public class StoreRepositoryJdbcImpl implements StoreRepository
 	private static final String SQL_SAVE = "INSERT INTO t_store (store_name, store_place, contacts, description, create_time) values(:store_name, :store_place, :contacts, :description, :create_time)";
 	
 	private static final String SQL_QUERY = "SELECT id, store_name, store_place, contacts, description, create_time FROM t_store WHERE status=0 ORDER BY create_time DESC LIMIT :start, :num";
+	
+	private static final String SQL_COUNT = "SELECT COUNT(id) FROM t_store WHERE status = 0";
 	
 	private static final String SQL_DELETE = "UPDATE t_store SET status = 1 WHERE id=:id";
 	
@@ -98,5 +103,11 @@ public class StoreRepositoryJdbcImpl implements StoreRepository
 		paramSource.addValue("id", store.getId());
 		int effectedRows = this.mNamedParameterJdbcTemplate.update(SQL_UPDATE, paramSource);
 		return effectedRows;
+	}
+
+	@Override
+	public long count()
+	{
+		return this.mNamedParameterJdbcTemplate.queryForObject(SQL_COUNT, new HashMap<>(), Long.class);
 	}
 }

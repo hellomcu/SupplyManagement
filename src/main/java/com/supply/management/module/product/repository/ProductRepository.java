@@ -13,6 +13,8 @@ public interface ProductRepository extends Repository
 	
 	List<ProductPo> findAll(PageInfo pageInfo);
 	
+	long count();
+	
 	int delete(long id);
 	
 	int update(Map<String, Object> fields, long id);

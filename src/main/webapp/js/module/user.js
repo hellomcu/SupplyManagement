@@ -19,7 +19,7 @@ function userLogin(username, password, userType) {
 			
 			if (userType == 1){
 //				alert("总部");
-				window.location.href="./main.jsp"; 
+				window.location.href="./main.html"; 
 			}else{
 				alert("门店");
 			}

@@ -1,6 +1,7 @@
 package com.supply.management.module.product.repository.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -30,6 +31,8 @@ public class ProductRepositoryJdbcImpl implements ProductRepository
 			" LEFT JOIN t_category c2 ON c2.id = c.parent_id" + 
 			" WHERE p.status = 0 AND c.status = 0  AND c2.status = 0" + 
 			" ORDER BY p.create_time DESC LIMIT :start, :num";
+	
+	private static final String SQL_COUNT = "SELECT COUNT(id) FROM t_product WHERE status = 0";
 	
 	private static final String SQL_DELETE = "UPDATE t_product SET status = 1 WHERE id=:id";
 	
@@ -123,6 +126,12 @@ public class ProductRepositoryJdbcImpl implements ProductRepository
 		int effectedRows = this.mNamedParameterJdbcTemplate.update(sb.toString(), paramSource);
 
 		return effectedRows;
+	}
+
+	@Override
+	public long count()
+	{
+		return this.mNamedParameterJdbcTemplate.queryForObject(SQL_COUNT, new HashMap<>(), Long.class);
 	}
 }
 

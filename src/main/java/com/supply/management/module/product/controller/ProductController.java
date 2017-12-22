@@ -1,7 +1,5 @@
 package com.supply.management.module.product.controller;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.supply.base.controller.BaseController;
+import com.supply.contant.UserType;
 import com.supply.entity.PageInfo;
 import com.supply.entity.base.BaseResponse;
 import com.supply.entity.po.ProductPo;
@@ -20,6 +19,7 @@ import com.supply.entity.po.UserPo;
 import com.supply.exception.SupplyException;
 import com.supply.management.auth.util.JwtUtil;
 import com.supply.management.entity.dto.AddProductDto;
+import com.supply.management.entity.dto.OrderDto;
 import com.supply.management.entity.dto.ProductDto;
 import com.supply.management.entity.dto.UpdateProductDto;
 import com.supply.management.module.product.service.ProductService;
@@ -55,6 +55,12 @@ public class ProductController extends BaseController
 			response.setMessage("请先登录");
 			return response;
 		}
+		if (loginUser.getUserType().ordinal() != UserType.TYPE_ADMIN.ordinal())
+		{
+			BaseResponse<Void> response = new BaseResponse<>();
+			response.setMessage("您没有权限操作");
+			return response;
+		}
 		ProductPo product = WrappedBeanCopier.copyProperties(addProductDto, ProductPo.class);
 		product.setUserId(loginUser.getId());
 		mProductService.addProduct(product);
@@ -63,21 +69,52 @@ public class ProductController extends BaseController
 	
 	@ApiOperation(httpMethod = "GET", value = "获取所有产品", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@RequestMapping(method = RequestMethod.GET, value="/products", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public BaseResponse<List<ProductDto>> findAllProducts( @RequestParam("page") long page, @RequestParam("num") int num)
+	public BaseResponse<PageInfo<ProductDto>> findAllProducts( @RequestParam("page") long page, @RequestParam("num") int num, HttpServletRequest request)
 	{
-		PageInfo pageInfo = new PageInfo();
+		UserPo loginUser = JwtUtil.getLoginUserFromJwt(request);
+		if (loginUser == null)
+		{
+			BaseResponse<PageInfo<ProductDto>> response = new BaseResponse<>();
+			response.setMessage("请先登录");
+			return response;
+		}
+		if (loginUser.getUserType().ordinal() != UserType.TYPE_ADMIN.ordinal())
+		{
+			BaseResponse<PageInfo<ProductDto>> response = new BaseResponse<>();
+			response.setMessage("您没有权限操作");
+			return response;
+		}
+		PageInfo<Void> pageInfo = new PageInfo<Void>();
 		pageInfo.setCurrentPage(page);
 		pageInfo.setItemNum(num);
-
-		List<ProductPo> products = mProductService.findProducts(pageInfo);
-		return getResponse(WrappedBeanCopier.copyPropertiesOfList(products, ProductDto.class));
+		PageInfo<ProductPo> orderPos = mProductService.findProducts(pageInfo);
+		PageInfo<ProductDto> result = new PageInfo<ProductDto>();
+		result.setCurrentPage(orderPos.getCurrentPage());
+		result.setTotalNum(orderPos.getTotalNum());
+		result.setTotalPage(orderPos.getTotalPage());
+		result.setItemNum(orderPos.getItemNum());
+		result.setList(WrappedBeanCopier.copyPropertiesOfList(orderPos.getList(), ProductDto.class));
+		return getResponse(result);
 	}
 	
 	
 	@ApiOperation(httpMethod = "DELETE", value = "根据id删除产品", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@RequestMapping(method = RequestMethod.DELETE,  produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public BaseResponse<Void> deleteStore(@RequestParam("id") long id)
+	public BaseResponse<Void> deleteStore(@RequestParam("id") long id, HttpServletRequest request)
 	{
+		UserPo loginUser = JwtUtil.getLoginUserFromJwt(request);
+		if (loginUser == null)
+		{
+			BaseResponse<Void> response = new BaseResponse<>();
+			response.setMessage("请先登录");
+			return response;
+		}
+		if (loginUser.getUserType().ordinal() != UserType.TYPE_ADMIN.ordinal())
+		{
+			BaseResponse<Void> response = new BaseResponse<>();
+			response.setMessage("您没有权限操作");
+			return response;
+		}
 		mProductService.deleteProduct(id);
 		return getResponse();
 	}
@@ -85,8 +122,22 @@ public class ProductController extends BaseController
 	
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ApiOperation(httpMethod = "POST", value = "更新产品", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public BaseResponse<Void> updateStore(@RequestBody UpdateProductDto updateProductDto)
+	public BaseResponse<Void> updateStore(@RequestBody UpdateProductDto updateProductDto, HttpServletRequest request)
 	{
+		UserPo loginUser = JwtUtil.getLoginUserFromJwt(request);
+		if (loginUser == null)
+		{
+			BaseResponse<Void> response = new BaseResponse<>();
+			response.setMessage("请先登录");
+			return response;
+		}
+		if (loginUser.getUserType().ordinal() != UserType.TYPE_ADMIN.ordinal())
+		{
+			BaseResponse<Void> response = new BaseResponse<>();
+			response.setMessage("您没有权限操作");
+			return response;
+		}
+		
 		if (updateProductDto.getProductNum() > updateProductDto.getTotalNum())
 		{
 			throw new SupplyException("产品当前数量不能大于总数量");

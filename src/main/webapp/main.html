@@ -28,7 +28,6 @@
 <script type="text/javascript">
 	$(function(){
 		$('#header-div').load('./common/header.html');
-		getProducts(1);
 	});
 </script>
 
@@ -36,33 +35,9 @@
 <body>
 	<div id="header-div"></div>
 	<div class="container">
-		<br />
-		<button type='button' class='btn btn-info'
-			onclick="javascript:window.location.href='add_product.html';">添加商品</button>
-		<br /> <br />
-		<table id="myTable"
-			class="table table-striped table-hover table-bordered">
-			<!-- 		<table id="myTable"> -->
-			<thead>
-				<tr class="info">
-					<th class="col-xs-5">商品名称</th>
-					<th class="col-xs-4">产地</th>
-					<th class="col-xs-2">单价</th>
-					<th class="col-xs-1">操作</th>
-				</tr>
-			</thead>
-			<tbody id="tb">
-
-			</tbody>
-		</table>
-
-		<nav aria-label="Page navigation" style="text-align: center">
-			<ul class="pagination" id="pagination">
-			</ul>
-		</nav>
+		<h1 class="text-center">小河农场(总部)欢迎您</h1>
 
 	</div>
 </body>
-<script type="text/javascript" src="js/module/product.js"></script>
 <script type="text/javascript" src="js/global.js"></script>
 </html>

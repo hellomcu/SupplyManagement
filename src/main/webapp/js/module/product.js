@@ -23,15 +23,16 @@ function addProduct(categoryId, remark, productName, productNum, productPrice,
 			});
 
 }
-function getProducts(num) {
+function getProducts(page) {
 
-	$.myAjax('admin/product/products?page=' + num + '&num=10', 'GET', null,
+	$.myAjax('admin/product/products?page=' + page + '&num=10', 'GET', null,
 			function(data) {
 				// alert(JSON.stringify(data.data));
 
 				if (data.code != 1) {
 					alert(data.message);
 				} else {
+					console.log(data);
 					initData(data.data);
 				}
 			});
@@ -39,7 +40,9 @@ function getProducts(num) {
 }
 
 function initData(data) {
-	for (var i = 0; i < data.length; i++) {
+	
+	var list = data.list;
+	for (var i = 0; i < list.length; i++) {
 		// alert(JSON.stringify(data[i].createTime));
 
 		var x = document.getElementById('tb').insertRow(i);
@@ -49,14 +52,31 @@ function initData(data) {
 		var a = x.insertCell(2);
 		// var b = x.insertCell(3);
 		var c = x.insertCell(3);
-		y.innerHTML = data[i].productName;
-		z.innerHTML = data[i].productPlace;
+		y.innerHTML = list[i].productName;
+		z.innerHTML = list[i].productPlace;
 
-		a.innerHTML = "<h4><span class='text-danger'>" + data[i].productPrice + "</span><small>元/" + data[i].productUnit + "</small></h4>";
+		a.innerHTML = "<h4><span class='text-danger'>" + list[i].productPrice + "</span><small>元/" + list[i].productUnit + "</small></h4>";
 		// b.innerHTML = data[i].productUnit;
 
 		// c.innerHTML = "<input type='button' value='立即购买'
 		// onclick='createOrder(" + JSON.stringify(data[i]) + ");' />";
 		c.innerHTML = "<button type='button' class='btn btn-danger' onclick='javascript:alert(\"暂不提供删除功能\");'>删除</button>";
 	}
+	
+	var totalPage = data.totalPage;
+	$('#pagination').pagination({
+        items: data.totalPage,
+        itemOnPage: data.itemNum,
+        currentPage: data.currentPage,
+        cssStyle: '',
+        prevText: '上一页',
+        nextText: '下一页',
+        onInit: function () {
+            // fire first page loading
+        },
+        onPageClick: function (page, evt) {
+        	getProducts(page);
+//            $('#alt-style-pagination-content').text('Page ' + page);
+        }
+    });
 }
