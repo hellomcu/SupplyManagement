@@ -4,15 +4,16 @@ import java.util.List;
 import java.util.Map;
 
 import com.supply.base.repository.Repository;
+import com.supply.contant.OrderStatus;
 import com.supply.entity.PageInfo;
 import com.supply.entity.po.OrderPo;
 
 public interface OrderRepository extends Repository
 {
 	
-	List<OrderPo> findAll(PageInfo pageInfo);
+	List<OrderPo> findAll(PageInfo pageInfo, OrderStatus status);
 	
-	long count();
+	long count(OrderStatus status);
 	
 	int update(Map<String, Object> fields, long id);
 }

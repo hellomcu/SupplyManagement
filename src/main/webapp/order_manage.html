@@ -30,7 +30,10 @@
 <script type="text/javascript">
 	$(function() {
 		$('#header-div').load('./common/header.html');
-		getOrders(1);
+		getOrders(1, status);
+		$("#order-status").change(function() {
+			getOrders(1, getStatus());
+		});
 	});
 </script>
 </head>

@@ -40,7 +40,7 @@ public class OrderController extends BaseController
 
 	@ApiOperation(httpMethod = "GET", value = "获取所有订单", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@RequestMapping(method = RequestMethod.GET, value = "/orders", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public BaseResponse<PageInfo<OrderDto>> findAllOrders(@RequestParam("page") long page, @RequestParam("num") int num, HttpServletRequest request)
+	public BaseResponse<PageInfo<OrderDto>> findAllOrders(@RequestParam("page") long page, @RequestParam("num") int num, @RequestParam(value="status", defaultValue = "0") int status, HttpServletRequest request)
 	{
 		UserPo loginUser = JwtUtil.getLoginUserFromJwt(request);
 		if (loginUser == null)
@@ -58,8 +58,7 @@ public class OrderController extends BaseController
 		PageInfo<Void> pageInfo = new PageInfo<Void>();
 		pageInfo.setCurrentPage(page);
 		pageInfo.setItemNum(num);
-
-		PageInfo<OrderPo> orderPos = mOrderService.findOrders(pageInfo);
+		PageInfo<OrderPo> orderPos = mOrderService.findOrders(pageInfo, OrderStatus.values()[status]);
 		PageInfo<OrderDto> result = new PageInfo<OrderDto>();
 		result.setCurrentPage(orderPos.getCurrentPage());
 		result.setTotalNum(orderPos.getTotalNum());

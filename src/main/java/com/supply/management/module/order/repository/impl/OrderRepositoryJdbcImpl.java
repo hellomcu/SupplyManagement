@@ -44,13 +44,24 @@ public class OrderRepositoryJdbcImpl implements OrderRepository
 
 
 	@Override
-	public List<OrderPo> findAll(PageInfo pageInfo)
+	public List<OrderPo> findAll(PageInfo pageInfo, OrderStatus status)
 	{
+		String statusCondition = "";
+		int statusVal = status.ordinal();
+		if (statusVal != 0)
+		{
+			statusCondition = " AND o.order_status = " + statusVal;
+		}
+		
+		String sql = "SELECT o.id order_id, o.store_id store_id, o.total_price total_price, o.product_num product_num, o.contacts contacts, o.order_status order_status, o.order_remark order_remark, o.create_time create_time," + 
+				"s.store_name store_name" + 
+				" FROM t_order o LEFT JOIN t_store s ON o.store_id = s.id AND s.status = 0 WHERE o.status = 0 " + statusCondition + " ORDER BY o.create_time DESC LIMIT :start, :num";
+		
 		List<OrderPo> orders = new ArrayList<OrderPo>();
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
 		paramSource.addValue("start", pageInfo.getStartItemNum());
 		paramSource.addValue("num", pageInfo.getItemNum());
-		SqlRowSet rowSet = this.mNamedParameterJdbcTemplate.queryForRowSet(SQL_QUERY, paramSource);
+		SqlRowSet rowSet = this.mNamedParameterJdbcTemplate.queryForRowSet(sql, paramSource);
 		while (rowSet.next())
 		{
 			OrderPo order = new OrderPo();
@@ -70,9 +81,16 @@ public class OrderRepositoryJdbcImpl implements OrderRepository
 	}
 
 	@Override
-	public long count()
+	public long count(OrderStatus status)
 	{
-		return this.mNamedParameterJdbcTemplate.queryForObject(SQL_COUNT, new HashMap<>(), Long.class);
+		String statusCondition = "";
+		int statusVal = status.ordinal();
+		if (statusVal != 0)
+		{
+			statusCondition = " AND o.order_status = " + statusVal;
+		}
+		String sql = "SELECT COUNT(o.id) FROM t_order o WHERE o.status = 0" + statusCondition;
+		return this.mNamedParameterJdbcTemplate.queryForObject(sql, new HashMap<>(), Long.class);
 	}
 	
 	@Override

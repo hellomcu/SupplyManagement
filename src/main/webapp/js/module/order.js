@@ -1,10 +1,10 @@
-function getOrders(page) {
+function getOrders(page, status) {
 	
 	/*
 	 * var jsonParams = { "page" : num, "num" : 10, };
 	 */
 
-	$.myAjax('admin/order/orders?page=' + page + '&num=10', 'GET', null,
+	$.myAjax('admin/order/orders?page=' + page + '&num=10&status=' + status, 'GET', null,
 			function(data) {
 				// alert(JSON.stringify(data.data));
 
@@ -15,10 +15,7 @@ function getOrders(page) {
 				}
 			});
 
-//	$("#order-status").change(function() {
-//		var status = $(this).children('option:selected').val();
-//		getByStatus(status);
-//	});
+
 }
 
 
@@ -95,7 +92,7 @@ function initData(data) {
         },
         onPageClick: function (page, evt) {
         	console.log(page);
-        	getOrders(page);
+        	getOrders(page, getStatus());
 //            $('#alt-style-pagination-content').text('Page ' + page);
         }
     });
@@ -117,6 +114,10 @@ function initData(data) {
 //		console.info(page + ' (from event listening)');
 //	});
 
+}
+
+function getStatus() {
+	return parseInt($('#order-status').children('option:selected').val());
 }
 
 function getByStatus(status) {

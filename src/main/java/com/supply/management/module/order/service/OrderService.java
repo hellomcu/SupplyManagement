@@ -7,7 +7,7 @@ import com.supply.entity.po.OrderPo;
 
 public interface OrderService extends BaseService
 {
-	PageInfo<OrderPo> findOrders(PageInfo page);
+	PageInfo<OrderPo> findOrders(PageInfo page, OrderStatus status);
 
 	void updateOrderStatus(OrderStatus status, long id);
 }
