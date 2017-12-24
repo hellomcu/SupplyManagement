@@ -4,7 +4,7 @@ function getOrders(page, status) {
 	 * var jsonParams = { "page" : num, "num" : 10, };
 	 */
 
-	$.myAjax('admin/order/orders?page=' + page + '&num=10&status=' + status, 'GET', null,
+	$.myAjax('../admin/order/orders?page=' + page + '&num=10&status=' + status, 'GET', null,
 			function(data) {
 				// alert(JSON.stringify(data.data));
 
@@ -159,7 +159,7 @@ function getMyOrderDetail(order, products) {
 
 function updateOrderStatus(id, status) {
 
-	$.myAjax('admin/order/status?id=' + id + '&status=' + status, 'POST', null,
+	$.myAjax('../admin/order/status?id=' + id + '&status=' + status, 'POST', null,
 			function(data) {
 				if (data.code != 1) {
 					alert(data.message);

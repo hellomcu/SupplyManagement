@@ -9,13 +9,13 @@ function addStore(storeName, storeAddress, callNumber, userName, passWord,
 		"password" : passWord,
 		"description" : beizhu
 	};
-	$.myAjax('admin/store', 'PUT', JSON.stringify(jsonParams),
+	$.myAjax('../admin/store', 'PUT', JSON.stringify(jsonParams),
 			function(data) {
 				if (data.code != 1) {
 					alert(data.message);
 				} else {
 					alert("添加成功！");
-					window.location.href = "./mendianManage.html";
+					window.location.href = "./stores.html";
 				}
 			});
 
@@ -23,7 +23,7 @@ function addStore(storeName, storeAddress, callNumber, userName, passWord,
 
 function getStore(page) {
 
-	$.myAjax('admin/store/stores?page=' + page + '&num=10', 'GET', null,
+	$.myAjax('../admin/store/stores?page=' + page + '&num=10', 'GET', null,
 			function(data) {
 				if (data.code != 1) {
 					alert(data.message);
@@ -35,10 +35,12 @@ function getStore(page) {
 
 function initData(data) {
 	var list = data.list;
+	var tbody = document.getElementById('tb');
+	$(tbody).empty();
 	for (var i = 0; i < list.length; i++) {
 		// alert(JSON.stringify(data[i].createTime));
 
-		var x = document.getElementById('tb').insertRow(i);
+		var x = tbody.insertRow(i);
 		var y = x.insertCell(0);
 		var z = x.insertCell(1);
 
@@ -75,12 +77,12 @@ function initData(data) {
 function deleteStore(id) {
 	var r = confirm("要删除它吗？");
 	if (r == true) {
-		$.myAjax('admin/store?id=' + id, 'DELETE', null,
+		$.myAjax('../admin/store?id=' + id, 'DELETE', null,
 				function(data) {
 					if (data.code != 1) {
 						alert(data.message);
 					} else {
-						window.location.href = "./mendianManage.html";
+						window.location.href = "./stores.html";
 					}
 				});
 

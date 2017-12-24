@@ -12,27 +12,26 @@ function addProduct(categoryId, remark, productName, productNum, productPrice,
 			  "productUnit": productUnit,
 			  "qualityGuaranteePeriod": null
 			};
-	$.myAjax('admin/product', 'PUT', JSON.stringify(jsonParams),
+	$.myAjax('../admin/product', 'PUT', JSON.stringify(jsonParams),
 			function(data) {
 				if (data.code != 1) {
 					alert(data.message);
 				} else {
 					alert("添加成功！");
-					window.location.href = "product_manage.html";
+					window.location.href = "./products.html";
 				}
 			});
 
 }
 function getProducts(page) {
 
-	$.myAjax('admin/product/products?page=' + page + '&num=10', 'GET', null,
+	$.myAjax('../admin/product/products?page=' + page + '&num=10', 'GET', null,
 			function(data) {
 				// alert(JSON.stringify(data.data));
 
 				if (data.code != 1) {
 					alert(data.message);
 				} else {
-					console.log(data);
 					initData(data.data);
 				}
 			});
@@ -42,10 +41,13 @@ function getProducts(page) {
 function initData(data) {
 	
 	var list = data.list;
+	var tbody = document.getElementById('tb');
+	
+	$(tbody).empty();
 	for (var i = 0; i < list.length; i++) {
 		// alert(JSON.stringify(data[i].createTime));
 
-		var x = document.getElementById('tb').insertRow(i);
+		var x = tbody.insertRow(i);
 		var y = x.insertCell(0);
 		var z = x.insertCell(1);
 

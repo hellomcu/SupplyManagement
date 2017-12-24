@@ -35,3 +35,7 @@ $.extend($, {
 		});
 	}
 });
+
+function loadPage(page) {
+	$('#wrapper').load(page);
+}

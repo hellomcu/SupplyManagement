@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>添加商品 - 小河农场</title>
+
+<!-- Core CSS - Include with every page -->
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="font-awesome/css/font-awesome.css" rel="stylesheet">
+
+<!-- Page-Level Plugin CSS - Forms -->
+
+<!-- SB Admin CSS - Include with every page -->
+<link href="css/sb-admin.css" rel="stylesheet">
+<link rel="stylesheet" href="../js/loading/jquery.mloading.css"
+	type="text/css" />
+</head>
+
+<body>
+
+	<div id="wrapper">
+		<nav id="nav-div" class="navbar navbar-default navbar-fixed-top" role="navigation" style="margin-bottom: 0">
+
+        </nav> 
+
+		<div id="page-wrapper">
+			<div class="row">
+				<div class="col-lg-12">
+					<h1 class="page-header">商品管理</h1>
+				</div>
+				<!-- /.col-lg-12 -->
+			</div>
+			<!-- /.row -->
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">添加商品</div>
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-lg-6">
+									<form role="form">
+										<div class="form-group">
+											<div class="input-group ">
+												<div class="input-group-addon  success">商品分类</div>
+												<select id="category-parent" class="form-control">
+												</select> <select id="category-child" class="form-control">
+												</select>
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="input-group ">
+												<div class="input-group-addon  success">商品名称</div>
+												<input type="text" class="form-control" id="productName"
+													placeholder="商品名称" />
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="input-group">
+												<div class="input-group-addon">商品数量</div>
+												<input type="number" class="form-control" id="productNum"
+													placeholder="输入商品数量" /> <span class="input-group-addon">件</span>
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="input-group">
+												<div class="input-group-addon">商品单价</div>
+												<input type="number" class="form-control" id="unitPrice"
+													placeholder="输入商品单价" /> <span class="input-group-addon">元</span>
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="input-group">
+												<div class="input-group-addon">计价单位</div>
+												<input type="text" class="form-control" id="productUnit"
+													placeholder="输入计价单位" />
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="input-group">
+												<div class="input-group-addon">商品产地</div>
+												<input type="text" class="form-control" id="productPlace"
+													placeholder="输入商品产地" />
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="input-group">
+												<div class="input-group-addon">备注信息</div>
+												<textarea class="form-control" rows="5" cols="" id="remark"
+													placeholder="输入备注信息"></textarea>
+											</div>
+										</div>
+										<div class="form-group">
+											<button type='button' class="btn btn-info btn-block"
+												onclick="addProductPre();">添加</button>
+										</div>
+									</form>
+								</div>
+								<!-- /.col-lg-6 (nested) -->
+							</div>
+							<!-- /.row (nested) -->
+						</div>
+						<!-- /.panel-body -->
+					</div>
+					<!-- /.panel -->
+				</div>
+				<!-- /.col-lg-12 -->
+			</div>
+			<!-- /.row -->
+		</div>
+		<!-- /#page-wrapper -->
+
+	</div>
+	<!-- /#wrapper -->
+
+	<!-- Core Scripts - Include with every page -->
+	<script src="js/jquery-1.10.2.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+
+	<!-- Page-Level Plugin Scripts - Forms -->
+
+	<!-- SB Admin Scripts - Include with every page -->
+	<script src="js/sb-admin.js"></script>
+
+	<script src="../js/util.js"></script>
+	<script src="../js/loading/jquery.mloading.js"></script>
+	<script type="text/javascript" src="../js/global.js"></script>
+	<script type="text/javascript" src="../js/module/category.js"></script>
+	<script type="text/javascript" src="../js/module/product.js"></script>
+	<!-- Page-Level Demo Scripts - Forms - Use for reference -->
+	<script type="text/javascript">
+		$(function(){
+			getCategories(1);
+		});
+	
+		function addProductPre() {
+			var productName = document.getElementById("productName").value;
+			var productNum = document.getElementById("productNum").value;
+			var productPrice = document.getElementById("unitPrice").value;
+			var productUnit = document.getElementById("productUnit").value;
+			var productPlace = document.getElementById("productPlace").value;
+			var remark = document.getElementById("remark").value;
+	
+			if (productName == "" || productNum == "" || productPrice == ""
+					|| productUnit == "") {
+				alert("信息填写不完整");
+			} else {
+				addProduct(parseInt($("#category-child").val()), remark, productName, productNum, productPrice,
+						productUnit, productPlace);
+			}
+		}
+	</script>
+</body>
+
+</html>

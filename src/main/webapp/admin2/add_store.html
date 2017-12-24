@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>添加门店 - 小河农场</title>
+
+<!-- Core CSS - Include with every page -->
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="font-awesome/css/font-awesome.css" rel="stylesheet">
+
+<!-- Page-Level Plugin CSS - Forms -->
+
+<!-- SB Admin CSS - Include with every page -->
+<link href="css/sb-admin.css" rel="stylesheet">
+<link rel="stylesheet" href="../js/loading/jquery.mloading.css"
+	type="text/css" />
+</head>
+
+<body>
+
+	<div id="wrapper">
+		<nav id="nav-div" class="navbar navbar-default navbar-fixed-top" role="navigation" style="margin-bottom: 0">
+
+        </nav> 
+
+		<div id="page-wrapper">
+			<div class="row">
+				<div class="col-lg-12">
+					<h1 class="page-header">门店管理</h1>
+				</div>
+				<!-- /.col-lg-12 -->
+			</div>
+			<!-- /.row -->
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">添加门店</div>
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-lg-6">
+									<form role="form">
+										<div class="form-group">
+				<div class="input-group ">
+					<div class="input-group-addon  success">门店名称</div>
+					<input type="text" class="form-control" id="storeName"
+						placeholder="输入门店名称" />
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="input-group">
+					<div class="input-group-addon">门店地址</div>
+					<input type="text" class="form-control" id="storeAddress"
+						placeholder="输入门店地址" />
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="input-group">
+					<div class="input-group-addon">联系方式</div>
+					<input type="text" class="form-control" id="callNumber"
+						placeholder="输入门店联系方式" />
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="input-group">
+					<div class="input-group-addon">登录帐号</div>
+					<input type="text" class="form-control" id="userName"
+						placeholder="输入门店登录帐号" />
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="input-group">
+					<div class="input-group-addon">登录密码</div>
+					<input type="text" class="form-control" id="passWord"
+						placeholder="输入门店登录密码" />
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="input-group">
+					<div class="input-group-addon">备注信息</div>
+					<textarea class="form-control" rows="5" cols="" id="beizhu"
+						placeholder="输入备注信息"></textarea>
+				</div>
+			</div>
+			<div class="form-group">
+				<button type='button' class="btn btn-info btn-block"
+					onclick="addMenDianPre();">添加</button>
+			</div>
+									</form>
+								</div>
+								<!-- /.col-lg-6 (nested) -->
+							</div>
+							<!-- /.row (nested) -->
+						</div>
+						<!-- /.panel-body -->
+					</div>
+					<!-- /.panel -->
+				</div>
+				<!-- /.col-lg-12 -->
+			</div>
+			<!-- /.row -->
+		</div>
+		<!-- /#page-wrapper -->
+
+	</div>
+	<!-- /#wrapper -->
+
+	<!-- Core Scripts - Include with every page -->
+	<script src="js/jquery-1.10.2.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+
+	<!-- Page-Level Plugin Scripts - Forms -->
+
+	<!-- SB Admin Scripts - Include with every page -->
+	<script src="js/sb-admin.js"></script>
+
+	<script src="../js/util.js"></script>
+	<script src="../js/loading/jquery.mloading.js"></script>
+	<script type="text/javascript" src="../js/global.js"></script>
+	<script type="text/javascript" src="../js/module/store.js"></script>
+	<!-- Page-Level Demo Scripts - Forms - Use for reference -->
+	<script type="text/javascript">
+
+		function addMenDianPre() {
+			var storeName = document.getElementById("storeName").value;
+			var storeAddress = document.getElementById("storeAddress").value;
+			var callNumber = document.getElementById("callNumber").value;
+			var userName = document.getElementById("userName").value;
+			var passWord = document.getElementById("passWord").value;
+
+			var beizhu = document.getElementById("beizhu").value;
+
+			if (storeName == "" || storeAddress == "" || callNumber == ""
+					|| userName == "" || passWord == "") {
+				alert("信息填写不完整");
+			} else {
+				addStore(storeName, storeAddress, callNumber, userName, passWord,
+						beizhu);
+			}
+		}
+	</script>
+</body>
+
+</html>
