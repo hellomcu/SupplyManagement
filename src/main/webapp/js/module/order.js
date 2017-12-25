@@ -165,7 +165,7 @@ function updateOrderStatus(id, status) {
 					alert(data.message);
 				} else {
 					alert("订单状态更新成功");
-					window.location.href = './order_manage.html';
+					window.location.href = './orders.html';
 				}
 			});
 }
