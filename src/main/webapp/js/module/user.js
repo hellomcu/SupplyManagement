@@ -10,7 +10,7 @@ function userLogin(username, password, userType) {
 			function(data) {
 		if (userType == 1){
 //			alert("总部");
-			window.location.href="./index.html"; 
+			window.location.href="./home.html"; 
 		}else{
 			alert("门店");
 		}
