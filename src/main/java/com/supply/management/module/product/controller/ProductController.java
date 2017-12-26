@@ -19,7 +19,6 @@ import com.supply.entity.po.UserPo;
 import com.supply.exception.SupplyException;
 import com.supply.management.auth.util.JwtUtil;
 import com.supply.management.entity.dto.AddProductDto;
-import com.supply.management.entity.dto.OrderDto;
 import com.supply.management.entity.dto.ProductDto;
 import com.supply.management.entity.dto.UpdateProductDto;
 import com.supply.management.module.product.service.ProductService;

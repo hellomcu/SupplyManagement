@@ -42,18 +42,19 @@ function initData(data) {
 	
 	var list = data.list;
 	var tbody = document.getElementById('tb');
-	
+	console.log(list);
 	$(tbody).empty();
 	for (var i = 0; i < list.length; i++) {
 		// alert(JSON.stringify(data[i].createTime));
 
 		var x = tbody.insertRow(i);
-		var y = x.insertCell(0);
-		var z = x.insertCell(1);
+		x.insertCell(0).innerHTML = i + 1;
+		var y = x.insertCell(1);
+		var z = x.insertCell(2);
 
-		var a = x.insertCell(2);
+		var a = x.insertCell(3);
 		// var b = x.insertCell(3);
-		var c = x.insertCell(3);
+		var c = x.insertCell(4);
 		y.innerHTML = list[i].productName;
 		z.innerHTML = list[i].productPlace;
 

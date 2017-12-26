@@ -59,7 +59,7 @@
 		},
 		applyClasses: function(settings, toggler) {
 			// TODO use event delegation
-			this.filter(":has(>ul):not(:has(>a))").find(">span").unbind("click.treeview").bind("click.treeview", function(event) {
+			this.filter(":has(>ul):not(:has(>a))").find(">span").unbind("click.treeview2").bind("click.treeview2", function(event) {
 				// don't handle click events on children, eg. checkboxes
 				if ( this == event.target )
 					toggler.apply($(this).next());
@@ -92,10 +92,10 @@
 			// apply event to hitarea
 			this.find("div." + CLASSES.hitarea).click( toggler );
 		},
-		treeview: function(settings) {
+		treeview2: function(settings) {
 
 			settings = $.extend({
-				cookieId: "treeview"
+				cookieId: "treeview2"
 			}, settings);
 
 			if ( settings.toggle ) {
@@ -181,7 +181,7 @@
 			}
 
 			// add treeview class to activate styles
-			this.addClass("treeview");
+			this.addClass("treeview2");
 
 			// prepare branches and find all tree items with child lists
 			var branches = this.find("li").prepareBranches(settings);
@@ -231,8 +231,8 @@
 
 	// classes used by the plugin
 	// need to be styled via external stylesheet, see first example
-	$.treeview = {};
-	var CLASSES = ($.treeview.classes = {
+	$.treeview2 = {};
+	var CLASSES = ($.treeview2.classes = {
 		open: "open",
 		closed: "closed",
 		expandable: "expandable",

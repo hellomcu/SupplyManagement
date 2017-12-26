@@ -29,7 +29,7 @@ public class ProductRepositoryJdbcImpl implements ProductRepository
 			"c2.id parent_id, c2.category_name parent_name" + 
 			" FROM t_product p LEFT JOIN t_category c ON p.category_id = c.id" + 
 			" LEFT JOIN t_category c2 ON c2.id = c.parent_id" + 
-			" WHERE p.status = 0 AND c.status = 0  AND c2.status = 0" + 
+			" WHERE p.status = 0 AND c.status = 0 AND c2.status = 0" + 
 			" ORDER BY p.create_time DESC LIMIT :start, :num";
 	
 	private static final String SQL_COUNT = "SELECT COUNT(id) FROM t_product WHERE status = 0";

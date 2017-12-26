@@ -107,7 +107,7 @@ function showCategories(data) {
 		}
 	}
 
-	$("#category-tree").treeview({
+	$("#category-tree").treeview2({
 //		toggle : function() {
 //			console.log("%s was toggled.", $(this).find(">span").text());
 //		}
@@ -131,7 +131,7 @@ function showAddCategoryDialog(parentId) {
 				if (parentId === 0) {
 					//添加父分类
 					$('#category-tree').prepend("<li><span class='folder' id='" + data.id + "'>" + name + "</span><ul><li><span class='file'><a href='javascript:showAddCategoryDialog(" + data.id + ");'>+添加</a></span></li></ul></li>");
-					$("#category-tree").treeview({
+					$("#category-tree").treeview2({
 					});
 				} else {
 					//添加子分类
