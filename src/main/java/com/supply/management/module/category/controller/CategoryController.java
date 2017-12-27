@@ -57,6 +57,7 @@ public class CategoryController extends BaseController
 		{
 			BaseResponse<AddCategoryResultDto> response = new BaseResponse<>();
 			response.setMessage("请先登录");
+			response.setCode(100);
 			return response;
 		}
 		if (loginUser.getUserType().ordinal() != UserType.TYPE_ADMIN.ordinal())
@@ -91,6 +92,7 @@ public class CategoryController extends BaseController
 		if (loginUser == null)
 		{
 			BaseResponse<List<CategoryDto>> response = new BaseResponse<>();
+			response.setCode(100);
 			response.setMessage("请先登录");
 			return response;
 		}

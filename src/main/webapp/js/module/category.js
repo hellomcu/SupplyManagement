@@ -57,13 +57,16 @@ function initCategory(data) {
 
 	}
 
-	var children = data[0].children;
-	for (var j = 0; j < children.length; j++) {
-		var child = children[j];
-		$('#category-child').append(
-				"<option value='" + child.id + "'>" + child.categoryName
-						+ "</option>");
+	if (data != null && data.length != 0) {
+		var children = data[0].children;
+		for (var j = 0; j < children.length; j++) {
+			var child = children[j];
+			$('#category-child').append(
+					"<option value='" + child.id + "'>" + child.categoryName
+							+ "</option>");
+		}
 	}
+	
 
 	$("#category-parent").change(
 			function() {

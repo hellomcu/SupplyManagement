@@ -1,7 +1,5 @@
 package com.supply.management.module.store.controller;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +18,6 @@ import com.supply.entity.po.StorePo;
 import com.supply.entity.po.UserPo;
 import com.supply.management.auth.util.JwtUtil;
 import com.supply.management.entity.dto.AddStoreDto;
-import com.supply.management.entity.dto.CategoryDto;
 import com.supply.management.entity.dto.StoreDto;
 import com.supply.management.entity.dto.UpdateStoreDto;
 import com.supply.management.module.store.service.StoreService;
@@ -53,6 +50,7 @@ public class StoreController extends BaseController
 		if (loginUser == null)
 		{
 			BaseResponse<Void> response = new BaseResponse<>();
+			response.setCode(100);
 			response.setMessage("请先登录");
 			return response;
 		}
@@ -82,6 +80,7 @@ public class StoreController extends BaseController
 		if (loginUser == null)
 		{
 			BaseResponse<PageInfo<StoreDto>> response = new BaseResponse<>();
+			response.setCode(100);
 			response.setMessage("请先登录");
 			return response;
 		}

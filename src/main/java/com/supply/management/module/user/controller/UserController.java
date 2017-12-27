@@ -51,6 +51,7 @@ public class UserController extends BaseController
 		// response.setHeader("Access-Control-Allow-Credentials", "true");
 
 		response.addHeader("Set-Cookie", ServerConfig.TOKEN_HEADER + "=" + jwt + "; Path=/; HttpOnly");
+		response.addHeader("Set-Cookie", "username=" + userPo.getUsername() + "; Path=/");
 		return getResponse();
 	}
 

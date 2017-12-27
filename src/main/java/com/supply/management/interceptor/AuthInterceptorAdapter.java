@@ -18,7 +18,7 @@ public class AuthInterceptorAdapter extends HandlerInterceptorAdapter
 		{
 			return true;
 		}
-		throw new SupplyException("请先登录");
+		throw new SupplyException("请先登录", 100);
 	}
 
 	

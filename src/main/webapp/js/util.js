@@ -26,6 +26,9 @@ $.extend($, {
 				$("body").mLoading("hide");
 			},
 			success : function(data) {
+				if (data.code === 100) {
+					window.location.href = 'login.html';
+				}
 				if (typeof callback != 'undefined')
 					callback.call(this, data);
 			},
@@ -53,7 +56,13 @@ function loadPage(page, callback) {
 }
 
 function loadHeader() {
-	$('#header').load('header.html');
+	loadPage('header.html', function(html) {
+		$('#header').html(html);
+	});
+}
+
+function loadFooter() {
+	$('#footer-container').load('footer.html');
 }
 
 function loadNav() {

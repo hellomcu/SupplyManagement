@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.supply.entity.base.BaseResponse;
+import com.supply.exception.SupplyException;
 
 
 @ControllerAdvice
@@ -22,6 +23,11 @@ public class BaseExceptionHandler
 	{
 		mLogger.error(e.getMessage(), e);
 		BaseResponse<Void> response = new BaseResponse<Void>();
+		if (e instanceof SupplyException)
+		{
+			response.setCode(((SupplyException) e).getCode());
+		}
+	
 		response.setMessage(e.getMessage());
 		
 		return response;

@@ -51,6 +51,7 @@ public class ProductController extends BaseController
 		if (loginUser == null)
 		{
 			BaseResponse<Void> response = new BaseResponse<>();
+			response.setCode(100);
 			response.setMessage("请先登录");
 			return response;
 		}
@@ -74,6 +75,7 @@ public class ProductController extends BaseController
 		if (loginUser == null)
 		{
 			BaseResponse<PageInfo<ProductDto>> response = new BaseResponse<>();
+			response.setCode(100);
 			response.setMessage("请先登录");
 			return response;
 		}
@@ -105,6 +107,7 @@ public class ProductController extends BaseController
 		if (loginUser == null)
 		{
 			BaseResponse<Void> response = new BaseResponse<>();
+			response.setCode(100);
 			response.setMessage("请先登录");
 			return response;
 		}
@@ -127,6 +130,7 @@ public class ProductController extends BaseController
 		if (loginUser == null)
 		{
 			BaseResponse<Void> response = new BaseResponse<>();
+			response.setCode(100);
 			response.setMessage("请先登录");
 			return response;
 		}
