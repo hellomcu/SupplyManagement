@@ -54,7 +54,7 @@ function initData(data) {
 		a.innerHTML = list[i].storePlace;
 		b.innerHTML = list[i].contacts;
 
-		c.innerHTML = "<button type='button' class='btn btn-danger' onclick=deleteStore("+ list[i].id + ")>删除</button>";
+		c.innerHTML = "<button type='button' class='btn btn-flat btn-danger' onclick=deleteStore("+ list[i].id + ")>删除</button>";
 	}
 	
 	var totalPage = data.totalPage;

@@ -63,7 +63,7 @@ function initData(data) {
 
 		// c.innerHTML = "<input type='button' value='立即购买'
 		// onclick='createOrder(" + JSON.stringify(data[i]) + ");' />";
-		c.innerHTML = "<button type='button' class='btn btn-danger' onclick='javascript:alert(\"暂不提供删除功能\");'>删除</button>";
+		c.innerHTML = "<button type='button' class='btn btn-flat btn-danger' onclick='javascript:alert(\"暂不提供删除功能\");'>删除</button>";
 	}
 	
 	var totalPage = data.totalPage;

@@ -75,7 +75,7 @@ function initData(data) {
 		var params = 'order=' + encodeURI(encodeURI(JSON.stringify(order)));
 
 		oper.innerHTML = "<button type='button' " + btnDisabled
-				+ " class='btn " + btnClass + "' onclick='updateOrderStatus("
+				+ " class='btn btn-flat" + btnClass + "' onclick='updateOrderStatus("
 				+ order.id + "," + (status + 1) + ");'>" + btnStr + "</button>";
 	}
 
