@@ -1,8 +1,8 @@
-
+ <link rel="stylesheet" href="../js/loading/jquery.mloading.css"/>
     <!-- Logo -->
     <a href="home.html" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>小河</b></span>
+      <span class="logo-mini"><b>总部</b></span>
       <!-- logo for regular state and mobile devices -->
       <span class="logo-lg"><b>小河农场</b></span>
     </a>
@@ -227,7 +227,7 @@
 <!--                   <a href="#" class="btn btn-default btn-flat">Profile</a> -->
 <!--                 </div> -->
                 <div>
-                  <a href="login.html" class="btn btn-default btn-flat btn-block">退出</a>
+                  <a href="javascript:userLogout();" class="btn btn-default btn-flat btn-block">退出</a>
                 </div>
               </li>
             </ul>
@@ -242,6 +242,8 @@
     	<script src="../js/jquery.cookie.js">
     	
     </script>
+    <script src="../js/loading/jquery.mloading.js"></script>
+    <script src="../js/module/user.js"></script>
     <script >
     	$('#username-title').html($.cookie("username"));
     </script>

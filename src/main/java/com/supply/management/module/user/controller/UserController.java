@@ -1,5 +1,7 @@
 package com.supply.management.module.user.controller;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,8 +52,23 @@ public class UserController extends BaseController
 		// // 允许跨域请求中携带cookie
 		// response.setHeader("Access-Control-Allow-Credentials", "true");
 
-		response.addHeader("Set-Cookie", ServerConfig.TOKEN_HEADER + "=" + jwt + "; Path=/; HttpOnly");
-		response.addHeader("Set-Cookie", "username=" + userPo.getUsername() + "; Path=/");
+		response.addHeader("Set-Cookie", ServerConfig.TOKEN_HEADER + "=" + jwt + "; Path=/SupplyManagement; HttpOnly");
+		response.addHeader("Set-Cookie", "username=" + userPo.getUsername() + "; Path=/SupplyManagement");
+		return getResponse();
+	}
+	
+	@RequestMapping(method = RequestMethod.DELETE, value="/user_logout", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ApiOperation(httpMethod = "DELETE", value = "用户退出", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public BaseResponse<Void> userLogout(HttpServletRequest request, HttpServletResponse response)
+	{
+		request.getSession().removeAttribute("JSESSIONID");
+		Cookie[] cookies = request.getCookies();
+		for (Cookie cookie : cookies)
+		{
+			cookie.setMaxAge(0);
+			cookie.setPath("/");
+			response.addCookie(cookie);
+		}
 		return getResponse();
 	}
 

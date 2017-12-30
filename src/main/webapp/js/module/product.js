@@ -63,7 +63,7 @@ function initData(data) {
 
 		// c.innerHTML = "<input type='button' value='立即购买'
 		// onclick='createOrder(" + JSON.stringify(data[i]) + ");' />";
-		c.innerHTML = "<button type='button' class='btn btn-flat btn-danger' onclick='javascript:alert(\"暂不提供删除功能\");'>删除</button>";
+		c.innerHTML = "<button type='button' class='btn btn-flat btn-danger' onclick='deleteProduct(" + list[i].id + ");'>删除</button>";
 	}
 	
 	var totalPage = data.totalPage;
@@ -82,4 +82,21 @@ function initData(data) {
 //            $('#alt-style-pagination-content').text('Page ' + page);
         }
     });
+}
+
+function deleteProduct(id) {
+	var r = confirm("要删除它吗？");
+	if (r == true) {
+		$.myAjax('../admin/product?id=' + id, 'DELETE', null,
+				function(data) {
+					if (data.code != 1) {
+						alert(data.message);
+					} else {
+						window.location.href = "./products.html";
+					}
+				});
+
+	} else {
+
+	}
 }

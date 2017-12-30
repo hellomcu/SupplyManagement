@@ -8,11 +8,31 @@ function userLogin(username, password, userType) {
 	};
 	$.myAjax('../user/user_login', 'POST', JSON.stringify(jsonParams),
 			function(data) {
-		if (userType == 1){
-//			alert("总部");
-			window.location.href="./home.html"; 
-		}else{
-			alert("门店");
+		if (data.code === 1) {
+			if (userType === 1) {
+				window.location.href = "./home.html";
+			} else {
+				alert("用户身份错误");
+			}
+		} else {
+			alert(data.message);
+		}
+	
+	});
+
+}
+
+function userLogout() {
+
+
+	$.myAjax('../user/user_logout', 'DELETE', null, function(
+			data) {
+
+		if (data.code === 1) {
+			window.location.href = "./login.html";
+	
+		} else {
+			alert(data.message);
 		}
 	});
 

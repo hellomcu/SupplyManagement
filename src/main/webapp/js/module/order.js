@@ -45,29 +45,29 @@ function initData(data) {
 		var status = order.orderStatus;
 		var statusStr = '未知';
 		var btnStr = '';
-		var btnClass = 'btn-default';
+		var btnClass = ' btn-default';
 		var btnDisabled = '';
 
 		if (status === 1) {
 			statusStr = '已下单';
 			btnStr = '出货';
-			btnClass = 'btn-danger';
+			btnClass = ' btn-danger';
 		} else if (status === 2) {
 			statusStr = '出货中';
 			btnStr = '发货';
-			btnClass = 'btn-warning';
+			btnClass = ' btn-warning';
 		} else if (status === 3) {
 			statusStr = '配送中';
 			btnStr = '到达';
-			btnClass = 'btn-info';
+			btnClass = ' btn-info';
 		} else if (status === 4) {
 			statusStr = '已到达';
 			btnStr = '收货';
-			btnClass = 'btn-primary';
+			btnClass = ' btn-primary';
 		} else if (status === 5) {
 			statusStr = '已收货';
 			btnStr = '完成';
-			btnClass = 'btn-success';
+			btnClass = ' btn-success';
 			btnDisabled = 'disabled=\'disabled\'';
 		}
 		statusCol.name = status;
