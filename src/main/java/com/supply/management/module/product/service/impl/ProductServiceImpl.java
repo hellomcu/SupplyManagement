@@ -32,11 +32,11 @@ public class ProductServiceImpl implements ProductService
 	}
 	
 	@Override
-	public PageInfo<ProductPo> findProducts(PageInfo<Void> page)
+	public PageInfo<ProductPo> findProducts(PageInfo<Void> page, String productName)
 	{
 		PageInfo<ProductPo> result = new PageInfo<>();
-		List<ProductPo> list = mProductRepository.findAll(page);
-		long count = mProductRepository.count();
+		List<ProductPo> list = mProductRepository.findAll(page, productName);
+		long count = mProductRepository.count(productName);
 		result.setList(list);
 		result.setTotalNum(count);
 		result.setItemNum(page.getItemNum());

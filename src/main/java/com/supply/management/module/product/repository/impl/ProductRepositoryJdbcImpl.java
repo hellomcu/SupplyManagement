@@ -29,10 +29,10 @@ public class ProductRepositoryJdbcImpl implements ProductRepository
 			"c2.id parent_id, c2.category_name parent_name" + 
 			" FROM t_product p LEFT JOIN t_category c ON p.category_id = c.id" + 
 			" LEFT JOIN t_category c2 ON c2.id = c.parent_id" + 
-			" WHERE p.status = 0 AND c.status = 0 AND c2.status = 0" + 
+			" WHERE p.status = 0 AND c.status = 0 AND c2.status = 0 AND p.product_name LIKE '%' :product_name '%'" + 
 			" ORDER BY p.create_time DESC LIMIT :start, :num";
 	
-	private static final String SQL_COUNT = "SELECT COUNT(id) FROM t_product WHERE status = 0";
+	private static final String SQL_COUNT = "SELECT COUNT(id) FROM t_product WHERE status = 0 AND product_name LIKE '%' :product_name '%'";
 	
 	private static final String SQL_DELETE = "UPDATE t_product SET status = 1 WHERE id=:id";
 	
@@ -72,12 +72,13 @@ public class ProductRepositoryJdbcImpl implements ProductRepository
 	}
 
 	@Override
-	public List<ProductPo> findAll(PageInfo pageInfo)
+	public List<ProductPo> findAll(PageInfo pageInfo, String productName)
 	{
 		List<ProductPo> products = new ArrayList<ProductPo>();
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
 		paramSource.addValue("start", pageInfo.getStartItemNum());
 		paramSource.addValue("num", pageInfo.getItemNum());
+		paramSource.addValue("product_name", productName);
 		SqlRowSet rowSet = this.mNamedParameterJdbcTemplate.queryForRowSet(SQL_QUERY, paramSource);
 		while (rowSet.next())
 		{
@@ -129,9 +130,11 @@ public class ProductRepositoryJdbcImpl implements ProductRepository
 	}
 
 	@Override
-	public long count()
+	public long count(String productName)
 	{
-		return this.mNamedParameterJdbcTemplate.queryForObject(SQL_COUNT, new HashMap<>(), Long.class);
+		MapSqlParameterSource paramSource = new MapSqlParameterSource();
+		paramSource.addValue("product_name", productName);
+		return this.mNamedParameterJdbcTemplate.queryForObject(SQL_COUNT, paramSource, Long.class);
 	}
 }
 

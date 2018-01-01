@@ -38,7 +38,7 @@ public class UserController extends BaseController
 
 	@RequestMapping(method = RequestMethod.POST, value = "/user_login", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ApiOperation(httpMethod = "POST", value = "用户登录", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public BaseResponse<Void> userLogin(@RequestBody UserLoginDto userLoginDto, HttpServletResponse response)
+	public BaseResponse<Void> userLogin(@RequestBody UserLoginDto userLoginDto, HttpServletRequest request, HttpServletResponse response)
 	{
 		UserPo userPo = mUserService.userLogin(userLoginDto.getUsername(), userLoginDto.getPassword(),
 				userLoginDto.getType());
@@ -51,9 +51,9 @@ public class UserController extends BaseController
 		// "DNT,X-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization,SessionToken");
 		// // 允许跨域请求中携带cookie
 		// response.setHeader("Access-Control-Allow-Credentials", "true");
-
-		response.addHeader("Set-Cookie", ServerConfig.TOKEN_HEADER + "=" + jwt + "; Path=/SupplyManagement; HttpOnly");
-		response.addHeader("Set-Cookie", "username=" + userPo.getUsername() + "; Path=/SupplyManagement");
+		String contextPath = request.getContextPath();
+		response.addHeader("Set-Cookie", ServerConfig.TOKEN_HEADER + "=" + jwt + "; Path=" + contextPath + "; HttpOnly");
+		response.addHeader("Set-Cookie", "username=" + userPo.getUsername() + "; Path="  + contextPath);
 		return getResponse();
 	}
 	

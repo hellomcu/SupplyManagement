@@ -1,5 +1,5 @@
 function requestCategory(num, callback) {
-	$.myAjax('../admin/category/categories?page=' + num + '&num=100000', 'GET',
+	$.myAjax('./admin/category/categories?page=' + num + '&num=100000', 'GET',
 			null, function(data) {
 				if (data.code != 1) {
 					alert(data.message);
@@ -159,7 +159,7 @@ function requestAddCategory(parentId, categoryName, callback) {
 		"parentId" : parentId
 	};
 
-	$.myAjax('../admin/category', 'PUT', JSON.stringify(body), function(data) {
+	$.myAjax('./admin/category', 'PUT', JSON.stringify(body), function(data) {
 		if (data.code != 1) {
 			alert(data.message);
 		} else {

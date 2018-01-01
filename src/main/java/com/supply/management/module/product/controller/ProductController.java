@@ -69,7 +69,7 @@ public class ProductController extends BaseController
 	
 	@ApiOperation(httpMethod = "GET", value = "获取所有产品", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@RequestMapping(method = RequestMethod.GET, value="/products", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public BaseResponse<PageInfo<ProductDto>> findAllProducts( @RequestParam("page") long page, @RequestParam("num") int num, HttpServletRequest request)
+	public BaseResponse<PageInfo<ProductDto>> findAllProducts( @RequestParam("page") long page, @RequestParam("num") int num, @RequestParam(value="productName", defaultValue="", required=false) String productName, HttpServletRequest request)
 	{
 		UserPo loginUser = JwtUtil.getLoginUserFromJwt(request);
 		if (loginUser == null)
@@ -88,7 +88,7 @@ public class ProductController extends BaseController
 		PageInfo<Void> pageInfo = new PageInfo<Void>();
 		pageInfo.setCurrentPage(page);
 		pageInfo.setItemNum(num);
-		PageInfo<ProductPo> orderPos = mProductService.findProducts(pageInfo);
+		PageInfo<ProductPo> orderPos = mProductService.findProducts(pageInfo, productName);
 		PageInfo<ProductDto> result = new PageInfo<ProductDto>();
 		result.setCurrentPage(orderPos.getCurrentPage());
 		result.setTotalNum(orderPos.getTotalNum());

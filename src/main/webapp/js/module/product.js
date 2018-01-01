@@ -12,7 +12,7 @@ function addProduct(categoryId, remark, productName, productNum, productPrice,
 			  "productUnit": productUnit,
 			  "qualityGuaranteePeriod": null
 			};
-	$.myAjax('../admin/product', 'PUT', JSON.stringify(jsonParams),
+	$.myAjax('./admin/product', 'PUT', JSON.stringify(jsonParams),
 			function(data) {
 				if (data.code != 1) {
 					alert(data.message);
@@ -23,9 +23,9 @@ function addProduct(categoryId, remark, productName, productNum, productPrice,
 			});
 
 }
-function getProducts(page) {
+function getProducts(page, productName) {
 
-	$.myAjax('../admin/product/products?page=' + page + '&num=10', 'GET', null,
+	$.myAjax('./admin/product/products?page=' + page + '&num=10&productName=' + productName, 'GET', null,
 			function(data) {
 				// alert(JSON.stringify(data.data));
 
@@ -78,7 +78,7 @@ function initData(data) {
             // fire first page loading
         },
         onPageClick: function (page, evt) {
-        	getProducts(page);
+        	getProducts(page,  $('#search-input').val());
 //            $('#alt-style-pagination-content').text('Page ' + page);
         }
     });
@@ -87,7 +87,7 @@ function initData(data) {
 function deleteProduct(id) {
 	var r = confirm("要删除它吗？");
 	if (r == true) {
-		$.myAjax('../admin/product?id=' + id, 'DELETE', null,
+		$.myAjax('./admin/product?id=' + id, 'DELETE', null,
 				function(data) {
 					if (data.code != 1) {
 						alert(data.message);

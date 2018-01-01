@@ -9,7 +9,7 @@ function addStore(storeName, storeAddress, callNumber, userName, passWord,
 		"password" : passWord,
 		"description" : beizhu
 	};
-	$.myAjax('../admin/store', 'PUT', JSON.stringify(jsonParams),
+	$.myAjax('./admin/store', 'PUT', JSON.stringify(jsonParams),
 			function(data) {
 				if (data.code != 1) {
 					alert(data.message);
@@ -23,7 +23,7 @@ function addStore(storeName, storeAddress, callNumber, userName, passWord,
 
 function getStore(page) {
 
-	$.myAjax('../admin/store/stores?page=' + page + '&num=10', 'GET', null,
+	$.myAjax('./admin/store/stores?page=' + page + '&num=10', 'GET', null,
 			function(data) {
 				if (data.code != 1) {
 					alert(data.message);
@@ -48,7 +48,7 @@ function initData(data) {
 		var b = x.insertCell(3);
 		var c = x.insertCell(4);
 		y.innerHTML = i + 1;
-		z.innerHTML = '<a href="http://www.baidu.com">' + list[i].storeName
+		z.innerHTML = '<a href="#">' + list[i].storeName
 				+ '</a>';
 
 		a.innerHTML = list[i].storePlace;
@@ -77,7 +77,7 @@ function initData(data) {
 function deleteStore(id) {
 	var r = confirm("要删除它吗？");
 	if (r == true) {
-		$.myAjax('../admin/store?id=' + id, 'DELETE', null,
+		$.myAjax('./admin/store?id=' + id, 'DELETE', null,
 				function(data) {
 					if (data.code != 1) {
 						alert(data.message);

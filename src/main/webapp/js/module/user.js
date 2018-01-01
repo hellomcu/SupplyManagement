@@ -6,7 +6,7 @@ function userLogin(username, password, userType) {
 		"type" : userType,
 		"username" : username
 	};
-	$.myAjax('../user/user_login', 'POST', JSON.stringify(jsonParams),
+	$.myAjax('./user/user_login', 'POST', JSON.stringify(jsonParams),
 			function(data) {
 		if (data.code === 1) {
 			if (userType === 1) {
@@ -24,8 +24,7 @@ function userLogin(username, password, userType) {
 
 function userLogout() {
 
-
-	$.myAjax('../user/user_logout', 'DELETE', null, function(
+	$.myAjax('./user/user_logout', 'DELETE', null, function(
 			data) {
 
 		if (data.code === 1) {

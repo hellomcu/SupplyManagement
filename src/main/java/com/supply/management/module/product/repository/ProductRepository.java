@@ -11,9 +11,9 @@ public interface ProductRepository extends Repository
 {
 	int save(ProductPo product);
 	
-	List<ProductPo> findAll(PageInfo pageInfo);
+	List<ProductPo> findAll(PageInfo pageInfo, String productName);
 	
-	long count();
+	long count(String productName);
 	
 	int delete(long id);
 	

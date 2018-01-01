@@ -8,7 +8,7 @@ public interface ProductService extends BaseService
 {
 	void addProduct(ProductPo product);
 	
-	PageInfo<ProductPo> findProducts(PageInfo<Void> page);
+	PageInfo<ProductPo> findProducts(PageInfo<Void> page, String productName);
 	
 	void deleteProduct(long id);
 	
