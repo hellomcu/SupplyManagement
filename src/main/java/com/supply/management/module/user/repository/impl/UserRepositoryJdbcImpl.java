@@ -1,5 +1,6 @@
 package com.supply.management.module.user.repository.impl;
 
+import java.math.BigDecimal;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,7 @@ public class UserRepositoryJdbcImpl implements UserRepository
 	
 	private static final String SQL_SAVE = "INSERT INTO t_user (store_id, username, password, user_type) VALUES(:store_id, :username, :password, :user_type)";
 
+	private static final String SQL_ADD_BALANCE = "UPDATE t_user SET balance = balance + :balance WHERE id=:id";
 	
 	@Autowired
 	public UserRepositoryJdbcImpl(
@@ -77,5 +79,14 @@ public class UserRepositoryJdbcImpl implements UserRepository
 		int effectedRows = this.mNamedParameterJdbcTemplate.update(sb.toString(), paramSource);
 
 		return effectedRows;
+	}
+
+	@Override
+	public int addBalance(BigDecimal balance, long id)
+	{
+		MapSqlParameterSource paramSource = new MapSqlParameterSource();
+		paramSource.addValue("balance",  balance);
+		paramSource.addValue("id",  id);
+		return this.mNamedParameterJdbcTemplate.update(SQL_ADD_BALANCE, paramSource);
 	}
 }

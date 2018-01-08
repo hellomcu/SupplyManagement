@@ -74,8 +74,9 @@
 				<tr>
 					<th class="col-xs-1">编号</th>
 					<th class="col-xs-2">名称</th>
-					<th class="col-xs-5">地址</th>
+					<th class="col-xs-4">地址</th>
 					<th class="col-xs-2">电话</th>
+					<th class="col-xs-1">账户余额</th>
 					<th class="col-xs-2">操作</th>
 				</tr>
 			</thead>
@@ -117,11 +118,18 @@
 				<h4 class="modal-title">给门店充值</h4>
 			</div>
 			<div class="modal-body">
-				<form role="form" id="category-form">
+				<form role="form" id="recharge-form">
 					<div class="form-group">
 						<div class="input-group ">
 							<div class="input-group-addon success">门店名称</div>
-<!-- 							<input type="text" class="form-control" id="store-name" value="aa" disabled="disabled" /> -->
+							<input type="text" class="form-control" id="store-name"  disabled="disabled" />
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="input-group ">
+							<div class="input-group-addon">余&emsp;&emsp;额</div>
+							<input type="number" class="form-control" id="balance"  disabled="disabled" />
+							<div class="input-group-addon">元</div>
 						</div>
 					</div>
 					<div class="form-group">
@@ -129,6 +137,7 @@
 							<div class="input-group-addon  success">充值金额</div>
 							<input type="number" class="form-control" id="amount"
 								placeholder="请输入充值金额" />
+								<div class="input-group-addon">元</div>
 						</div>
 					</div>
 				</form>
@@ -138,7 +147,7 @@
 				<button type="button" class="btn btn-primary" id="btn-recharge">确定</button>
 			</div>
 		</div>
-		<!-- /.modal-content -->
+		/.modal-content
 	</div>
 	</div>
 </div>

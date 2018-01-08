@@ -46,7 +46,8 @@ function initData(data) {
 
 		var a = x.insertCell(2);
 		var b = x.insertCell(3);
-		var c = x.insertCell(4);
+		var balance = x.insertCell(4);
+		var c = x.insertCell(5);
 		y.innerHTML = i + 1;
 		z.innerHTML = '<a href="#">' + list[i].storeName
 				+ '</a>';
@@ -54,7 +55,9 @@ function initData(data) {
 		a.innerHTML = list[i].storePlace;
 		b.innerHTML = list[i].contacts;
 
-		c.innerHTML = "<button type='button' class='btn btn-flat btn-warning' onclick=toRecharge("+ list[i] + ")>充值</button>"
+		balance.innerHTML = list[i].balance + "&nbsp;元";
+		
+		c.innerHTML = "<button type='button' class='btn btn-flat btn-warning' onclick='toRecharge(" + JSON.stringify(list[i]) + ");'>充值</button>"
 			+ "&nbsp;&nbsp;<button type='button' class='btn btn-flat btn-danger' onclick=deleteStore("+ list[i].id + ")>删除</button>";
 	}
 	
@@ -71,7 +74,7 @@ function initData(data) {
         },
         onPageClick: function (page, evt) {
         	getStore(page);
-//            $('#alt-style-pagination-content').text('Page ' + page);
+// $('#alt-style-pagination-content').text('Page ' + page);
         }
     });
 }
@@ -92,36 +95,48 @@ function deleteStore(id) {
 	}
 }
 
+function recharge(id, amount, success) {
+	var params = {
+		storeId: id,
+		amount: amount
+	};
+	$.myAjax('./admin/payment/recharge', 'POST', JSON.stringify(params), function(data) {
+		if (data.code != 1) {
+			alert(data.message);
+		} else {
+			alert("充值成功");
+			if (!!success) {
+				success();
+			}
+			
+		}
+	});
+}
+
 function toRecharge(store) {
+	// alert(store);
+	// var store = JSON.parse(store);
 	$('#my-modal').modal('show');
 	$('#my-modal').on('shown.bs.modal', function() {
-		$('#btn-add-category').unbind("click");
-		$('#btn-add-category').bind("click", function() {
-			var name = $("#category-name").val();
-			if (name === '') {
-				alert("名称不能为空");
+		$("#store-name").val(store.storeName);
+		$("#balance").val(store.balance);
+		$('#btn-recharge').unbind("click");
+		$('#btn-recharge').bind("click", function() {
+			var amount = $("#amount").val();
+			if (!isPositive(amount)) {
+				alert("充值金额必须大于0");
 				return;
 			}
-			requestAddCategory(parentId, name, function(data){
+			amount = parseFloat(amount);
+			
+			recharge(store.id, amount, function() {
 				$('#my-modal').modal('hide');
-				alert("添加成功");
-				if (parentId === 0) {
-					//添加父分类
-					$('#category-tree').prepend("<li><span class='folder' id='" + data.id + "'>" + name + "</span><ul><li><span class='file'><a href='javascript:showAddCategoryDialog(" + data.id + ");'>+添加</a></span></li></ul></li>");
-					$("#category-tree").treeview2({
-					});
-				} else {
-					//添加子分类
-					$('#' + parentId).next().children("li:first-child").after("<li><span class='file' id='" + data.id + "'>"+ name + "</span></li>"); 
-
-				}
+				window.location.href = "./stores.html";
 				
 			});
 		});
 	});
 	$('#my-modal').on('hidden.bs.modal', function() {
-		// $('#btn-add-category').bind("click", null);
-		// $('#btn-add-category').unbind("click");
-		$('#category-form')[0].reset();
+		$('recharge-form')[0].reset();
 	});
 }

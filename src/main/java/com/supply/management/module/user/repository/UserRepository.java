@@ -1,5 +1,6 @@
 package com.supply.management.module.user.repository;
 
+import java.math.BigDecimal;
 import java.util.Map;
 
 import com.supply.base.repository.Repository;
@@ -12,4 +13,6 @@ public interface UserRepository extends Repository
 	int save(UserPo user);
 	
 	int update(Map<String, Object> fields, long id);
+	
+	int addBalance(BigDecimal balance, long id);
 }

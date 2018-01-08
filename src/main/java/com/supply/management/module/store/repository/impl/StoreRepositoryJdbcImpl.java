@@ -1,5 +1,6 @@
 package com.supply.management.module.store.repository.impl;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,13 +27,15 @@ public class StoreRepositoryJdbcImpl implements StoreRepository
 
 	private static final String SQL_SAVE = "INSERT INTO t_store (store_name, store_place, contacts, description, create_time) values(:store_name, :store_place, :contacts, :description, :create_time)";
 	
-	private static final String SQL_QUERY = "SELECT id, store_name, store_place, contacts, description, create_time FROM t_store WHERE status=0 ORDER BY create_time DESC LIMIT :start, :num";
+	private static final String SQL_QUERY = "SELECT id, store_name, store_place, contacts, balance, description, create_time FROM t_store WHERE status=0 ORDER BY create_time DESC LIMIT :start, :num";
 	
 	private static final String SQL_COUNT = "SELECT COUNT(id) FROM t_store WHERE status = 0";
 	
 	private static final String SQL_DELETE = "UPDATE t_store SET status = 1 WHERE id=:id";
 	
 	private static final String SQL_UPDATE = "UPDATE t_store SET store_name=:store_name, store_place=:store_place, contacts=:contacts, description=:description WHERE status=0 AND id=:id";
+	
+	private static final String SQL_ADD_BALANCE = "UPDATE t_store SET balance = balance + :balance WHERE id=:id";
 	
 	private NamedParameterJdbcTemplate mNamedParameterJdbcTemplate;
 
@@ -76,6 +79,7 @@ public class StoreRepositoryJdbcImpl implements StoreRepository
 			store.setStoreName(rowSet.getString("store_name"));
 			store.setStorePlace(rowSet.getString("store_place"));
 			store.setContacts(rowSet.getString("contacts"));
+			store.setBalance(rowSet.getBigDecimal("balance"));
 			store.setDescription(rowSet.getString("description"));
 			store.setCreateTime(rowSet.getTimestamp("create_time"));
 			stores.add(store);
@@ -109,5 +113,14 @@ public class StoreRepositoryJdbcImpl implements StoreRepository
 	public long count()
 	{
 		return this.mNamedParameterJdbcTemplate.queryForObject(SQL_COUNT, new HashMap<>(), Long.class);
+	}
+	
+	@Override
+	public int addBalance(BigDecimal balance, long id)
+	{
+		MapSqlParameterSource paramSource = new MapSqlParameterSource();
+		paramSource.addValue("balance",  balance);
+		paramSource.addValue("id",  id);
+		return this.mNamedParameterJdbcTemplate.update(SQL_ADD_BALANCE, paramSource);
 	}
 }

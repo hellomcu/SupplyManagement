@@ -1,5 +1,6 @@
 package com.supply.management.entity.dto;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 import com.supply.entity.base.BaseDto;
@@ -17,6 +18,7 @@ public class StoreDto extends BaseDto
 	private String storeName;
 	private String storePlace;
 	private String contacts;
+	private BigDecimal balance;
 	private String description;
 	private Timestamp createTime;
 	
@@ -69,6 +71,14 @@ public class StoreDto extends BaseDto
 	public void setCreateTime(Timestamp createTime)
 	{
 		this.createTime = createTime;
+	}
+	public BigDecimal getBalance()
+	{
+		return balance;
+	}
+	public void setBalance(BigDecimal balance)
+	{
+		this.balance = balance;
 	}
 	
 	

@@ -74,3 +74,11 @@ function loadNav() {
 function navActive(obj) {
 	obj.addClass('active');
 }
+
+
+function isPositive(num) {
+ 
+	var reg = /^(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*))$/;
+	if(reg.test(num)) return true;
+	return false ;  
+}
