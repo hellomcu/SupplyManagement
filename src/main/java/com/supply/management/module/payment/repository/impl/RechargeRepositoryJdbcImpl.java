@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.supply.entity.po.RechargePo;
 import com.supply.management.module.payment.repository.RechargeRepository;
+import com.supply.util.TimeUtil;
 
 
 @Repository(value = "rechargeRepository")
@@ -16,7 +17,7 @@ public class RechargeRepositoryJdbcImpl implements RechargeRepository
 	private NamedParameterJdbcTemplate mNamedParameterJdbcTemplate;
 
 	
-	private static final String SQL_SAVE = "INSERT INTO t_recharge (user_id, store_id, amount, from_id) VALUES(:user_id, :store_id, :amount, :from_id)";
+	private static final String SQL_SAVE = "INSERT INTO t_recharge (user_id, store_id, amount, from_id, create_time) VALUES(:user_id, :store_id, :amount, :from_id, :create_time)";
 
 	
 	@Autowired
@@ -36,6 +37,7 @@ public class RechargeRepositoryJdbcImpl implements RechargeRepository
 		paramSource.addValue("store_id", rechargePo.getStoreId());
 		paramSource.addValue("amount", rechargePo.getAmount());
 		paramSource.addValue("from_id", rechargePo.getFromId());
+		paramSource.addValue("create_time", TimeUtil.getCurrentTimestamp());
 		int effectedRows = this.mNamedParameterJdbcTemplate.update(SQL_SAVE, paramSource);
 		
 		return effectedRows;
