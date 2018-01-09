@@ -155,3 +155,17 @@ function deleteProduct(id) {
 
 	}
 }
+
+
+function getMyCart() {
+
+	$.myAjax('./admin/cart/my_cart', 'GET', null, function(data) {
+
+		if (data.code != 1) {
+			alert(data.message);
+		} else {
+			console.log(data);
+		}
+	});
+
+}

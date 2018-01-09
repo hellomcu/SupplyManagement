@@ -11,11 +11,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.supply.base.controller.BaseController;
 import com.supply.contant.UserType;
+import com.supply.entity.PageInfo;
 import com.supply.entity.base.BaseResponse;
 import com.supply.entity.po.CartPo;
+import com.supply.entity.po.ProductPo;
 import com.supply.entity.po.UserPo;
 import com.supply.management.auth.util.JwtUtil;
 import com.supply.management.entity.dto.AddCartDto;
+import com.supply.management.entity.dto.CartDto;
+import com.supply.management.entity.dto.ProductDto;
 import com.supply.management.module.cart.service.CartService;
 import com.supply.management.util.WrappedBeanCopier;
 
@@ -61,5 +65,25 @@ public class CartController extends BaseController
 		return getResponse();
 	}
 	
-	
+	@ApiOperation(httpMethod = "GET", value = "获取我的购物车", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@RequestMapping(method = RequestMethod.GET, value="/my_cart", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public BaseResponse<CartDto> findAllProducts(HttpServletRequest request)
+	{
+		UserPo loginUser = JwtUtil.getLoginUserFromJwt(request);
+		if (loginUser == null)
+		{
+			BaseResponse<CartDto> response = new BaseResponse<>();
+			response.setCode(100);
+			response.setMessage("请先登录");
+			return response;
+		}
+		if (loginUser.getUserType().ordinal() != UserType.TYPE_ADMIN.ordinal())
+		{
+			BaseResponse<CartDto> response = new BaseResponse<>();
+			response.setMessage("您没有权限操作");
+			return response;
+		}
+		
+		return getResponse(WrappedBeanCopier.copyProperties(mCartService.findMyCart(loginUser.getId()), CartDto.class));
+	}
 }

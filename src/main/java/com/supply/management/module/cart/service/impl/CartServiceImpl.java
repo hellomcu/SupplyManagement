@@ -16,36 +16,43 @@ import com.supply.management.module.user.repository.UserRepository;
 public class CartServiceImpl implements CartService
 {
 	private CartRepository mCartRepository;
-	
+
 	private RechargeRepository mRechargeRepository;
 
 	private UserRepository mUserRepository;
-	
+
 	private StoreRepository mStoreRepository;
 
 	@Override
 	public void createCart(CartPo cartPo)
 	{
-		int rows = mCartRepository.save(cartPo);
-		if (rows != 1)
+		CartPo exist = mCartRepository.findByUserId(cartPo.getUserId());
+		if (exist == null)
 		{
-			throw new SupplyException("创建购物车失败");
+			int rows = mCartRepository.save(cartPo);
+			if (rows != 1)
+			{
+				throw new SupplyException("创建购物车失败");
+			}
+		}
+		else
+		{
+			//exist
 		}
 	}
-	
-	
+
 	@Override
 	public CartPo findMyCart(long userId)
 	{
 		return mCartRepository.findByUserId(userId);
 	}
-	
-	@Resource(name="cartRepository")
+
+	@Resource(name = "cartRepository")
 	public void setCartRepository(CartRepository cartRepository)
 	{
 		this.mCartRepository = cartRepository;
 	}
-	
+
 	@Resource(name = "rechargeRepository")
 	public void setRechargeRepository(RechargeRepository rechargeRepository)
 	{
@@ -58,16 +65,10 @@ public class CartServiceImpl implements CartService
 		this.mUserRepository = userRepository;
 	}
 
-	@Resource(name="storeRepository")
+	@Resource(name = "storeRepository")
 	public void setStoreRepository(StoreRepository storeRepository)
 	{
 		this.mStoreRepository = storeRepository;
 	}
 
-
-	
-
-	
-
-	
 }

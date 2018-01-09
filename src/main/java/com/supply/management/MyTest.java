@@ -20,7 +20,7 @@ public class MyTest extends TestCase
 	public void testJedis()
 	{
 		Jedis jedis = new Jedis("139.196.166.177", 6379);
-		jedis.set("singleJedis", "hello jedis!");
+		jedis.rename("singleJedis11111111", "hello jedis!111111");
 		System.out.println(jedis.get("1"));
 		jedis.close();
 

@@ -10,4 +10,5 @@ public interface CartRepository extends Repository
 
 	CartPo findByUserId(long userId);
 	
+	int update(long userId);
 }

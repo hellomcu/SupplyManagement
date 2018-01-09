@@ -11,12 +11,12 @@ import com.supply.management.module.cart.repository.CartRepository;
 public class CartRepositoryRedisImpl implements CartRepository
 {
 	@Autowired
-	private RedisTemplate<Long, CartPo> redisTemplate;
+	private RedisTemplate<String, CartPo> redisTemplate;
 
 	@Override
 	public int save(CartPo cartPo)
 	{
-		redisTemplate.opsForValue().set(cartPo.getUserId(), cartPo);
+		redisTemplate.opsForValue().set(Long.toString(cartPo.getUserId()), cartPo);
 		return 1;
 	}
 
@@ -24,6 +24,12 @@ public class CartRepositoryRedisImpl implements CartRepository
 	public CartPo findByUserId(long userId)
 	{
 		return redisTemplate.opsForValue().get(userId);
+	}
+
+	@Override
+	public int update(long userId)
+	{
+		return 0;
 	}
 
 	
