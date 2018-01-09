@@ -123,7 +123,7 @@ function toRecharge(store) {
 		$('#btn-recharge').unbind("click");
 		$('#btn-recharge').bind("click", function() {
 			var amount = $("#amount").val();
-			if (!isPositive(amount)) {
+			if (!isPositiveFloat(amount)) {
 				alert("充值金额必须大于0");
 				return;
 			}

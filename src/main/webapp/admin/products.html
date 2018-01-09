@@ -81,9 +81,9 @@
 				<tr>
 					<th class="col-xs-1">编号</th>
 					<th class="col-xs-4">商品名称</th>
-					<th class="col-xs-4">产地</th>
+					<th class="col-xs-2">产地</th>
 					<th class="col-xs-2">单价</th>
-					<th class="col-xs-1">操作</th>
+					<th class="col-xs-3">操作</th>
 				</tr>
 			</thead>
 			<tbody id="tb">
@@ -112,6 +112,53 @@
     
   </footer>
   <div class="control-sidebar-bg"></div>
+  <div class="modal fade" tabindex="-1" role="dialog" id="my-modal">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title">加入购物车</h4>
+			</div>
+			<div class="modal-body">
+				<form role="form" id="add-cart-form">
+					<div class="form-group">
+						<div class="input-group ">
+							<div class="input-group-addon success">商品名称</div>
+							<input type="text" class="form-control" id="product-name"  disabled="disabled" />
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="input-group ">
+							<div class="input-group-addon">商品单价</div>
+							<input type="text" class="form-control" id="product-price"  disabled="disabled" />
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="input-group ">
+							<div class="input-group-addon">商品产地</div>
+							<input type="text" class="form-control" id="product-place"  disabled="disabled" />
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="input-group ">
+							<div class="input-group-addon  success">配货数量</div>
+							<input type="number" class="form-control" id="amount"
+								placeholder="请输入配货数量" />
+								<div class="input-group-addon">件</div>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+				<button type="button" class="btn btn-primary" id="btn-add-cart">加入购物车</button>
+			</div>
+		</div>
+	</div>
+	</div>
 </div>
 <!-- ./wrapper -->
 

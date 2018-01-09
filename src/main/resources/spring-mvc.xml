@@ -12,30 +12,24 @@
 
 	<context:annotation-config />
 	<context:component-scan base-package="com.supply.management" />
+	
+	
+	<!-- 配置properties的路径 -->
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:jdbc.properties</value>
+				<value>classpath:redis.properties</value>
+			</list>
+		</property>
+	</bean>
 
 	<bean id="namedParameterJdbcTemplate"
 		class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
-		<!-- <property name="dataSource" ref="dataSource" /> -->
 		<constructor-arg ref="dataSource" />
 	</bean>
 
-	<!-- 配置bonecp -->
-	<!-- <bean id="dataSource" class="com.jolbox.bonecp.BoneCPDataSource" -->
-	<!-- destroy-method="close"> -->
-	<!-- <property name="driverClass" value="${jdbc.driverClassName}" /> -->
-	<!-- <property name="jdbcUrl" value="${jdbc.url}" /> -->
-	<!-- <property name="username" value="${jdbc.username}" /> -->
-	<!-- <property name="password" value="${jdbc.password}" /> -->
-
-	<!-- <property name="idleConnectionTestPeriod" value="60" /> -->
-	<!-- <property name="idleMaxAge" value="240" /> -->
-	<!-- <property name="maxConnectionsPerPartition" value="30" /> -->
-	<!-- <property name="minConnectionsPerPartition" value="10" /> -->
-	<!-- <property name="partitionCount" value="3" /> -->
-	<!-- <property name="acquireIncrement" value="5" /> -->
-	<!-- <property name="statementsCacheSize" value="100" /> -->
-	<!-- <property name="releaseHelperThreads" value="3" /> -->
-	<!-- </bean> -->
 
 	<!-- 配置Druid -->
 	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
@@ -73,18 +67,6 @@
 		<property name="filters" value="stat,log4j" />
 	</bean>
 
-
-	<!-- 配置jdbc.properties的路径 -->
-	<bean id="propertyConfigurer"
-		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="locations">
-			<list>
-				<value>classpath:jdbc.properties</value>
-			</list>
-		</property>
-	</bean>
-
-
 	<!-- 添加事务管理器组件DataSourceTransactionManager -->
 	<bean id="transactionManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
@@ -101,6 +83,40 @@
 
 	<bean id="myObjectMapper" class="com.supply.management.config.MyObjectMapper"></bean>
 
+
+	<!-- jedis 配置 -->
+	<bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">
+		<property name="maxIdle" value="${redis.maxIdle}" />
+		<property name="maxWaitMillis" value="${redis.maxWait}" />
+		<property name="testOnBorrow" value="${redis.testOnBorrow}" />
+	</bean>
+
+	<!-- redis服务器中心 -->
+	<bean id="connectionFactory"
+		class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+		<property name="poolConfig" ref="poolConfig" />
+		<property name="hostName" value="${redis.host}" />
+		<property name="port" value="${redis.port}" />
+		<!-- <property name="password" value="${redis.password}" /> -->
+		<property name="timeout" value="${redis.timeout}"></property>
+	</bean>
+	<bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+		<property name="connectionFactory" ref="connectionFactory" />
+<!-- 		<property name="keySerializer"> -->
+<!-- 			<bean -->
+<!-- 				class="org.springframework.data.redis.serializer.StringRedisSerializer" /> -->
+<!-- 		</property> -->
+<!-- 		<property name="valueSerializer"> -->
+<!-- 			<bean -->
+<!-- 				class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer" /> -->
+<!-- 		</property> -->
+	</bean>
+	<!-- 配置缓存 -->
+<!-- 	<bean id="cacheManager" class="org.springframework.data.redis.cache.RedisCacheManager"> -->
+<!-- 		<constructor-arg ref="redisTemplate" /> -->
+<!-- 	</bean> -->
+
+
 	<!-- 开启基于注解声明式事务 注意配置transaction-manager属性，它引用了我们事务管理组件对象，这里要和事务管理器组件id一致 
 		默认是transactionManager -->
 	<tx:annotation-driven transaction-manager="transactionManager" />
@@ -111,7 +127,7 @@
 			<bean
 				class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
 				<property name="objectMapper" ref="myObjectMapper">
-			
+
 					<!-- <bean class="com.fasterxml.jackson.databind.ObjectMapper"> -->
 
 					<!-- <property name="dateFormat"> -->
@@ -131,5 +147,6 @@
 			</bean>
 		</mvc:message-converters>
 	</mvc:annotation-driven>
+
 
 </beans>

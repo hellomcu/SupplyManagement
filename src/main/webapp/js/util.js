@@ -76,9 +76,16 @@ function navActive(obj) {
 }
 
 
-function isPositive(num) {
+function isPositiveFloat(num) {
  
 	var reg = /^(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*))$/;
+	if(reg.test(num)) return true;
+	return false ;  
+}
+
+function isPositive(num) {
+	 
+	var reg = /^[0-9]*[1-9][0-9]*$/;
 	if(reg.test(num)) return true;
 	return false ;  
 }
