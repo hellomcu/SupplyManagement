@@ -9,4 +9,10 @@ public interface CartService extends BaseService
 	void createCart(CartPo cartPo);
 	
 	CartPo findMyCart(long userId);
+	
+	void updateCart(long userId, long productId, long productNum);
+	
+	void deleteCart(long userId, long productId);
+	
+	void clearCart(long userId);
 }

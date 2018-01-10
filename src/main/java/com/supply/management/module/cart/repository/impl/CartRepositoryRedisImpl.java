@@ -1,9 +1,14 @@
 package com.supply.management.module.cart.repository.impl;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.servlet.RequestToViewNameTranslator;
 
+import com.supply.entity.po.CartDetailPo;
 import com.supply.entity.po.CartPo;
 import com.supply.management.module.cart.repository.CartRepository;
 
@@ -11,27 +16,57 @@ import com.supply.management.module.cart.repository.CartRepository;
 public class CartRepositoryRedisImpl implements CartRepository
 {
 	@Autowired
-	private RedisTemplate<String, CartPo> redisTemplate;
+	private RedisTemplate<Long, CartPo> redisTemplate;
 
 	@Override
-	public int save(CartPo cartPo)
+	public int save(long userId, long productId, long productNum)
 	{
-		redisTemplate.opsForValue().set(Long.toString(cartPo.getUserId()), cartPo);
+		// List<CartDetailPo> details = cartPo.getDetails();
+		//
+		// if (details != null)
+		// {
+		// int size = details.size();
+		// if (size != 0)
+		// {
+		// for (CartDetailPo detailPo : details)
+		// {
+		// redisTemplate.opsForHash().put(Long.toString(cartPo.getUserId()),
+		// detailPo.getProductId(),
+		// detailPo);
+		// }
+		// return size;
+		// }
+		// }
+		redisTemplate.opsForHash().put(new Long(userId), new Long(productId), new Long(productNum));
 		return 1;
 	}
 
 	@Override
-	public CartPo findByUserId(long userId)
+	public Map<Object, Object> findByUserId(long userId)
 	{
-		return redisTemplate.opsForValue().get(userId);
+		return redisTemplate.opsForHash().entries(new Long(userId));
 	}
 
 	@Override
-	public int update(long userId)
+	public int update(long userId, long productId, long productNum)
 	{
+		redisTemplate.opsForHash().put(new Long(userId), new Long(productId), new Long(productNum));
+		return 1;
+	}
+
+	@Override
+	public int remove(long userId)
+	{
+		redisTemplate.opsForHash().getOperations().delete(userId);
+		return 1;
+	}
+
+	@Override
+	public int remove(long userId, long productId)
+	{
+		if (redisTemplate.opsForHash().delete(userId, new Long[] { productId }) == 1L)
+			return 1;
 		return 0;
 	}
 
-	
-	
 }

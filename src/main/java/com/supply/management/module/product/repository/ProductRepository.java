@@ -2,6 +2,7 @@ package com.supply.management.module.product.repository;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.supply.base.repository.Repository;
 import com.supply.entity.PageInfo;
@@ -18,4 +19,6 @@ public interface ProductRepository extends Repository
 	int delete(long id);
 	
 	int update(Map<String, Object> fields, long id);
+	
+	List<ProductPo> findByIds(Set<Long> ids);
 }

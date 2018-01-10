@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -17,30 +18,30 @@ import com.supply.entity.po.ProductPo;
 import com.supply.management.module.product.repository.ProductRepository;
 import com.supply.management.util.TimeUtil;
 
-@Repository(value="productRepository")
+@Repository(value = "productRepository")
 public class ProductRepositoryJdbcImpl implements ProductRepository
 {
 
 	private static final String SQL_SAVE = "INSERT INTO t_product (category_id, user_id, product_name, total_num, product_num, product_price, product_unit, product_place, product_date, quality_guarantee_period, description, create_time) values(:category_id, :user_id, :product_name, :total_num, :product_num, :product_price, :product_unit, :product_place, :product_date, :quality_guarantee_period, :description, :create_time)";
-	
-	private static final String SQL_QUERY = "SELECT p.id product_id, p.product_name product_name, p.total_num total_num," + 
-			"p.product_num product_num, p.product_price product_price, p.product_unit, p.product_place product_place, p.description description, p.create_time create_time," + 
-			"c.id category_id,c.category_name category_name," + 
-			"c2.id parent_id, c2.category_name parent_name" + 
-			" FROM t_product p LEFT JOIN t_category c ON p.category_id = c.id" + 
-			" LEFT JOIN t_category c2 ON c2.id = c.parent_id" + 
-			" WHERE p.status = 0 AND c.status = 0 AND c2.status = 0 AND p.product_name LIKE '%' :product_name '%'" + 
-			" ORDER BY p.create_time DESC LIMIT :start, :num";
-	
+
+	private static final String SQL_QUERY = "SELECT p.id product_id, p.product_name product_name, p.total_num total_num,"
+			+ "p.product_num product_num, p.product_price product_price, p.product_unit, p.product_place product_place, p.description description, p.create_time create_time,"
+			+ "c.id category_id,c.category_name category_name," + "c2.id parent_id, c2.category_name parent_name"
+			+ " FROM t_product p LEFT JOIN t_category c ON p.category_id = c.id"
+			+ " LEFT JOIN t_category c2 ON c2.id = c.parent_id"
+			+ " WHERE p.status = 0 AND c.status = 0 AND c2.status = 0 AND p.product_name LIKE '%' :product_name '%'"
+			+ " ORDER BY p.create_time DESC LIMIT :start, :num";
+
 	private static final String SQL_COUNT = "SELECT COUNT(id) FROM t_product WHERE status = 0 AND product_name LIKE '%' :product_name '%'";
-	
+
 	private static final String SQL_DELETE = "UPDATE t_product SET status = 1 WHERE id=:id";
-	
-	//private static final String SQL_UPDATE = "UPDATE t_store SET store_name=:store_name, store_place=:store_place, contacts=:contacts, description=:description WHERE status=0 AND id=:id";
-	
+
+	// private static final String SQL_UPDATE = "UPDATE t_store SET
+	// store_name=:store_name, store_place=:store_place, contacts=:contacts,
+	// description=:description WHERE status=0 AND id=:id";
+
 	private NamedParameterJdbcTemplate mNamedParameterJdbcTemplate;
 
-	
 	@Autowired
 	public ProductRepositoryJdbcImpl(
 			@Qualifier(value = "namedParameterJdbcTemplate") NamedParameterJdbcTemplate namedParameterJdbcTemplate)
@@ -51,7 +52,7 @@ public class ProductRepositoryJdbcImpl implements ProductRepository
 	@Override
 	public int save(ProductPo product)
 	{
-	
+
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
 		paramSource.addValue("category_id", product.getCategoryId());
 		paramSource.addValue("user_id", product.getUserId());
@@ -65,7 +66,7 @@ public class ProductRepositoryJdbcImpl implements ProductRepository
 		paramSource.addValue("quality_guarantee_period", product.getQualityGuaranteePeriod());
 		paramSource.addValue("description", product.getDescription());
 		paramSource.addValue("create_time", TimeUtil.getCurrentTimestamp());
-		
+
 		int effectedRows = this.mNamedParameterJdbcTemplate.update(SQL_SAVE, paramSource);
 
 		return effectedRows;
@@ -96,7 +97,7 @@ public class ProductRepositoryJdbcImpl implements ProductRepository
 			product.setCategoryName(rowSet.getString("category_name"));
 			product.setParentId(rowSet.getLong("parent_id"));
 			product.setParentName(rowSet.getString("parent_name"));
-	
+
 			products.add(product);
 		}
 		return products;
@@ -136,5 +137,38 @@ public class ProductRepositoryJdbcImpl implements ProductRepository
 		paramSource.addValue("product_name", productName);
 		return this.mNamedParameterJdbcTemplate.queryForObject(SQL_COUNT, paramSource, Long.class);
 	}
-}
 
+	@Override
+	public List<ProductPo> findByIds(Set<Long> ids)
+	{
+		String sql = "SELECT id, product_name, product_num, product_price, product_unit WHERE status = 0";
+		List<ProductPo> products = new ArrayList<ProductPo>();
+		MapSqlParameterSource paramSource = new MapSqlParameterSource();
+		
+		if (ids == null || ids.isEmpty())
+		{
+			return products;
+		}
+		StringBuffer sBuffer = new StringBuffer(" AND id IN (");
+		for (Long id : ids)
+		{
+			sBuffer.append(id).append(",");
+		}
+		sBuffer = new StringBuffer(sBuffer.substring(0, sBuffer.length() - 1));
+		sBuffer.append(");");
+		SqlRowSet rowSet = this.mNamedParameterJdbcTemplate.queryForRowSet(sql + sBuffer.toString(), paramSource);
+		while (rowSet.next())
+		{
+			ProductPo product = new ProductPo();
+			product.setId(rowSet.getLong("id"));
+			product.setProductName(rowSet.getString("product_name"));
+			product.setProductNum(rowSet.getInt("product_num"));
+			product.setProductPrice(rowSet.getBigDecimal("product_price"));
+			product.setProductUnit(rowSet.getString("product_unit"));
+
+			products.add(product);
+		}
+		return products;
+
+	}
+}

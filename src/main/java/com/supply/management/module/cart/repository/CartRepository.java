@@ -1,14 +1,19 @@
 package com.supply.management.module.cart.repository;
 
+import java.util.Map;
+
 import com.supply.base.repository.Repository;
-import com.supply.entity.po.CartPo;
 
 public interface CartRepository extends Repository
 {
 
-	int save(CartPo cartPo);
+	int save(long userId, long productId, long productNum);
 
-	CartPo findByUserId(long userId);
+	Map<Object, Object> findByUserId(long userId);
 	
-	int update(long userId);
+	int update(long userId, long productId, long productNum);
+	
+	int remove(long userId);
+	
+	int remove(long userId, long productId);
 }

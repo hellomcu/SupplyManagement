@@ -7,6 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.supply.base.controller.BaseController;
@@ -67,7 +68,7 @@ public class CartController extends BaseController
 	
 	@ApiOperation(httpMethod = "GET", value = "获取我的购物车", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@RequestMapping(method = RequestMethod.GET, value="/my_cart", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public BaseResponse<CartDto> findAllProducts(HttpServletRequest request)
+	public BaseResponse<CartDto> getMyCart(HttpServletRequest request)
 	{
 		UserPo loginUser = JwtUtil.getLoginUserFromJwt(request);
 		if (loginUser == null)
@@ -85,5 +86,50 @@ public class CartController extends BaseController
 		}
 		
 		return getResponse(WrappedBeanCopier.copyProperties(mCartService.findMyCart(loginUser.getId()), CartDto.class));
+	}
+	
+	@ApiOperation(httpMethod = "DELETE", value = "删除购物车中商品", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@RequestMapping(method = RequestMethod.DELETE, value="/cart_product", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public BaseResponse<Void> removeProductFromCart(@RequestParam("productId") Long productId, HttpServletRequest request)
+	{
+		UserPo loginUser = JwtUtil.getLoginUserFromJwt(request);
+		if (loginUser == null)
+		{
+			BaseResponse<Void> response = new BaseResponse<>();
+			response.setCode(100);
+			response.setMessage("请先登录");
+			return response;
+		}
+		if (loginUser.getUserType().ordinal() != UserType.TYPE_ADMIN.ordinal())
+		{
+			BaseResponse<Void> response = new BaseResponse<>();
+			response.setMessage("您没有权限操作");
+			return response;
+		}
+		mCartService.deleteCart(loginUser.getId(), productId);
+		return getResponse();
+	}
+	
+	
+	@ApiOperation(httpMethod = "DELETE", value = "清空购物车", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@RequestMapping(method = RequestMethod.DELETE, value="/cart", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public BaseResponse<Void> clearCart(HttpServletRequest request)
+	{
+		UserPo loginUser = JwtUtil.getLoginUserFromJwt(request);
+		if (loginUser == null)
+		{
+			BaseResponse<Void> response = new BaseResponse<>();
+			response.setCode(100);
+			response.setMessage("请先登录");
+			return response;
+		}
+		if (loginUser.getUserType().ordinal() != UserType.TYPE_ADMIN.ordinal())
+		{
+			BaseResponse<Void> response = new BaseResponse<>();
+			response.setMessage("您没有权限操作");
+			return response;
+		}
+		mCartService.clearCart(loginUser.getId());
+		return getResponse();
 	}
 }
