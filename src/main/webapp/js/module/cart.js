@@ -24,7 +24,7 @@ function initCartList(data) {
 		var num = list[i].productNum;
 		pNum.innerHTML = "<input type='number' value='" +num + "' id='" + i + "' class='col-xs-12'/>";
 		var xiaoji = parseFloat(unitPrice) * parseInt(num);
-		pPrice.innerHTML = "<span class='text-danger' id='price-" + i + "'>" + xiaoji + "元</span>";
+		pPrice.innerHTML = "<span class='text-danger' id='price-" + i + "'>" + xiaoji + "</span>元";
 		totalPrice += xiaoji;
 		pOpr.innerHTML = "<button type='button' class='btn btn-flat btn-danger' onclick='deleteProductFromCart("
 				+ list[i].productId + ");'>移除</button>";
@@ -35,18 +35,23 @@ function initCartList(data) {
 				this.value = '0';
 			}
 			var _this = this;
+			var subPrice = 0.0;
 			updateCart(list[this.id].productId, this.value, 
 					function(data) {
 						var newNum = data.productNum;
+						this.value = newNum; 
+						var newPrice = list[_this.id].unitPrice * parseInt(newNum);
+//						console.log(newPrice + "," + ;
+						subPrice = newPrice - parseFloat($('#price-' + _this.id).html());
+						totalPrice += subPrice;
+						$('#total-price').html("总价: " + (totalPrice) + " 元");
 						if (newNum === 0) {
 							var index = _this.parentNode.parentNode.rowIndex;
 							tbody.deleteRow(index - 1);
 							return;
 						}
-						this.value = newNum; 
-						var newPrice = parseFloat(list[_this.id].unitPrice) * parseInt(newNum);
-						
-						$('#price-' + _this.id).html(newPrice + "元");
+					
+						$('#price-' + _this.id).html(newPrice);
 					},
 					function() {
 						window.location.href = "./my_cart.html";

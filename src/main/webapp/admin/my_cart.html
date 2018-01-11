@@ -32,6 +32,10 @@
 	text-align: center;
 	vertical-align: middle !important;
 }
+
+input {
+	text-align: left;
+}
 </style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
@@ -72,11 +76,11 @@
                 <thead>
 				<tr>
 					<th class="col-xs-1">编号</th>
-					<th class="col-xs-3">商品</th>
+					<th class="col-xs-4">商品</th>
 					<th class="col-xs-2">单价</th>
-					<th class="col-xs-1">数量</th>
+					<th class="col-xs-2">数量</th>
 					<th class="col-xs-2">小计</th>
-					<th class="col-xs-3">操作</th>
+					<th class="col-xs-1">操作</th>
 				</tr>
 			</thead>
 			<tbody id="tb">
@@ -87,6 +91,7 @@
             <!-- /.box-body -->
             <div class="box-footer clearfix">
             <h3><span class='text-danger' id='total-price'>总价</span></h3>
+            <button type='button' class='btn btn-flat btn-block btn-primary'>给门店配货</button>
 <!--               <nav aria-label="Page navigation" style="text-align: center"> -->
 <!-- 			<ul class="pagination" id="pagination"> -->
 <!-- 			</ul> -->
