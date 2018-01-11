@@ -1,5 +1,7 @@
 package com.supply.management.module.cart.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import com.supply.base.controller.BaseController;
 import com.supply.contant.UserType;
 import com.supply.entity.PageInfo;
 import com.supply.entity.base.BaseResponse;
+import com.supply.entity.po.CartDetailPo;
 import com.supply.entity.po.CartPo;
 import com.supply.entity.po.ProductPo;
 import com.supply.entity.po.UserPo;
@@ -61,8 +64,10 @@ public class CartController extends BaseController
 			return response;
 		}
 		addCartDto.setUserId(loginUser.getId());
+		List<CartDetailPo> details = WrappedBeanCopier.copyPropertiesOfList(addCartDto.getDetails(), CartDetailPo.class);
 		CartPo cartPo = WrappedBeanCopier.copyProperties(addCartDto, CartPo.class);
-		mCartService.createCart(cartPo);
+		cartPo.setDetails(details);
+		mCartService.addCart(cartPo);
 		return getResponse();
 	}
 	

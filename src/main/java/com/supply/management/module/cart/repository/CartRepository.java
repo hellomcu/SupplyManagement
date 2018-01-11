@@ -16,4 +16,6 @@ public interface CartRepository extends Repository
 	int remove(long userId);
 	
 	int remove(long userId, long productId);
+	
+	boolean has(long userId);
 }

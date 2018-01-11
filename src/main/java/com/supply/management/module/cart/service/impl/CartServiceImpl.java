@@ -32,7 +32,7 @@ public class CartServiceImpl implements CartService
 	private StoreRepository mStoreRepository;
 
 	@Override
-	public void createCart(CartPo cartPo)
+	public void addCart(CartPo cartPo)
 	{
 		long userId = cartPo.getUserId();
 		List<CartDetailPo> cartDetails = cartPo.getDetails();
@@ -87,6 +87,7 @@ public class CartServiceImpl implements CartService
 			detailPo.setUnitPrice(product.getProductPrice());
 			detailPo.setProductUnit(product.getProductUnit());
 			detailPo.setProductNum((Long)map.get(new Long(productId)));
+			details.add(detailPo);
 		}
 		cartPo.setDetails(details);
 		return cartPo;

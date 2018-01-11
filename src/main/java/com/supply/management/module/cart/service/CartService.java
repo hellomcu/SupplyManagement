@@ -6,7 +6,7 @@ import com.supply.entity.po.CartPo;
 
 public interface CartService extends BaseService
 {
-	void createCart(CartPo cartPo);
+	void addCart(CartPo cartPo);
 	
 	CartPo findMyCart(long userId);
 	

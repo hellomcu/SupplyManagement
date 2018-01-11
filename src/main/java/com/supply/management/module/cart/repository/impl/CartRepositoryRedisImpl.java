@@ -69,4 +69,10 @@ public class CartRepositoryRedisImpl implements CartRepository
 		return 0;
 	}
 
+	@Override
+	public boolean has(long userId)
+	{
+		return redisTemplate.hasKey(new Long(userId));
+	}
+
 }

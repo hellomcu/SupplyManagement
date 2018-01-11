@@ -141,7 +141,7 @@ public class ProductRepositoryJdbcImpl implements ProductRepository
 	@Override
 	public List<ProductPo> findByIds(Set<Long> ids)
 	{
-		String sql = "SELECT id, product_name, product_num, product_price, product_unit WHERE status = 0";
+		String sql = "SELECT id, product_name, product_num, product_price, product_unit FROM t_product WHERE status = 0";
 		List<ProductPo> products = new ArrayList<ProductPo>();
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
 		
