@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>我的购物车 - 小河农场</title>
+  <title>全部门店 - 小河农场</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -32,10 +32,6 @@
 	text-align: center;
 	vertical-align: middle !important;
 }
-
-input {
-	text-align: left;
-}
 </style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
@@ -53,13 +49,13 @@ input {
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        	我的购物车
+        	门店管理
 <!--         <small>preview of simple tables</small> -->
       </h1>
       <ol class="breadcrumb">
         <li><a href="home.html"><i class="fa fa-home"></i> 首页</a></li>
-        <li class="active">我的购物车</li>
-        
+        <li><a href="my_cart.html">我的购物车</a></li>
+        <li class="active">给门店配货</li>
       </ol>
     </section>
 
@@ -69,7 +65,7 @@ input {
         <div class="col-xs-12">
           <div class="box box-primary">
             <div class="box-header with-border">
-              <h3 class="box-title">全部商品</h3>
+              <h3 class="box-title">全部门店</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -77,11 +73,11 @@ input {
                 <thead>
 				<tr>
 					<th class="col-xs-1">编号</th>
-					<th class="col-xs-4">商品</th>
-					<th class="col-xs-2">单价</th>
-					<th class="col-xs-2">数量</th>
-					<th class="col-xs-2">小计</th>
-					<th class="col-xs-1">操作</th>
+					<th class="col-xs-2">名称</th>
+					<th class="col-xs-4">地址</th>
+					<th class="col-xs-2">电话</th>
+					<th class="col-xs-1">账户余额</th>
+					<th class="col-xs-2">操作</th>
 				</tr>
 			</thead>
 			<tbody id="tb">
@@ -91,12 +87,10 @@ input {
             </div>
             <!-- /.box-body -->
             <div class="box-footer clearfix">
-            <h3><span class='text-danger' id='total-price'>总价</span></h3>
-            <button type='button' class='btn btn-flat btn-block btn-primary' onclick="javascript:window.location.href='./assign_product.html'">给门店配货</button>
-<!--               <nav aria-label="Page navigation" style="text-align: center"> -->
-<!-- 			<ul class="pagination" id="pagination"> -->
-<!-- 			</ul> -->
-<!-- 			</nav>   -->
+              <nav aria-label="Page navigation" style="text-align: center">
+			<ul class="pagination" id="pagination">
+			</ul>
+			</nav>  
             </div>
           </div>
           <!-- /.box -->
@@ -172,7 +166,8 @@ input {
 	loadHeader();
 	loadFooter();
 	loadNav();
-	navActive($('#my-cart-li'));
+	navActive($('#store-li'));
+	navActive($('#stores-li'));
 </script>
 <!-- AdminLTE App -->
 <script src="./dist/js/adminlte.js"></script>
@@ -181,12 +176,13 @@ input {
 
 <script src="./bootstrap-3.3.7/js/jquery.simplePagination.js"></script>
 <script src="./js/loading/jquery.mloading.js"></script>
-<script src="./js/module/cart.js"></script>
-<script src="./js/module/product.js"></script>
+<script src="./js/module/store.js"></script>
     <!-- Page-Level Demo Scripts - Tables - Use for reference -->
     <script>
 	    $(document).ready(function() {
-	    	getMyCart();
+	        //$('#dataTables-example').dataTable();
+	        //$('#product-li').toggleClass('active').children('ul').collapse('toggle');
+	    	getStore(1);
 	    });
     </script>
 </body>
