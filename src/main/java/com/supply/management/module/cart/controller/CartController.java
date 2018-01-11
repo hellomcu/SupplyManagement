@@ -14,16 +14,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.supply.base.controller.BaseController;
 import com.supply.contant.UserType;
-import com.supply.entity.PageInfo;
 import com.supply.entity.base.BaseResponse;
 import com.supply.entity.po.CartDetailPo;
 import com.supply.entity.po.CartPo;
-import com.supply.entity.po.ProductPo;
 import com.supply.entity.po.UserPo;
 import com.supply.management.auth.util.JwtUtil;
 import com.supply.management.entity.dto.AddCartDto;
+import com.supply.management.entity.dto.CartDetailDto;
 import com.supply.management.entity.dto.CartDto;
-import com.supply.management.entity.dto.ProductDto;
+import com.supply.management.entity.dto.UpdateCartDto;
 import com.supply.management.module.cart.service.CartService;
 import com.supply.management.util.WrappedBeanCopier;
 
@@ -136,5 +135,28 @@ public class CartController extends BaseController
 		}
 		mCartService.clearCart(loginUser.getId());
 		return getResponse();
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, value = "/update_cart", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ApiOperation(httpMethod = "POST", value = "更新购物车", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public BaseResponse<CartDetailDto> updateCart(@RequestBody UpdateCartDto updateCartDto, HttpServletRequest request)
+	{
+		
+		UserPo loginUser = JwtUtil.getLoginUserFromJwt(request);
+		if (loginUser == null)
+		{
+			BaseResponse<CartDetailDto> response = new BaseResponse<>();
+			response.setCode(100);
+			response.setMessage("请先登录");
+			return response;
+		}
+		if (loginUser.getUserType().ordinal() != UserType.TYPE_ADMIN.ordinal())
+		{
+			BaseResponse<CartDetailDto> response = new BaseResponse<>();
+			response.setMessage("您没有权限操作");
+			return response;
+		}
+		
+		return getResponse(WrappedBeanCopier.copyProperties(mCartService.updateCart(loginUser.getId(), updateCartDto.getProductId(), updateCartDto.getProductNum()), CartDetailDto.class));
 	}
 }

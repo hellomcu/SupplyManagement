@@ -95,14 +95,29 @@ public class CartServiceImpl implements CartService
 
 	
 	@Override
-	public void updateCart(long userId, long productId, long productNum)
+	public CartDetailPo updateCart(long userId, long productId, long productNum)
 	{
-		int rows = mCartRepository.update(userId, productId, productNum);
-		if (rows != 1)
+		if (productNum > 0)
 		{
-			throw new SupplyException("更新商品数量失败");
+			int rows = mCartRepository.update(userId, productId, productNum);
+			if (rows != 1)
+			{
+				throw new SupplyException("更新商品数量失败");
+			}
 		}
+		else 
+		{
+			int rows = mCartRepository.remove(userId, productId);
+			if (rows != 1)
+			{
+				throw new SupplyException("更新商品数量失败");
+			}
+		}
+		CartDetailPo cartDetailPo = new CartDetailPo();
+		cartDetailPo.setProductId(productId);
+		cartDetailPo.setProductNum(productNum);
 		
+		return cartDetailPo;
 	}
 
 	@Override
