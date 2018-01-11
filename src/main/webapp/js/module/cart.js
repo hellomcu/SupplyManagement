@@ -68,7 +68,6 @@ function toCart(product) {
 					addCart(product.id, amount, function() {
 						$('#my-modal').modal('hide');
 						window.location.href = "./products.html";
-
 					});
 				});
 			});
