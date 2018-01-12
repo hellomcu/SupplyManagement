@@ -22,13 +22,22 @@ function addStore(storeName, storeAddress, callNumber, userName, passWord,
 }
 
 function getStore(page) {
+	requestStores(page, initData);
+	
+}
 
-	$.myAjax('./admin/store/stores?page=' + page + '&num=10', 'GET', null,
+function getSelectStore(page) {
+	requestStores(page, initSelectStore);
+	
+}
+
+function requestStores(page, success) {
+	$.myAjax('./admin/store/stores?page=' + page + '&num=1', 'GET', null,
 			function(data) {
 				if (data.code != 1) {
 					alert(data.message);
 				} else {
-					initData(data.data);
+					success(data.data);
 				}
 			});
 }
@@ -78,6 +87,71 @@ function initData(data) {
         }
     });
 }
+
+var selectedStores = {};
+
+function initSelectStore(data) {
+	var list = data.list;
+	var tbody = document.getElementById('tb');
+	$(tbody).empty();
+	for (var i = 0; i < list.length; i++) {
+		// alert(JSON.stringify(data[i].createTime));
+
+		var x = tbody.insertRow(i);
+		var check = x.insertCell(0);
+		var y = x.insertCell(1);
+		var z = x.insertCell(2);
+
+		var a = x.insertCell(3);
+		var b = x.insertCell(4);
+		var balance = x.insertCell(5);
+
+		y.innerHTML = i + 1;
+		z.innerHTML = '<a href="#">' + list[i].storeName
+				+ '</a>';
+
+		a.innerHTML = list[i].storePlace;
+		b.innerHTML = list[i].contacts;
+
+		balance.innerHTML = list[i].balance + "&nbsp;元";
+		
+		check.innerHTML = "<input type='checkbox' id='" + i + "' />";
+		
+		if (list[i].id in selectedStores) {
+			$("#" + i).attr("checked", true);
+		} else {
+			$("#" + i).attr("checked", false);
+		}
+		
+		
+		$("#" + i).change(function() { 
+			if (this.checked) {
+				selectedStores[list[this.id].id] = list[this.id];
+			} else {
+				delete selectedStores[list[this.id].id];
+			}
+			console.log(selectedStores);
+		});
+	}
+	
+	var totalPage = data.totalPage;
+	$('#pagination').pagination({
+        items: data.totalPage,
+        itemOnPage: data.itemNum,
+        currentPage: data.currentPage,
+        cssStyle: '',
+        prevText: '上一页',
+        nextText: '下一页',
+        onInit: function () {
+            // fire first page loading
+        },
+        onPageClick: function (page, evt) {
+        	getSelectStore(page);
+// $('#alt-style-pagination-content').text('Page ' + page);
+        }
+    });
+}
+
 function deleteStore(id) {
 	var r = confirm("要删除它吗？");
 	if (r == true) {
