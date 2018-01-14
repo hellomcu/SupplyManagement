@@ -77,6 +77,13 @@
 								</div>
 								<div class="form-group">
 									<div class="input-group">
+										<div class="input-group-addon">联&emsp;系&emsp;人</div>
+										<input type="text" class="form-control" id="contacts"
+											placeholder="输入门店联系人" />
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="input-group">
 										<div class="input-group-addon">联系方式</div>
 										<input type="text" class="form-control" id="callNumber"
 											placeholder="输入门店联系方式" />
@@ -162,6 +169,7 @@
 		function addMenDianPre() {
 			var storeName = document.getElementById("storeName").value;
 			var storeAddress = document.getElementById("storeAddress").value;
+			var contacts = document.getElementById("contacts").value;
 			var callNumber = document.getElementById("callNumber").value;
 			var userName = document.getElementById("userName").value;
 			var passWord = document.getElementById("passWord").value;
@@ -169,10 +177,10 @@
 			var beizhu = document.getElementById("beizhu").value;
 
 			if (storeName == "" || storeAddress == "" || callNumber == ""
-					|| userName == "" || passWord == "") {
+					|| userName == "" || passWord == "" || contacts == "") {
 				alert("信息填写不完整");
 			} else {
-				addStore(storeName, storeAddress, callNumber, userName, passWord,
+				addStore(storeName, storeAddress, contacts, callNumber, userName, passWord,
 						beizhu);
 			}
 		}

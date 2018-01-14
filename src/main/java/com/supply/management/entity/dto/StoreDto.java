@@ -18,6 +18,7 @@ public class StoreDto extends BaseDto
 	private String storeName;
 	private String storePlace;
 	private String contacts;
+	private String contactWay;
 	private BigDecimal balance;
 	private String description;
 	private Timestamp createTime;
@@ -79,6 +80,14 @@ public class StoreDto extends BaseDto
 	public void setBalance(BigDecimal balance)
 	{
 		this.balance = balance;
+	}
+	public String getContactWay()
+	{
+		return contactWay;
+	}
+	public void setContactWay(String contactWay)
+	{
+		this.contactWay = contactWay;
 	}
 	
 	

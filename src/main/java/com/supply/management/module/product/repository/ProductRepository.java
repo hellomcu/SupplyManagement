@@ -21,4 +21,6 @@ public interface ProductRepository extends Repository
 	int update(Map<String, Object> fields, long id);
 	
 	List<ProductPo> findByIds(Set<Long> ids);
+	
+	int[] updateNum(List<ProductPo> products);
 }
