@@ -38,7 +38,10 @@ public class CartServiceImpl implements CartService
 		List<CartDetailPo> cartDetails = cartPo.getDetails();
 		for (CartDetailPo cartDetailPo : cartDetails)
 		{
-			int rows = mCartRepository.save(userId, cartDetailPo.getProductId(), cartDetailPo.getProductNum());
+			long productId = cartDetailPo.getProductId();
+			long productNum = mCartRepository.getProductNum(userId, productId);
+			cartDetailPo.setProductNum(productNum + cartDetailPo.getProductNum());
+			int rows = mCartRepository.save(userId, productId, cartDetailPo.getProductNum());
 			if (rows != 1)
 			{
 				throw new SupplyException("创建购物车失败");

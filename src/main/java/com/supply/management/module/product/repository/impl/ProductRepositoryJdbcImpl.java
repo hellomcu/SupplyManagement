@@ -14,6 +14,7 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 
 import com.supply.entity.PageInfo;
+import com.supply.entity.po.OrderDetailPo;
 import com.supply.entity.po.ProductPo;
 import com.supply.management.module.product.repository.ProductRepository;
 import com.supply.management.util.TimeUtil;
@@ -40,6 +41,8 @@ public class ProductRepositoryJdbcImpl implements ProductRepository
 	// store_name=:store_name, store_place=:store_place, contacts=:contacts,
 	// description=:description WHERE status=0 AND id=:id";
 
+	private static final String SQL_UPDATE_NUM = "UPDATE t_product set product_num=:product_num WHERE id = :id AND status = 0";
+	
 	private NamedParameterJdbcTemplate mNamedParameterJdbcTemplate;
 
 	@Autowired
@@ -170,5 +173,24 @@ public class ProductRepositoryJdbcImpl implements ProductRepository
 		}
 		return products;
 
+	}
+	
+	
+	@Override
+	public int[] updateNum(List<ProductPo> products)
+	{
+		int size = products.size();
+		Map<String, Object>[] batchArgs = new Map[size];
+		for (int i = 0; i < size; i++)
+		{
+			ProductPo productPo = products.get(i);
+			Map<String, Object> map = new HashMap<>();
+			map.put("id", productPo.getId());
+			map.put("product_num", productPo.getProductNum());
+
+			batchArgs[i] = map;
+		}
+		
+		return mNamedParameterJdbcTemplate.batchUpdate(SQL_UPDATE_NUM, batchArgs);
 	}
 }

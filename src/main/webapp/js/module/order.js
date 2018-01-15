@@ -169,3 +169,20 @@ function updateOrderStatus(id, status) {
 				}
 			});
 }
+
+function assignProducts(storeIds) {
+	var params = {
+			storeIds: storeIds,
+			details : JSON.parse(decodeURIComponent(getQueryString('params')))
+	};
+	console.log(params);
+	$.myAjax('./admin/order/orders', 'POST', JSON.stringify(params),
+			function(data) {
+				if (data.code != 1) {
+					alert(data.message);
+				} else {
+					alert("配货成功");
+					window.location.href = './orders.html';
+				}
+			});
+}

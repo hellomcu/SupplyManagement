@@ -1,10 +1,11 @@
-function addStore(storeName, storeAddress, callNumber, userName, passWord,
+function addStore(storeName, storeAddress,contacts, callNumber, userName, passWord,
 		beizhu) {
 
 	var jsonParams = {
 		"storeName" : storeName,
 		"storePlace" : storeAddress,
-		"contacts" : callNumber,
+		"contacts" : contacts,
+		"contactWay" : callNumber,
 		"username" : userName,
 		"password" : passWord,
 		"description" : beizhu
@@ -62,7 +63,7 @@ function initData(data) {
 				+ '</a>';
 
 		a.innerHTML = list[i].storePlace;
-		b.innerHTML = list[i].contacts;
+		b.innerHTML = list[i].contacts + "&nbsp;" + list[i].contactWay;
 
 		balance.innerHTML = list[i].balance + "&nbsp;元";
 		
@@ -89,6 +90,7 @@ function initData(data) {
 }
 
 var selectedStores = {};
+var selectNum = 0;
 
 function initSelectStore(data) {
 	var list = data.list;
@@ -111,7 +113,7 @@ function initSelectStore(data) {
 				+ '</a>';
 
 		a.innerHTML = list[i].storePlace;
-		b.innerHTML = list[i].contacts;
+		b.innerHTML = list[i].contacts + "&nbsp;" + list[i].contactWay;
 
 		balance.innerHTML = list[i].balance + "&nbsp;元";
 		
@@ -127,9 +129,12 @@ function initSelectStore(data) {
 		$("#" + i).change(function() { 
 			if (this.checked) {
 				selectedStores[list[this.id].id] = list[this.id];
+				selectNum++;
 			} else {
 				delete selectedStores[list[this.id].id];
+				selectNum--;
 			}
+			showSelectedNum();
 			console.log(selectedStores);
 		});
 	}
@@ -150,6 +155,10 @@ function initSelectStore(data) {
 // $('#alt-style-pagination-content').text('Page ' + page);
         }
     });
+}
+
+function showSelectedNum() {
+	$('#selected-num').html(selectNum);
 }
 
 function deleteStore(id) {
@@ -213,4 +222,14 @@ function toRecharge(store) {
 	$('#my-modal').on('hidden.bs.modal', function() {
 		$('recharge-form')[0].reset();
 	});
+}
+
+
+function toAssign() {
+	var storeIds = [];
+	var i = 0;
+	for (var id in selectedStores) {
+		storeIds[i++] = id;
+	}
+	assignProducts(storeIds);
 }

@@ -75,4 +75,13 @@ public class CartRepositoryRedisImpl implements CartRepository
 		return redisTemplate.hasKey(new Long(userId));
 	}
 
+	@Override
+	public long getProductNum(long userId, long productId)
+	{
+		Object object = redisTemplate.opsForHash().get(userId, new Long(productId));
+		return object == null ? 0L : (Long)object;
+	}
+
+	
+	
 }

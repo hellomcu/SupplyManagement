@@ -16,6 +16,7 @@ public class UpdateStoreDto extends BaseDto
 	private String storeName;
 	private String storePlace;
 	private String contacts;
+	private String contactWay;
 	private String description;
 
 	public String getStoreName()
@@ -57,5 +58,13 @@ public class UpdateStoreDto extends BaseDto
 	public void setId(long id)
 	{
 		this.id = id;
+	}
+	public String getContactWay()
+	{
+		return contactWay;
+	}
+	public void setContactWay(String contactWay)
+	{
+		this.contactWay = contactWay;
 	}
 }

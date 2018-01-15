@@ -7,22 +7,22 @@ function initCartList(data) {
 	$(tbody).empty();
 	for (var i = 0; i < list.length; i++) {
 		// alert(JSON.stringify(data[i].createTime));
-
+		var productId = list[i].productId;
 		var x = tbody.insertRow(i);
-		x.insertCell(0).innerHTML = i + 1;
+		x.insertCell(0).innerHTML = i + 1 + "<input type='hidden' name='product-id' value='" + productId + "'>";
 		var pName = x.insertCell(1);
 		var pUnit = x.insertCell(2);
 		var pNum = x.insertCell(3);
 		var pPrice = x.insertCell(4);
 		var pOpr = x.insertCell(5);
 		
-		var productId = list[i].productId;
+		
 		
 		pName.innerHTML = list[i].productName;
 		var unitPrice = list[i].unitPrice;
 		pUnit.innerHTML = unitPrice + "元/" + list[i].productUnit;
 		var num = list[i].productNum;
-		pNum.innerHTML = "<input type='number' value='" +num + "' id='" + i + "' class='col-xs-12'/>";
+		pNum.innerHTML = "<input type='number' name='product-num' value='" +num + "' id='" + i + "' class='col-xs-12'/>";
 		var xiaoji = parseFloat(unitPrice) * parseInt(num);
 		pPrice.innerHTML = "<span class='text-danger' id='price-" + i + "'>" + xiaoji + "</span>元";
 		totalPrice += xiaoji;
@@ -162,4 +162,18 @@ function updateCart(productId, productNum, success, err) {
 		}
 	});
 
+}
+
+function toAssignPage() {
+	var productIds = $("input[name='product-id']");
+	var productNums = $("input[name='product-num']");
+	var params = [];
+	for (var i=0; i<productIds.length; i++) {
+		params[i] = {
+				productId: productIds[i].value,
+				productNum: productNums[i].value
+		};
+	}
+	console.log(JSON.stringify(params));
+	window.location.href = './assign_product.html?params=' + encodeURIComponent(JSON.stringify(params));
 }

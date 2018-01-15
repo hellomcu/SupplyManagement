@@ -21,6 +21,7 @@ public class BaseExceptionHandler
 	@ResponseBody
 	public BaseResponse<Void> onExceptionHandler(Exception e)
 	{
+		e.printStackTrace();
 		mLogger.error(e.getMessage(), e);
 		BaseResponse<Void> response = new BaseResponse<Void>();
 		if (e instanceof SupplyException)

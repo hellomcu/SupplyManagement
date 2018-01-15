@@ -15,6 +15,7 @@ public class AddStoreDto extends BaseDto
 	private String storeName;
 	private String storePlace;
 	private String contacts;
+	private String contactWay;
 	private String description;
 	private String username;
 	private String password;
@@ -65,6 +66,14 @@ public class AddStoreDto extends BaseDto
 	public void setPassword(String password)
 	{
 		this.password = password;
+	}
+	public String getContactWay()
+	{
+		return contactWay;
+	}
+	public void setContactWay(String contactWay)
+	{
+		this.contactWay = contactWay;
 	}
 	
 	
