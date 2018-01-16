@@ -1,9 +1,11 @@
 package com.supply.management.module.store.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,6 +18,7 @@ import com.supply.entity.PageInfo;
 import com.supply.entity.base.BaseResponse;
 import com.supply.entity.po.StorePo;
 import com.supply.entity.po.UserPo;
+import com.supply.exception.SupplyException;
 import com.supply.management.auth.util.JwtUtil;
 import com.supply.management.entity.dto.AddStoreDto;
 import com.supply.management.entity.dto.StoreDto;
@@ -44,7 +47,7 @@ public class StoreController extends BaseController
 	
 	@RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ApiOperation(httpMethod = "PUT", value = "添加门店", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public BaseResponse<Void> addStore(@RequestBody AddStoreDto addStoreDto, HttpServletRequest request)
+	public BaseResponse<Void> addStore(@RequestBody @Valid AddStoreDto addStoreDto, BindingResult result, HttpServletRequest request)
 	{
 		UserPo loginUser = JwtUtil.getLoginUserFromJwt(request);
 		if (loginUser == null)
@@ -60,10 +63,15 @@ public class StoreController extends BaseController
 			response.setMessage("您没有权限操作");
 			return response;
 		}
+		if (result.hasErrors())
+		{
+			throw new SupplyException(result.getFieldError().getDefaultMessage());
+		}
 		StorePo store = new StorePo();
 		UserPo user = new UserPo();
 		store.setStoreName(addStoreDto.getStoreName());
 		store.setStorePlace(addStoreDto.getStorePlace());
+		store.setContactWay(addStoreDto.getContactWay());
 		store.setContacts(addStoreDto.getContacts());
 		store.setDescription(addStoreDto.getDescription());
 		user.setUsername(addStoreDto.getUsername());

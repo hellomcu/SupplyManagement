@@ -20,7 +20,6 @@ function getOrders(page, status) {
 
 
 function initData(data) {
-	console.log(data);
 	var datas = data.list;
 	var tbody = document.getElementById('tb');
 	$(tbody).empty();
@@ -44,29 +43,23 @@ function initData(data) {
 
 		var status = order.orderStatus;
 		var statusStr = '未知';
-		var btnStr = '';
 		var btnClass = ' btn-default';
 		var btnDisabled = '';
 
 		if (status === 1) {
 			statusStr = '已下单';
-			btnStr = '出货';
 			btnClass = ' btn-danger';
 		} else if (status === 2) {
 			statusStr = '出货中';
-			btnStr = '发货';
 			btnClass = ' btn-warning';
 		} else if (status === 3) {
 			statusStr = '配送中';
-			btnStr = '到达';
 			btnClass = ' btn-info';
 		} else if (status === 4) {
 			statusStr = '已到达';
-			btnStr = '收货';
 			btnClass = ' btn-primary';
 		} else if (status === 5) {
-			statusStr = '已收货';
-			btnStr = '完成';
+			statusStr = '完成';
 			btnClass = ' btn-success';
 			btnDisabled = 'disabled=\'disabled\'';
 		}
@@ -74,9 +67,10 @@ function initData(data) {
 		statusCol.innerHTML = statusStr;
 		var params = 'order=' + encodeURI(encodeURI(JSON.stringify(order)));
 
-		oper.innerHTML = "<button type='button' " + btnDisabled
-				+ " class='btn btn-flat" + btnClass + "' onclick='updateOrderStatus("
-				+ order.id + "," + (status + 1) + ");'>" + btnStr + "</button>";
+//		oper.innerHTML = "<button type='button' " + btnDisabled
+//				+ " class='btn btn-flat" + btnClass + "' onclick='updateOrderStatus("
+//				+ order.id + "," + (status + 1) + ");'>" + btnStr + "</button>";
+		oper.innerHTML = "<button type='button' class='btn btn-success btn-flat' onclick='javascript:window.location.href=\"order_detail.html?" + params + "\"'>查看详情</button>";
 	}
 
 	var totalPage = data.totalPage;
@@ -185,4 +179,70 @@ function assignProducts(storeIds) {
 					window.location.href = './orders.html';
 				}
 			});
+}
+
+function getOrderDetail(orderId, success) {
+
+	$.myAjax('./admin/order/detail?orderId=' + orderId, 'GET', null,
+			function(data) {
+				if (data.code != 1) {
+					alert(data.message);
+				} else {
+					success(data.data);
+				}
+			});
+
+}
+
+
+function initOrderDetail(order) {
+
+
+	var statusStr = order.status;
+	var totalPrice = order.totalPrice;
+	var status = order.orderStatus;
+	var statusStr = '未知';
+
+	if (status === 1) {
+		statusStr = '已下单';
+	} else if (status === 2) {
+		statusStr = '出货中';
+	} else if (status === 3) {
+		statusStr = '配送中';
+	} else if (status === 4) {
+		statusStr = '已到达';
+	} else if (status === 5) {
+		statusStr = '已收货';
+	}
+	
+	getOrderDetail(order.id, function(details){
+		for (var i = 0; i < details.length; i++) {
+			var newRow = document.getElementById('tb').insertRow(i);
+			var no = newRow.insertCell(0);
+			var prod = newRow.insertCell(1);
+			var unit = newRow.insertCell(2);
+			var num = newRow.insertCell(3);
+			var total = newRow.insertCell(4);
+
+			no.innerHTML = i + 1;
+
+			var detail = details[i];
+
+			prod.innerHTML = detail.productName;
+			var price = detail.unitPrice;
+			var productUnit = detail.productUnit;
+			unit.innerHTML = price + ' 元/' + productUnit;
+			var productNum = detail.productNum;
+			var productNumStr = detail.productNum + ' ' + productUnit;
+			num.innerHTML = productNumStr;
+			total.innerHTML = price * productNum;
+			
+		}
+		$('#status').html(statusStr);
+		$('#total-price').html('总价: ' + totalPrice + '元');
+		$('#addr').html("<strong>" + order.contacts + "</strong></br>" + order.receivingAddress);
+	});
+
+	
+	
 }

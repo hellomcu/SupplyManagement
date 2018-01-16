@@ -21,6 +21,7 @@ import com.supply.entity.po.OrderPo;
 import com.supply.entity.po.ProductPo;
 import com.supply.entity.po.StorePo;
 import com.supply.exception.SupplyException;
+import com.supply.management.module.cart.repository.CartRepository;
 import com.supply.management.module.order.repository.OrderRepository;
 import com.supply.management.module.order.service.OrderService;
 import com.supply.management.module.product.repository.ProductRepository;
@@ -34,6 +35,8 @@ public class OrderServiceImpl implements OrderService
 	private ProductRepository mProductRepository;
 	
 	private StoreRepository mStoreRepository;
+	
+	private CartRepository mCartRepository;
 	
 	@Override
 	public PageInfo<OrderPo> findOrders(PageInfo page, OrderStatus status)
@@ -84,6 +87,8 @@ public class OrderServiceImpl implements OrderService
 		}
 		//扣款
 		updateStoreBalance(stores);
+		
+		//TODO 清空购物车
 	}
 	
 	private void createOneOrder(StorePo storePo, List<OrderDetailPo> detailParams)
@@ -264,6 +269,12 @@ public class OrderServiceImpl implements OrderService
 		return null;
 	}
 	
+	@Override
+	public List<OrderDetailPo> findOrderDetail(long orderId)
+	{
+		return mOrderRepository.findOrderDetail(orderId);
+	}
+	
 	@Resource(name="orderRepository")
 	public void setOrderRepository(OrderRepository orderRepository)
 	{
@@ -281,5 +292,13 @@ public class OrderServiceImpl implements OrderService
 	{
 		this.mStoreRepository = storeRepository;
 	}
+	
+	@Resource(name="cartRepository")
+	public void setCartRepository(CartRepository cartRepository)
+	{
+		this.mCartRepository = cartRepository;
+	}
+
+	
 	
 }

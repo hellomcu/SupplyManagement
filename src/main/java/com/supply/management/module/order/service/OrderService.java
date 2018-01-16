@@ -18,4 +18,6 @@ public interface OrderService extends BaseService
 	void createOrder(OrderPo order, List<OrderDetailPo> detailParams);
 	
 	void createOrder(Set<Long> storeIds, List<OrderDetailPo> detailParams);
+	
+	List<OrderDetailPo> findOrderDetail(long orderId);
 }

@@ -25,6 +25,7 @@ import com.supply.entity.po.UserPo;
 import com.supply.exception.SupplyException;
 import com.supply.management.auth.util.JwtUtil;
 import com.supply.management.entity.dto.CreateOrdersDto;
+import com.supply.management.entity.dto.OrderDetailDto;
 import com.supply.management.entity.dto.OrderDto;
 import com.supply.management.module.order.service.OrderService;
 import com.supply.management.util.WrappedBeanCopier;
@@ -134,5 +135,27 @@ public class OrderController extends BaseController
 		List<OrderDetailPo> details = WrappedBeanCopier.copyPropertiesOfList(createOrdersDto.getDetails(), OrderDetailPo.class);
 		mOrderService.createOrder(createOrdersDto.getStoreIds(), details);
 		return getResponse();
+	}
+	
+	@ApiOperation(httpMethod = "GET", value = "获取订单详情", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@RequestMapping(method = RequestMethod.GET, value = "/detail", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public BaseResponse<List<OrderDetailDto>> findOrderDetail(@RequestParam("orderId") long orderId, HttpServletRequest request)
+	{
+		UserPo loginUser = JwtUtil.getLoginUserFromJwt(request);
+		if (loginUser == null)
+		{
+			BaseResponse<List<OrderDetailDto>> response = new BaseResponse<>();
+			response.setCode(100);
+			response.setMessage("请先登录");
+			return response;
+		}
+		if (loginUser.getUserType().ordinal() != UserType.TYPE_ADMIN.ordinal())
+		{
+			BaseResponse<List<OrderDetailDto>> response = new BaseResponse<>();
+			response.setMessage("您没有权限操作");
+			return response;
+		}
+
+		return getResponse(WrappedBeanCopier.copyPropertiesOfList(mOrderService.findOrderDetail(orderId), OrderDetailDto.class));
 	}
 }

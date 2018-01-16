@@ -38,6 +38,8 @@ public class OrderRepositoryJdbcImpl implements OrderRepository
 	private static final String SQL_DETAIL_INSERT = "INSERT INTO t_order_detail (order_id, product_id, product_name, product_num, unit_price, product_unit, create_time)"
 			+ " VALUES(:order_id, :product_id, :product_name, :product_num, :unit_price, :product_unit, :create_time)";
 
+	private static final String SQL_QUERY_ORDER_DETAIL = "SELECT product_id, product_name, product_num, product_unit, unit_price FROM t_order_detail WHERE status=0 AND order_id=:order_id ORDER BY create_time DESC";
+	
 	private NamedParameterJdbcTemplate mNamedParameterJdbcTemplate;
 
 	@Autowired
@@ -57,7 +59,7 @@ public class OrderRepositoryJdbcImpl implements OrderRepository
 			statusCondition = " AND o.order_status = " + statusVal;
 		}
 
-		String sql = "SELECT o.id order_id, o.store_id store_id, o.total_price total_price, o.product_num product_num, o.contacts contacts, o.order_status order_status, o.order_remark order_remark, o.create_time create_time,"
+		String sql = "SELECT o.id order_id, o.store_id store_id, o.total_price total_price, o.product_num product_num, o.receiver receiver, o.contacts contacts, o.order_status order_status, o.order_remark order_remark, o.create_time create_time,"
 				+ "s.store_name store_name"
 				+ " FROM t_order o LEFT JOIN t_store s ON o.store_id = s.id AND o.status = 0 WHERE s.status = 0"
 				+ statusCondition + " ORDER BY o.create_time DESC LIMIT :start, :num";
@@ -74,6 +76,7 @@ public class OrderRepositoryJdbcImpl implements OrderRepository
 			order.setStoreId(rowSet.getLong("store_id"));
 			order.setTotalPrice(rowSet.getBigDecimal("total_price"));
 			order.setProductNum(rowSet.getInt("product_num"));
+			order.setReceiver(rowSet.getString("receiver"));
 			order.setContacts(rowSet.getString("contacts"));
 			order.setOrderStatus(OrderStatus.values()[rowSet.getInt("order_status")]);
 			order.setOrderRemark(rowSet.getString("order_remark"));
@@ -158,5 +161,27 @@ public class OrderRepositoryJdbcImpl implements OrderRepository
 			batchArgs[i] = map;
 		}
 		return mNamedParameterJdbcTemplate.batchUpdate(SQL_DETAIL_INSERT, batchArgs);
+	}
+
+	@Override
+	public List<OrderDetailPo> findOrderDetail(long orderId)
+	{
+		List<OrderDetailPo> details = new ArrayList<OrderDetailPo>();
+		MapSqlParameterSource paramSource = new MapSqlParameterSource();
+		paramSource.addValue("order_id", orderId);
+		SqlRowSet rowSet = this.mNamedParameterJdbcTemplate.queryForRowSet(SQL_QUERY_ORDER_DETAIL, paramSource);
+		while (rowSet.next())
+		{
+			OrderDetailPo detail = new OrderDetailPo();
+			detail.setOrderId(orderId);
+			detail.setProductId(rowSet.getLong("product_id"));
+			detail.setProductName(rowSet.getString("product_name"));
+			detail.setProductNum(rowSet.getInt("product_num"));
+			detail.setProductUnit(rowSet.getString("product_unit"));
+			detail.setUnitPrice(rowSet.getBigDecimal("unit_price"));
+
+			details.add(detail);
+		}
+		return details;
 	}
 }

@@ -20,7 +20,7 @@ public class OrderDto extends BaseDto
 	private int productNum;
 	private String receivingAddress;
 	private String contacts;
-	private String contactWay;
+	private String receiver;
 	private OrderStatus orderStatus;
 	private String orderRemark;
 	private String storeName;
@@ -66,14 +66,6 @@ public class OrderDto extends BaseDto
 	{
 		this.contacts = contacts;
 	}
-	public String getContactWay()
-	{
-		return contactWay;
-	}
-	public void setContactWay(String contactWay)
-	{
-		this.contactWay = contactWay;
-	}
 	public OrderStatus getOrderStatus()
 	{
 		return orderStatus;
@@ -113,6 +105,14 @@ public class OrderDto extends BaseDto
 	public void setCreateTime(Timestamp createTime)
 	{
 		this.createTime = createTime;
+	}
+	public String getReceiver()
+	{
+		return receiver;
+	}
+	public void setReceiver(String receiver)
+	{
+		this.receiver = receiver;
 	}
 	
 

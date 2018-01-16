@@ -23,4 +23,6 @@ public interface OrderRepository extends Repository
 	int save(OrderPo order);
 	
 	int[] saveDetails(long orderId,List<OrderDetailPo> details);
+	
+	List<OrderDetailPo> findOrderDetail(long orderId);
 }
