@@ -72,7 +72,7 @@ public class OrderServiceImpl implements OrderService
 	
 	@Transactional
 	@Override
-	public void createOrder(Set<Long> storeIds, List<OrderDetailPo> detailParams)
+	public void createOrder(long userId, Set<Long> storeIds, List<OrderDetailPo> detailParams)
 	{
 		List<StorePo> stores = mStoreRepository.findByIds(storeIds);
 		if (stores.size() != storeIds.size())
@@ -86,7 +86,11 @@ public class OrderServiceImpl implements OrderService
 		//扣款
 		updateStoreBalance(stores);
 		
-		//TODO 清空购物车
+		//清空购物车
+		if (1 != mCartRepository.remove(userId))
+		{
+			throw new SupplyException("下单失败");
+		}
 	}
 	
 	private void createOneOrder(StorePo storePo, List<OrderDetailPo> detailParams)

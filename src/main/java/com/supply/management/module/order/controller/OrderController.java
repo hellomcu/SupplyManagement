@@ -133,7 +133,7 @@ public class OrderController extends BaseController
 		
 
 		List<OrderDetailPo> details = WrappedBeanCopier.copyPropertiesOfList(createOrdersDto.getDetails(), OrderDetailPo.class);
-		mOrderService.createOrder(createOrdersDto.getStoreIds(), details);
+		mOrderService.createOrder(loginUser.getId(), createOrdersDto.getStoreIds(), details);
 		return getResponse();
 	}
 	
