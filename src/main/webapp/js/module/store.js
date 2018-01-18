@@ -33,7 +33,7 @@ function getSelectStore(page) {
 }
 
 function requestStores(page, success) {
-	$.myAjax('./admin/store/stores?page=' + page + '&num=1', 'GET', null,
+	$.myAjax('./admin/store/stores?page=' + page + '&num=10', 'GET', null,
 			function(data) {
 				if (data.code != 1) {
 					alert(data.message);
