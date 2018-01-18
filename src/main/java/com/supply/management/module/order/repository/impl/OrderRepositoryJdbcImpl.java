@@ -26,7 +26,7 @@ import com.supply.management.util.TimeUtil;
 public class OrderRepositoryJdbcImpl implements OrderRepository
 {
 
-	private static final String SQL_QUERY = "SELECT o.id order_id, o.store_id store_id, o.total_price total_price, o.product_num product_num, o.contacts contacts, o.order_status order_status, o.order_remark order_remark, o.create_time create_time,"
+	private static final String SQL_QUERY = "SELECT o.id order_id, o.store_id store_id, o.total_price total_price, o.product_num product_num, o.receiver receiver, o.contacts contacts, o.receiving_address receiving_address, o.order_status order_status, o.order_remark order_remark, o.create_time create_time,"
 			+ "s.store_name store_name"
 			+ " FROM t_order o LEFT JOIN t_store s ON o.store_id = s.id AND s.status = 0 WHERE o.status = 0 ORDER BY o.create_time DESC LIMIT :start, :num";
 
@@ -59,7 +59,7 @@ public class OrderRepositoryJdbcImpl implements OrderRepository
 			statusCondition = " AND o.order_status = " + statusVal;
 		}
 
-		String sql = "SELECT o.id order_id, o.store_id store_id, o.total_price total_price, o.product_num product_num, o.receiver receiver, o.contacts contacts, o.order_status order_status, o.order_remark order_remark, o.create_time create_time,"
+		String sql = "SELECT o.id order_id, o.store_id store_id, o.total_price total_price, o.product_num product_num, o.receiver receiver, o.contacts contacts,o.receiving_address receiving_address, o.order_status order_status, o.order_remark order_remark, o.create_time create_time,"
 				+ "s.store_name store_name"
 				+ " FROM t_order o LEFT JOIN t_store s ON o.store_id = s.id AND o.status = 0 WHERE s.status = 0"
 				+ statusCondition + " ORDER BY o.create_time DESC LIMIT :start, :num";
@@ -78,6 +78,7 @@ public class OrderRepositoryJdbcImpl implements OrderRepository
 			order.setProductNum(rowSet.getInt("product_num"));
 			order.setReceiver(rowSet.getString("receiver"));
 			order.setContacts(rowSet.getString("contacts"));
+			order.setReceivingAddress(rowSet.getString("receiving_address"));
 			order.setOrderStatus(OrderStatus.values()[rowSet.getInt("order_status")]);
 			order.setOrderRemark(rowSet.getString("order_remark"));
 			order.setCreateTime(rowSet.getTimestamp("create_time"));
