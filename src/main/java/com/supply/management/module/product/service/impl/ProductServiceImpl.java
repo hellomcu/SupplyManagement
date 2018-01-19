@@ -58,17 +58,20 @@ public class ProductServiceImpl implements ProductService
 	@Override
 	public void updateProduct(ProductPo product)
 	{
-		Map<String, Object> fields = new HashMap<String, Object>();
-		fields.put("product_name", product.getProductName());
-		fields.put("total_num", product.getTotalNum());
-		fields.put("product_num", product.getProductNum());
-		fields.put("product_price", product.getProductPrice());
-		fields.put("product_unit", product.getProductUnit());
-		fields.put("product_place", product.getProductPlace());
-		fields.put("product_date", product.getProductDate());
-		fields.put("quality_guarantee_period", product.getQualityGuaranteePeriod());
-		fields.put("description", product.getDescription());
-		int effectedRows = mProductRepository.update(fields, product.getId());
+		//total_num = total_num + product_num - product_num
+//		Map<String, Object> fields = new HashMap<String, Object>();
+//		fields.put("product_name", product.getProductName());
+//		fields.put("total_num", product.getTotalNum());
+//		fields.put("product_num", product.getProductNum());
+//		fields.put("total_num", product.getProductNum());
+//		fields.put("product_price", product.getProductPrice());
+//		fields.put("product_unit", product.getProductUnit());
+//		fields.put("product_place", product.getProductPlace());
+//		fields.put("product_date", product.getProductDate());
+//		fields.put("quality_guarantee_period", product.getQualityGuaranteePeriod());
+//		fields.put("description", product.getDescription());
+//		int effectedRows = mProductRepository.update(fields, product.getId());
+		int effectedRows = mProductRepository.update(product);
 		if (effectedRows != 1)
 		{
 			throw new SupplyException("更新产品失败,请稍后重试");

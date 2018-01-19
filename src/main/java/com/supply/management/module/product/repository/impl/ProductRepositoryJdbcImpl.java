@@ -42,7 +42,9 @@ public class ProductRepositoryJdbcImpl implements ProductRepository
 	// description=:description WHERE status=0 AND id=:id";
 
 	private static final String SQL_UPDATE_NUM = "UPDATE t_product set product_num=:product_num WHERE id = :id AND status = 0";
-	
+
+	private static final String SQL_UPDATE = "UPDATE t_product set product_name=:product_name, total_num=total_num+:product_num-product_num, product_num=:product_num, product_price=:product_price, product_unit=:product_unit,product_place=:product_place,description=:description WHERE id = :id AND status = 0";
+
 	private NamedParameterJdbcTemplate mNamedParameterJdbcTemplate;
 
 	@Autowired
@@ -126,7 +128,9 @@ public class ProductRepositoryJdbcImpl implements ProductRepository
 			paramSource.addValue(key, fields.get(key));
 			sb.append(key).append("=:").append(key).append(",");
 		}
-		sb = new StringBuffer(sb.substring(0, sb.lastIndexOf(",")));
+
+		sb.append("total_num=total_num+:product_num");
+		// sb = new StringBuffer(sb.substring(0, sb.lastIndexOf(",")));
 		sb.append(" WHERE id=:id");
 		int effectedRows = this.mNamedParameterJdbcTemplate.update(sb.toString(), paramSource);
 
@@ -147,7 +151,7 @@ public class ProductRepositoryJdbcImpl implements ProductRepository
 		String sql = "SELECT id, product_name, product_num, product_price, product_unit FROM t_product WHERE status = 0";
 		List<ProductPo> products = new ArrayList<ProductPo>();
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
-		
+
 		if (ids == null || ids.isEmpty())
 		{
 			return products;
@@ -174,8 +178,7 @@ public class ProductRepositoryJdbcImpl implements ProductRepository
 		return products;
 
 	}
-	
-	
+
 	@Override
 	public int[] updateNum(List<ProductPo> products)
 	{
@@ -190,7 +193,24 @@ public class ProductRepositoryJdbcImpl implements ProductRepository
 
 			batchArgs[i] = map;
 		}
-		
+
 		return mNamedParameterJdbcTemplate.batchUpdate(SQL_UPDATE_NUM, batchArgs);
+	}
+
+	@Override
+	public int update(ProductPo product)
+	{
+		MapSqlParameterSource paramSource = new MapSqlParameterSource();
+		paramSource.addValue("id", product.getId());
+		paramSource.addValue("product_name", product.getProductName());
+		paramSource.addValue("product_num", product.getProductNum());
+		paramSource.addValue("product_price", product.getProductPrice());
+		paramSource.addValue("product_unit", product.getProductUnit());
+		paramSource.addValue("product_place", product.getProductPlace());
+		paramSource.addValue("description", product.getDescription());
+
+		int effectedRows = this.mNamedParameterJdbcTemplate.update(SQL_UPDATE, paramSource);
+
+		return effectedRows;
 	}
 }

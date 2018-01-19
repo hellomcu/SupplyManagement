@@ -3,7 +3,7 @@ function addProduct(categoryId, remark, productName, productNum, productPrice,
 
 	var jsonParams = {
 		"categoryId" : categoryId,
-		"description" : "remark",
+		"description" : remark,
 		"productDate" : null,
 		"productName" : productName,
 		"productNum" : productNum,
@@ -23,6 +23,7 @@ function addProduct(categoryId, remark, productName, productNum, productPrice,
 	});
 
 }
+
 function getProducts(page, productName) {
 
 	$.myAjax('./admin/product/products?page=' + page + '&num=10&productName='
@@ -44,8 +45,7 @@ function initData(data) {
 	var tbody = document.getElementById('tb');
 	$(tbody).empty();
 	for (var i = 0; i < list.length; i++) {
-		// alert(JSON.stringify(data[i].createTime));
-
+		console.log(list[i]);
 		var x = tbody.insertRow(i);
 		x.insertCell(0).innerHTML = i + 1;
 		var y = x.insertCell(1);
@@ -53,12 +53,16 @@ function initData(data) {
 
 		var a = x.insertCell(3);
 		// var b = x.insertCell(3);
-		var c = x.insertCell(4);
-		y.innerHTML = list[i].productName;
+		var stock = x.insertCell(4);
+		var c = x.insertCell(5);
+		y.innerHTML = "<a href='product_detail.html?product="
+				+ encodeURI(encodeURI(JSON.stringify(list[i]))) + "'>"
+				+ list[i].productName + "</a>";
 		z.innerHTML = list[i].productPlace;
 
 		a.innerHTML = "<h4><span class='text-danger'>" + list[i].productPrice
 				+ "</span><small>元/" + list[i].productUnit + "</small></h4>";
+		stock.innerHTML = list[i].productNum;
 		// b.innerHTML = data[i].productUnit;
 
 		// c.innerHTML = "<input type='button' value='立即购买'
@@ -88,7 +92,6 @@ function initData(data) {
 	});
 }
 
-
 function deleteProduct(id) {
 	var r = confirm("要删除它吗？");
 	if (r == true) {
@@ -105,4 +108,38 @@ function deleteProduct(id) {
 	}
 }
 
+function initProductDetail(product) {
+	$('#product-id').val(product.id);
+	$('#productName').val(product.productName);
+	$('#productNum').val(product.productNum);
+	$('#unitPrice').val(product.productPrice);
+	$('#productUnit').val(product.productUnit);
+	$('#productPlace').val(product.productPlace);
+	$('#remark').html(product.productName);
+}
 
+function updateProduct(id, categoryId, remark, productName, productNum,
+		productPrice, productUnit, productPlace) {
+
+	var jsonParams = {
+		"id" : id,
+		"description" : remark,
+		"productDate" : null,
+		"productName" : productName,
+		"productNum" : productNum,
+		"productPlace" : productPlace,
+		"productPrice" : productPrice,
+		"productUnit" : productUnit,
+		"qualityGuaranteePeriod" : null
+	};
+	$.myAjax('./admin/product', 'POST', JSON.stringify(jsonParams), function(
+			data) {
+		if (data.code != 1) {
+			alert(data.message);
+		} else {
+			alert("更新成功！");
+			// window.location.href = "./products.html";
+		}
+	});
+
+}

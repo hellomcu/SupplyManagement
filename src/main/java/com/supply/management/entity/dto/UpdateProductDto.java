@@ -15,7 +15,6 @@ public class UpdateProductDto extends BaseDto
 	private static final long serialVersionUID = -291408185877689715L;
 	private long id;
 	private String productName;
-	private int totalNum;
 	private int productNum;
 	private BigDecimal productPrice;
 	private String productUnit;
@@ -36,15 +35,6 @@ public class UpdateProductDto extends BaseDto
 		this.id = id;
 	}
 
-	public int getTotalNum()
-	{
-		return totalNum;
-	}
-
-	public void setTotalNum(int totalNum)
-	{
-		this.totalNum = totalNum;
-	}
 
 	public String getProductName()
 	{

@@ -141,10 +141,10 @@ public class ProductController extends BaseController
 			return response;
 		}
 		
-		if (updateProductDto.getProductNum() > updateProductDto.getTotalNum())
-		{
-			throw new SupplyException("产品当前数量不能大于总数量");
-		}
+//		if (updateProductDto.getProductNum() > updateProductDto.getTotalNum())
+//		{
+//			throw new SupplyException("产品当前数量不能大于总数量");
+//		}
 	
 		ProductPo product = WrappedBeanCopier.copyProperties(updateProductDto, ProductPo.class);
 		mProductService.updateProduct(product);

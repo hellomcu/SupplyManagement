@@ -23,4 +23,6 @@ public interface ProductRepository extends Repository
 	List<ProductPo> findByIds(Set<Long> ids);
 	
 	int[] updateNum(List<ProductPo> products);
+	
+	int update(ProductPo product);
 }
