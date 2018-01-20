@@ -32,7 +32,8 @@ function initData(data) {
 		var total = newRow.insertCell(3);
 		var cate = newRow.insertCell(4);
 		var statusCol = newRow.insertCell(5);
-		var oper = newRow.insertCell(6);
+		var createTime = newRow.insertCell(6);
+		var oper = newRow.insertCell(7);
 
 		no.innerHTML = i + 1;
 		var order = datas[i];
@@ -41,7 +42,7 @@ function initData(data) {
 		contact.innerHTML = order.contacts;
 		total.innerHTML = order.totalPrice;
 		cate.innerHTML = order.productNum;
-
+		createTime.innerHTML = order.createTime;
 		var status = order.orderStatus;
 		var statusStr = '未知';
 		var btnClass = ' btn-default';
@@ -86,7 +87,6 @@ function initData(data) {
             // fire first page loading
         },
         onPageClick: function (page, evt) {
-        	console.log(page);
         	getOrders(page, getStatus());
 //            $('#alt-style-pagination-content').text('Page ' + page);
         }
@@ -170,7 +170,7 @@ function assignProducts(storeIds) {
 			storeIds: storeIds,
 			details : JSON.parse(decodeURIComponent(getQueryString('params')))
 	};
-	console.log(params);
+	
 	$.myAjax('./admin/order/orders', 'POST', JSON.stringify(params),
 			function(data) {
 				if (data.code != 1) {
@@ -244,5 +244,5 @@ function initOrderDetail(order) {
 	$('#status').html(statusStr);
 	$('#total-price').html('总价: ' + totalPrice + '元');
 	$('#addr').html("<strong>" + order.receiver + "&nbsp;" + order.contacts + "</strong></br>" + order.receivingAddress);
-	
+	$('#create-time').html("创建时间:&nbsp;" + order.createTime);
 }
