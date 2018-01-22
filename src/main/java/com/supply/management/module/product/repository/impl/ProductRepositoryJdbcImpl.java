@@ -23,10 +23,10 @@ import com.supply.management.util.TimeUtil;
 public class ProductRepositoryJdbcImpl implements ProductRepository
 {
 
-	private static final String SQL_SAVE = "INSERT INTO t_product (category_id, user_id, product_name, total_num, product_num, product_price, product_unit, product_place, product_date, quality_guarantee_period, description, create_time) values(:category_id, :user_id, :product_name, :total_num, :product_num, :product_price, :product_unit, :product_place, :product_date, :quality_guarantee_period, :description, :create_time)";
+	private static final String SQL_SAVE = "INSERT INTO t_product (category_id, user_id, product_name, total_num, product_num, product_price, sale_price, product_unit, product_place, product_date, quality_guarantee_period, description, create_time) values(:category_id, :user_id, :product_name, :total_num, :product_num, :product_price, :sale_price, :product_unit, :product_place, :product_date, :quality_guarantee_period, :description, :create_time)";
 
 	private static final String SQL_QUERY = "SELECT p.id product_id, p.product_name product_name, p.total_num total_num,"
-			+ "p.product_num product_num, p.product_price product_price, p.product_unit, p.product_place product_place, p.description description, p.create_time create_time,"
+			+ "p.product_num product_num, p.product_price product_price, p.sale_price sale_price, p.product_unit, p.product_place product_place, p.description description, p.create_time create_time,"
 			+ "c.id category_id,c.category_name category_name," + "c2.id parent_id, c2.category_name parent_name"
 			+ " FROM t_product p LEFT JOIN t_category c ON p.category_id = c.id"
 			+ " LEFT JOIN t_category c2 ON c2.id = c.parent_id"
@@ -43,7 +43,7 @@ public class ProductRepositoryJdbcImpl implements ProductRepository
 
 	private static final String SQL_UPDATE_NUM = "UPDATE t_product set product_num=:product_num WHERE id = :id AND status = 0";
 
-	private static final String SQL_UPDATE = "UPDATE t_product set product_name=:product_name, total_num=total_num+:product_num-product_num, product_num=:product_num, product_price=:product_price, product_unit=:product_unit,product_place=:product_place,description=:description WHERE id = :id AND status = 0";
+	private static final String SQL_UPDATE = "UPDATE t_product set product_name=:product_name, total_num=total_num+:product_num-product_num, product_num=:product_num, product_price=:product_price, sale_price=:sale_price, product_unit=:product_unit,product_place=:product_place,description=:description WHERE id = :id AND status = 0";
 
 	private NamedParameterJdbcTemplate mNamedParameterJdbcTemplate;
 
@@ -65,6 +65,7 @@ public class ProductRepositoryJdbcImpl implements ProductRepository
 		paramSource.addValue("total_num", product.getTotalNum());
 		paramSource.addValue("product_num", product.getProductNum());
 		paramSource.addValue("product_price", product.getProductPrice());
+		paramSource.addValue("sale_price", product.getSalePrice());
 		paramSource.addValue("product_unit", product.getProductUnit());
 		paramSource.addValue("product_place", product.getProductPlace());
 		paramSource.addValue("product_date", product.getProductDate());
@@ -94,6 +95,7 @@ public class ProductRepositoryJdbcImpl implements ProductRepository
 			product.setTotalNum(rowSet.getInt("total_num"));
 			product.setProductNum(rowSet.getInt("product_num"));
 			product.setProductPrice(rowSet.getBigDecimal("product_price"));
+			product.setSalePrice(rowSet.getBigDecimal("sale_price"));
 			product.setProductUnit(rowSet.getString("product_unit"));
 			product.setProductPlace(rowSet.getString("product_place"));
 			product.setDescription(rowSet.getString("description"));
@@ -148,7 +150,7 @@ public class ProductRepositoryJdbcImpl implements ProductRepository
 	@Override
 	public List<ProductPo> findByIds(Set<Long> ids)
 	{
-		String sql = "SELECT id, product_name, product_num, product_price, product_unit FROM t_product WHERE status = 0";
+		String sql = "SELECT id, product_name, product_num, product_price, sale_price, product_unit FROM t_product WHERE status = 0";
 		List<ProductPo> products = new ArrayList<ProductPo>();
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
 
@@ -171,6 +173,7 @@ public class ProductRepositoryJdbcImpl implements ProductRepository
 			product.setProductName(rowSet.getString("product_name"));
 			product.setProductNum(rowSet.getInt("product_num"));
 			product.setProductPrice(rowSet.getBigDecimal("product_price"));
+			product.setSalePrice(rowSet.getBigDecimal("sale_price"));
 			product.setProductUnit(rowSet.getString("product_unit"));
 
 			products.add(product);
@@ -205,6 +208,7 @@ public class ProductRepositoryJdbcImpl implements ProductRepository
 		paramSource.addValue("product_name", product.getProductName());
 		paramSource.addValue("product_num", product.getProductNum());
 		paramSource.addValue("product_price", product.getProductPrice());
+		paramSource.addValue("sale_price", product.getSalePrice());
 		paramSource.addValue("product_unit", product.getProductUnit());
 		paramSource.addValue("product_place", product.getProductPlace());
 		paramSource.addValue("description", product.getDescription());

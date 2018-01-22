@@ -4,7 +4,7 @@ function getOrders(page, status) {
 	 * var jsonParams = { "page" : num, "num" : 10, };
 	 */
 
-	$.myAjax('./admin/order/orders?page=' + page + '&num=10&status=' + status, 'GET', null,
+	$.myAjax('./admin/order/orders?page=' + page + '&num=10&status=' + "", 'GET', null,
 			function(data) {
 				// alert(JSON.stringify(data.data));
 
@@ -20,6 +20,7 @@ function getOrders(page, status) {
 
 
 function initData(data) {
+	console.log(data);
 	var datas = data.list;
 	var tbody = document.getElementById('tb');
 	$(tbody).empty();
@@ -30,43 +31,43 @@ function initData(data) {
 		var store = newRow.insertCell(1);
 		var contact = newRow.insertCell(2);
 		var total = newRow.insertCell(3);
-		var cate = newRow.insertCell(4);
-		var statusCol = newRow.insertCell(5);
-		var createTime = newRow.insertCell(6);
-		var oper = newRow.insertCell(7);
+		//var cate = newRow.insertCell(4);
+		//var statusCol = newRow.insertCell(5);
+		var createTime = newRow.insertCell(4);
+		var oper = newRow.insertCell(5);
 
 		no.innerHTML = i + 1;
 		var order = datas[i];
-		console.log(order);
+		
 		store.innerHTML = order.storeName;
 		contact.innerHTML = order.contacts;
 		total.innerHTML = order.totalPrice;
-		cate.innerHTML = order.productNum;
+		//cate.innerHTML = order.productNum;
 		createTime.innerHTML = order.createTime;
-		var status = order.orderStatus;
-		var statusStr = '未知';
-		var btnClass = ' btn-default';
-		var btnDisabled = '';
-
-		if (status === 1) {
-			statusStr = '已下单';
-			btnClass = ' btn-danger';
-		} else if (status === 2) {
-			statusStr = '出货中';
-			btnClass = ' btn-warning';
-		} else if (status === 3) {
-			statusStr = '配送中';
-			btnClass = ' btn-info';
-		} else if (status === 4) {
-			statusStr = '已到达';
-			btnClass = ' btn-primary';
-		} else if (status === 5) {
-			statusStr = '完成';
-			btnClass = ' btn-success';
-			btnDisabled = 'disabled=\'disabled\'';
-		}
-		statusCol.name = status;
-		statusCol.innerHTML = statusStr;
+//		var status = order.orderStatus;
+//		var statusStr = '未知';
+//		var btnClass = ' btn-default';
+//		var btnDisabled = '';
+//
+//		if (status === 1) {
+//			statusStr = '已下单';
+//			btnClass = ' btn-danger';
+//		} else if (status === 2) {
+//			statusStr = '出货中';
+//			btnClass = ' btn-warning';
+//		} else if (status === 3) {
+//			statusStr = '配送中';
+//			btnClass = ' btn-info';
+//		} else if (status === 4) {
+//			statusStr = '已到达';
+//			btnClass = ' btn-primary';
+//		} else if (status === 5) {
+//			statusStr = '完成';
+//			btnClass = ' btn-success';
+//			btnDisabled = 'disabled=\'disabled\'';
+//		}
+//		statusCol.name = status;
+//		statusCol.innerHTML = statusStr;
 		var params = 'order=' + encodeURI(encodeURI(JSON.stringify(order)));
 
 //		oper.innerHTML = "<button type='button' " + btnDisabled

@@ -1,5 +1,5 @@
 function addProduct(categoryId, remark, productName, productNum, productPrice,
-		productUnit, productPlace) {
+		productUnit, productPlace, salePrice) {
 
 	var jsonParams = {
 		"categoryId" : categoryId,
@@ -7,10 +7,11 @@ function addProduct(categoryId, remark, productName, productNum, productPrice,
 		"productDate" : null,
 		"productName" : productName,
 		"productNum" : productNum,
-		"productPlace" : productPlace,
+		"productPlace" : null,
 		"productPrice" : productPrice,
 		"productUnit" : productUnit,
-		"qualityGuaranteePeriod" : null
+		"qualityGuaranteePeriod" : null,
+		"salePrice" : salePrice
 	};
 	$.myAjax('./admin/product', 'PUT', JSON.stringify(jsonParams), function(
 			data) {
@@ -49,19 +50,21 @@ function initData(data) {
 		var x = tbody.insertRow(i);
 		x.insertCell(0).innerHTML = i + 1;
 		var y = x.insertCell(1);
-		var z = x.insertCell(2);
+		//var z = x.insertCell(2);
 
-		var a = x.insertCell(3);
-		// var b = x.insertCell(3);
+		var a = x.insertCell(2);
+		var salePrice = x.insertCell(3);
 		var stock = x.insertCell(4);
 		var c = x.insertCell(5);
 		y.innerHTML = "<a href='product_detail.html?product="
 				+ encodeURI(encodeURI(JSON.stringify(list[i]))) + "'>"
 				+ list[i].productName + "</a>";
-		z.innerHTML = list[i].productPlace;
+		//z.innerHTML = list[i].productPlace;
 
 		a.innerHTML = "<h4><span class='text-danger'>" + list[i].productPrice
 				+ "</span><small>元/" + list[i].productUnit + "</small></h4>";
+		salePrice.innerHTML = "<h4><span class='text-danger'>" + list[i].salePrice
+		+ "</span><small>元/" + list[i].productUnit + "</small></h4>";
 		stock.innerHTML = list[i].productNum;
 		// b.innerHTML = data[i].productUnit;
 
@@ -114,12 +117,13 @@ function initProductDetail(product) {
 	$('#productNum').val(product.productNum);
 	$('#unitPrice').val(product.productPrice);
 	$('#productUnit').val(product.productUnit);
-	$('#productPlace').val(product.productPlace);
+	$('#sale-price').val(product.salePrice);
+	//$('#productPlace').val(product.productPlace);
 	$('#remark').html(product.productName);
 }
 
 function updateProduct(id, categoryId, remark, productName, productNum,
-		productPrice, productUnit, productPlace) {
+		productPrice, productUnit, productPlace, salePrice) {
 
 	var jsonParams = {
 		"id" : id,
@@ -127,10 +131,11 @@ function updateProduct(id, categoryId, remark, productName, productNum,
 		"productDate" : null,
 		"productName" : productName,
 		"productNum" : productNum,
-		"productPlace" : productPlace,
+		"productPlace" : null,
 		"productPrice" : productPrice,
 		"productUnit" : productUnit,
-		"qualityGuaranteePeriod" : null
+		"qualityGuaranteePeriod" : null,
+		"salePrice" : salePrice
 	};
 	$.myAjax('./admin/product', 'POST', JSON.stringify(jsonParams), function(
 			data) {
