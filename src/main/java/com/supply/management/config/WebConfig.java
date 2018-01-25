@@ -8,6 +8,8 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 @Configuration
 @EnableWebMvc
 public class WebConfig extends WebMvcConfigurerAdapter
@@ -51,12 +53,10 @@ public class WebConfig extends WebMvcConfigurerAdapter
 		return new StandardServletMultipartResolver();
 	}
 	
-//	@Bean
-//	public ObjectMapper getObjectMapper()
-//	{
-//		ObjectMapper objectMapper = new ObjectMapper();
-//		objectMapper.configure(SerializationFeature.WRITE_ENUMS_USING_INDEX, true);
-//		return objectMapper;
-//	}
+	@Bean
+	public ObjectMapper objectMapper()
+	{
+		return new MyObjectMapper();
+	}
 }
 

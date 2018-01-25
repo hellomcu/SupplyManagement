@@ -37,10 +37,6 @@
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
 
-
-	<bean id="myObjectMapper" class="com.supply.management.config.MyObjectMapper"></bean>
-
-
 	<!-- jedis 配置 -->
 	<bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">
 		<property name="maxIdle" value="${redis.maxIdle}" />
@@ -83,23 +79,7 @@
 		<mvc:message-converters>
 			<bean
 				class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
-				<property name="objectMapper" ref="myObjectMapper">
-
-					<!-- <bean class="com.fasterxml.jackson.databind.ObjectMapper"> -->
-
-					<!-- <property name="dateFormat"> -->
-					<!-- <bean class="java.text.SimpleDateFormat"> -->
-					<!-- <constructor-arg type="java.lang.String" value="yyyy-MM-dd HH:mm:ss" 
-						/> -->
-					<!-- </bean> -->
-					<!-- </property> -->
-
-					<!-- <property name="configure"> -->
-					<!-- <bean class="com.fasterxml.jackson.databind.SerializationFeature"> -->
-					<!-- <property name="id" ref="eee"></property> -->
-					<!-- </bean> -->
-
-					<!-- </property> -->
+				<property name="objectMapper" ref="objectMapper">
 				</property>
 			</bean>
 		</mvc:message-converters>
