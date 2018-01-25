@@ -16,6 +16,16 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
 		ctx.setConfigLocation("classpath:spring-mvc.xml");
 		return ctx;
 	}
+	
+
+	
+	@Override
+	protected void customizeRegistration(ServletRegistration.Dynamic registration)
+	{
+		registration.setInitParameter("spring.profiles.active", "prod");
+		registration.setMultipartConfig(getMultipartConfigElement());
+	}
+
 
 	@Override
 	protected String[] getServletMappings()
@@ -29,16 +39,6 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
 		return new Class<?>[] { WebConfig.class };
 	}
 
-	
-
-	
-	@Override
-	protected void customizeRegistration(ServletRegistration.Dynamic registration)
-	{
-		registration.setMultipartConfig(getMultipartConfigElement());
-	}
-
-	
 	
 	private MultipartConfigElement getMultipartConfigElement()
 	{
