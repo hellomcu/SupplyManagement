@@ -22,7 +22,7 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
 	@Override
 	protected void customizeRegistration(ServletRegistration.Dynamic registration)
 	{
-		registration.setInitParameter("spring.profiles.active", "prod");
+		registration.setInitParameter("spring.profiles.active", "dev");
 		registration.setMultipartConfig(getMultipartConfigElement());
 	}
 

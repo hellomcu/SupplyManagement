@@ -20,7 +20,7 @@ function getOrders(page, status) {
 
 
 function initData(data) {
-	console.log(data);
+	
 	var datas = data.list;
 	var tbody = document.getElementById('tb');
 	$(tbody).empty();
@@ -69,7 +69,6 @@ function initData(data) {
 //		statusCol.name = status;
 //		statusCol.innerHTML = statusStr;
 		var params = 'order=' + encodeURI(encodeURI(JSON.stringify(order)));
-
 //		oper.innerHTML = "<button type='button' " + btnDisabled
 //				+ " class='btn btn-flat" + btnClass + "' onclick='updateOrderStatus("
 //				+ order.id + "," + (status + 1) + ");'>" + btnStr + "</button>";

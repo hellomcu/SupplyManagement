@@ -180,7 +180,7 @@
 		// 	    });
 		$(function() {
 // 			getCategories(1);
-			initProductDetail(JSON.parse(decodeURI(getQueryString('product'))));
+			initProductDetail(JSON.parse(decodeURIComponent(getQueryString('product'))));
 		});
 
 		function updateProductPre() {
@@ -196,7 +196,6 @@
 					|| productUnit == "" || salePrice == "") {
 				alert("信息填写不完整");
 			} else {
-				console.log(productNum);
 				updateProduct($("#product-id").val(), parseInt($("#category-child").val()), remark,
 						productName, productNum, productPrice, productUnit,
 						null, salePrice);

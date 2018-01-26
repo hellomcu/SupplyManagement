@@ -46,7 +46,7 @@ function initData(data) {
 	var tbody = document.getElementById('tb');
 	$(tbody).empty();
 	for (var i = 0; i < list.length; i++) {
-		console.log(list[i]);
+	
 		var x = tbody.insertRow(i);
 		x.insertCell(0).innerHTML = i + 1;
 		var y = x.insertCell(1);
@@ -57,8 +57,9 @@ function initData(data) {
 		var stock = x.insertCell(4);
 		var c = x.insertCell(5);
 		y.innerHTML = "<a href='product_detail.html?product="
-				+ encodeURI(encodeURI(JSON.stringify(list[i]))) + "'>"
+				+ encodeURIComponent(JSON.stringify(list[i])) + "'>"
 				+ list[i].productName + "</a>";
+		console.log(JSON.stringify(list[i]));
 		//z.innerHTML = list[i].productPlace;
 
 		a.innerHTML = "<h4><span class='text-danger'>" + list[i].productPrice
@@ -119,7 +120,7 @@ function initProductDetail(product) {
 	$('#productUnit').val(product.productUnit);
 	$('#sale-price').val(product.salePrice);
 	//$('#productPlace').val(product.productPlace);
-	$('#remark').html(product.productName);
+	$('#remark').html(product.description);
 }
 
 function updateProduct(id, categoryId, remark, productName, productNum,
