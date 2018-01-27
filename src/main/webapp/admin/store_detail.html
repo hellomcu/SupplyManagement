@@ -155,7 +155,7 @@
 	<script type="text/javascript">
 		$(function(){
 			console.log(getQueryString('store'));
-			initStoreDetail(JSON.parse(decodeURIComponent(getQueryString('store'))));
+			initStoreDetail(JSON.parse(decodeURI(getQueryString('store'))));
 		});
 		function updateMenDianPre() {
 			var storeName = document.getElementById("storeName").value;

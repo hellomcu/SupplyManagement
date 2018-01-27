@@ -61,7 +61,7 @@ function initData(data) {
 		var c = x.insertCell(6);
 		y.innerHTML = i + 1;
 		z.innerHTML = "<a href='store_detail.html?store="
-				+ encodeURIComponent(JSON.stringify(list[i])) + "'>" + list[i].storeName
+				+ encodeURI(encodeURI(JSON.stringify(list[i]))) + "'>" + list[i].storeName
 				+ "</a>";
 
 		a.innerHTML = list[i].storePlace;
