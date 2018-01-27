@@ -93,18 +93,25 @@
 								</div>
 								<div class="form-group">
 									<div class="input-group">
+										<div class="input-group-addon">零&ensp;售&ensp;价</div>
+										<input type="number" class="form-control" id="sale-price"
+											placeholder="输入商品零售价" /> <span class="input-group-addon">元</span>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="input-group">
 										<div class="input-group-addon">计价单位</div>
 										<input type="text" class="form-control" id="productUnit"
 											placeholder="输入计价单位" />
 									</div>
 								</div>
-								<div class="form-group">
-									<div class="input-group">
-										<div class="input-group-addon">商品产地</div>
-										<input type="text" class="form-control" id="productPlace"
-											placeholder="输入商品产地" />
-									</div>
-								</div>
+<!-- 								<div class="form-group"> -->
+<!-- 									<div class="input-group"> -->
+<!-- 										<div class="input-group-addon">商品产地</div> -->
+<!-- 										<input type="text" class="form-control" id="productPlace" -->
+<!-- 											placeholder="输入商品产地" /> -->
+<!-- 									</div> -->
+<!-- 								</div> -->
 								<div class="form-group">
 									<div class="input-group">
 										<div class="input-group-addon">备注信息</div>
@@ -173,25 +180,25 @@
 		// 	    });
 		$(function() {
 // 			getCategories(1);
-			initProductDetail(JSON.parse(decodeURI(getQueryString('product'))));
+			initProductDetail(JSON.parse(decodeURIComponent(getQueryString('product'))));
 		});
 
 		function updateProductPre() {
 			var productName = document.getElementById("productName").value;
 			var productNum = document.getElementById("productNum").value;
 			var productPrice = document.getElementById("unitPrice").value;
+			var salePrice = document.getElementById("sale-price").value;
 			var productUnit = document.getElementById("productUnit").value;
-			var productPlace = document.getElementById("productPlace").value;
+// 			var productPlace = document.getElementById("productPlace").value;
 			var remark = document.getElementById("remark").value;
 
 			if (productName == "" || productNum == "" || productPrice == ""
-					|| productUnit == "") {
+					|| productUnit == "" || salePrice == "") {
 				alert("信息填写不完整");
 			} else {
-				console.log(productNum);
 				updateProduct($("#product-id").val(), parseInt($("#category-child").val()), remark,
 						productName, productNum, productPrice, productUnit,
-						productPlace);
+						null, salePrice);
 			}
 		}
 	</script>

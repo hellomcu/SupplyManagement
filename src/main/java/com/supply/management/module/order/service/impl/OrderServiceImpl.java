@@ -86,11 +86,11 @@ public class OrderServiceImpl implements OrderService
 		//扣款
 		updateStoreBalance(stores);
 		
-		//清空购物车
-		if (1 != mCartRepository.remove(userId))
-		{
-			throw new SupplyException("下单失败");
-		}
+//		//清空购物车
+//		if (1 != mCartRepository.remove(userId))
+//		{
+//			throw new SupplyException("下单失败");
+//		}
 	}
 	
 	private void createOneOrder(StorePo storePo, List<OrderDetailPo> detailParams)

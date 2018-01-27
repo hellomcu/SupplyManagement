@@ -23,6 +23,7 @@
        folder instead of downloading all of them to reduce the load. -->
 <link rel="stylesheet" href="./dist/css/skins/_all-skins.min.css">
 <link rel="stylesheet" href="./js/loading/jquery.mloading.css" />
+<link rel="stylesheet" href="./bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
@@ -69,26 +70,45 @@
 				<div class="row">
 					<div class="col-xs-12">
 						<div class="box box-primary">
-							<div class="box-header with-border">
-				
-							
-									<form role="form" class="form-inline">
-										<div class="form-group">
-											<div class="input-group">
-												<span class="input-group-addon">订单状态</span> <select
-													id="order-status" class="form-control form-inline">
-													<option value='0'>全部</option>
-													<option value='1'>已下单</option>
-													<option value='2'>出货中</option>
-													<option value='3'>配送中</option>
-													<option value='4'>已到达</option>
-													<option value='5'>已完成</option>
-												</select>
-											</div>
-										</div>
-									</form>
-						
-							</div>
+														<div class="box-header with-border">
+
+
+							<!-- 									<form role="form" class="form-inline"> -->
+							<!-- 										<div class="form-group"> -->
+							<!-- 											<div class="input-group"> -->
+							<!-- 												<span class="input-group-addon">订单状态</span> <select -->
+							<!-- 													id="order-status" class="form-control form-inline"> -->
+							<!--													<option value='0'>全部</option>
+<!--													<option value='1'>已下单</option>
+<!--													<option value='2'>出货中</option>
+<!--												<option value='3'>配送中</option>
+<!--													<option value='4'>已到达</option>
+<!--													<option value='5'>已完成</option>
+<!-- 												</select> -->
+							<!-- 											</div> -->
+							<!-- 										</div> -->
+							<!-- 									</form> -->
+
+							<form role="form" class="form-inline">
+								<div class="form-group">
+									<div class='input-group'>
+										<span class="input-group-addon">门店</span> <input
+											id='datetimepicker' type='text'
+											class="form-control" id="time-input" />
+									</div>
+<div class='input-group'>
+										<span class="input-group-addon">配货时间</span> 
+										<input
+											id='datetimepicker' type='text' data-format="yyyy-mm-dd"
+											class="form-control" id="time-input" />
+										<span class="input-group-addon" id="clear-span"> <!-- 											 	<span class="glyphicon glyphicon-remove"></span> -->
+											<a href="javascript:clearTime();">全部</a>
+										</span>
+									</div>
+								</div>
+							</form>
+
+														</div>
 							<!-- /.box-header -->
 							<div class="box-body">
 								<table class="table table-bordered table-hover">
@@ -98,10 +118,10 @@
 											<th class="col-xs-2">门店</th>
 											<th class="col-xs-2">联系方式</th>
 											<th class="col-xs-2">总价(单位: 元)</th>
-											<th class="col-xs-1">商品种类</th>
-											<th class="col-xs-1">状态</th>
-											<th class="col-xs-2">创建时间</th>
-											<th class="col-xs-1">操作</th>
+											<!-- 											<th class="col-xs-1">商品种类</th> -->
+											<!-- 											<th class="col-xs-1">状态</th> -->
+											<th class="col-xs-3">创建时间</th>
+											<th class="col-xs-2">操作</th>
 										</tr>
 									</thead>
 									<tbody id="tb">
@@ -126,9 +146,7 @@
 			<!-- /.content -->
 		</div>
 		<!-- /.content-wrapper -->
-		<footer id="footer-container" class="main-footer">
-			
-		</footer>
+		<footer id="footer-container" class="main-footer"> </footer>
 		<div class="control-sidebar-bg"></div>
 	</div>
 	<!-- ./wrapper -->
@@ -142,7 +160,8 @@
 		src="./bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 	<!-- FastClick -->
 	<script src="./bower_components/fastclick/lib/fastclick.js"></script>
-
+<script src="./bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+	<script src="./bower_components/bootstrap-datepicker/dist/locales/bootstrap-datepicker.zh-CN.min.js"></script>
 	<script src="./js/util.js"></script>
 	<script type="text/javascript">
 		loadHeader();
