@@ -57,16 +57,22 @@ function initData(data) {
 		var a = x.insertCell(2);
 		var b = x.insertCell(3);
 		var balance = x.insertCell(4);
-		var c = x.insertCell(5);
+		var orderTotalPrice = x.insertCell(5);
+		var c = x.insertCell(6);
 		y.innerHTML = i + 1;
-		z.innerHTML = '<a href="#">' + list[i].storeName
-				+ '</a>';
+		z.innerHTML = "<a href='store_detail.html?store="
+				+ encodeURIComponent(JSON.stringify(list[i])) + "'>" + list[i].storeName
+				+ "</a>";
 
 		a.innerHTML = list[i].storePlace;
 		b.innerHTML = list[i].contacts + "&nbsp;" + list[i].contactWay;
 
 		balance.innerHTML = list[i].balance + "&nbsp;元";
-		
+		var orderTotalPriceStr = list[i].orderTotalPrice;
+		if (orderTotalPriceStr === null) {
+			orderTotalPriceStr = 0;
+		}
+		orderTotalPrice.innerHTML = orderTotalPriceStr + "&nbsp;元";
 		c.innerHTML = "<button type='button' class='btn btn-flat btn-warning' onclick='toRecharge(" + JSON.stringify(list[i]) + ");'>充值</button>"
 			+ "&nbsp;&nbsp;<button type='button' class='btn btn-flat btn-danger' onclick=deleteStore("+ list[i].id + ")>删除</button>";
 	}
@@ -232,4 +238,34 @@ function toAssign() {
 		storeIds[i++] = id;
 	}
 	assignProducts(storeIds);
+}
+
+function initStoreDetail(store) {
+	$("#store-id").val(store.id);
+	$("#storeName").val(store.storeName);
+	$("#storeAddress").val(store.storePlace);
+	$("#contacts").val(store.contacts);
+	$("#callNumber").val(store.contactWay);
+	$("#beizhu").val(store.description);
+}
+
+function updateStore(id, storeName, storeAddress,contacts, callNumber, beizhu) {
+
+	var jsonParams = {
+			"id"	: id,
+		"storeName" : storeName,
+		"storePlace" : storeAddress,
+		"contacts" : contacts,
+		"contactWay" : callNumber,
+		"description" : beizhu
+	};
+	$.myAjax('./admin/store', 'POST', JSON.stringify(jsonParams),
+			function(data) {
+				if (data.code != 1) {
+					alert(data.message);
+				} else {
+					alert("更新成功！");
+				}
+			});
+
 }

@@ -114,6 +114,7 @@ function deleteProduct(id) {
 
 function initProductDetail(product) {
 	$('#product-id').val(product.id);
+	//console.log($.parseHTML(product.productName));
 	$('#productName').val(product.productName);
 	$('#productNum').val(product.productNum);
 	$('#unitPrice').val(product.productPrice);
