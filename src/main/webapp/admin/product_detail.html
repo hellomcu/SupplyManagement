@@ -180,7 +180,7 @@
 		// 	    });
 		$(function() {
 // 			getCategories(1);
-			initProductDetail(JSON.parse(decodeURIComponent(getQueryString('product'))));
+			initProductDetail(JSON.parse(decodeURI(getQueryString('product'))));
 		});
 
 		function updateProductPre() {

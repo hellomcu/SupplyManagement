@@ -47,6 +47,10 @@ public class WrappedBeanCopier
 
 	public static <T> T copyProperties(Object source, Class<T> targetClass)
 	{
+		if (source == null)
+		{
+			return null;
+		}
 		T t = null;
 		try
 		{
