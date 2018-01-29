@@ -67,8 +67,11 @@ public class CartServiceImpl implements CartService
 	public CartPo findMyCart(long userId)
 	{
 		Map<Object, Object> map = mCartRepository.findByUserId(userId);
-		CartPo cartPo = new CartPo();
-		cartPo.setUserId(userId);
+		if (map == null || map.isEmpty())
+		{
+			return null;
+		}
+		
 		Set<Long> ids = new HashSet<>();
 		for (Object key : map.keySet())
 		{
@@ -76,10 +79,13 @@ public class CartServiceImpl implements CartService
 		}
 		//查询购物车中的商品详情
 		List<ProductPo> products = mProductRepository.findByIds(ids);
-		if (products == null || products.size() != ids.size())
+		if (products.size() != ids.size())
 		{
-			throw new SupplyException("购物车中商品已失效,请重新选择商品");
+			//说明购物车中的商品在数据库中已失效，需要清空购物车
+			clearCartByUserId(userId);
+			return null;
 		}
+		
 		List<CartDetailPo> details = new ArrayList<>();
 		for (ProductPo product : products)
 		{
@@ -92,6 +98,8 @@ public class CartServiceImpl implements CartService
 			detailPo.setProductNum((Long)map.get(new Long(productId)));
 			details.add(detailPo);
 		}
+		CartPo cartPo = new CartPo();
+		cartPo.setUserId(userId);
 		cartPo.setDetails(details);
 		return cartPo;
 	}
@@ -134,6 +142,11 @@ public class CartServiceImpl implements CartService
 
 	@Override
 	public void clearCart(long userId)
+	{
+		clearCartByUserId(userId);
+	}
+	
+	private void clearCartByUserId(long userId) throws SupplyException
 	{
 		if (1 != mCartRepository.remove(userId))
 		{

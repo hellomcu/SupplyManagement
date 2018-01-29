@@ -124,14 +124,28 @@ public class StoreController extends BaseController
 	
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ApiOperation(httpMethod = "POST", value = "更新门店", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public BaseResponse<Void> updateStore(@RequestBody UpdateStoreDto updateStoreDto)
+	public BaseResponse<Void> updateStore(@RequestBody UpdateStoreDto updateStoreDto, HttpServletRequest request)
 	{
 		StorePo store = new StorePo();
-		//UserPo user = new UserPo();
+		UserPo loginUser = JwtUtil.getLoginUserFromJwt(request);
+		if (loginUser == null)
+		{
+			BaseResponse<Void> response = new BaseResponse<>();
+			response.setCode(100);
+			response.setMessage("请先登录");
+			return response;
+		}
+		if (loginUser.getUserType().ordinal() != UserType.TYPE_ADMIN.ordinal())
+		{
+			BaseResponse<Void> response = new BaseResponse<>();
+			response.setMessage("您没有权限操作");
+			return response;
+		}
 		store.setId(updateStoreDto.getId());
 		store.setStoreName(updateStoreDto.getStoreName());
 		store.setStorePlace(updateStoreDto.getStorePlace());
 		store.setContacts(updateStoreDto.getContacts());
+		store.setContactWay(updateStoreDto.getContactWay());
 		store.setDescription(updateStoreDto.getDescription());
 
 		mStoreService.updateStore(store, null);

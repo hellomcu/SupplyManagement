@@ -30,7 +30,7 @@ public class MyObjectMapper extends ObjectMapper
 		this.setDateFormat(dateFormat);
 		this.configure(SerializationFeature.WRITE_ENUMS_USING_INDEX, true);
 		this.getJsonFactory().setCharacterEscapes(new HTMLCharacterEscapes());
-		
+//		
 //		SimpleModule module = new SimpleModule("HTML XSS Serializer",
 //                new Version(1, 0, 0, "FINAL","com.yihaomen","ep-jsonmodule"));
 //        module.addSerializer(new JsonHtmlXssSerializer(String.class));

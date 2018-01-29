@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>更新商品 - 小和农场</title>
+<title>添加门店 - 小和农场</title>
 <!-- Tell the browser to be responsive to screen width -->
 <meta
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
@@ -40,14 +40,14 @@
 			<!-- Content Header (Page header) -->
 			<section class="content-header">
 				<h1>
-					商品管理
+					门店管理
 					<!--         <small>Preview</small> -->
 				</h1>
 				<ol class="breadcrumb">
 					<li><a href="home.html"><i class="fa fa-home"></i> 首页</a></li>
-					<li>商品管理</li>
-					<li><a href="products.html">全部商品</a></li>
-					<li class="active">更新商品</li>
+					<li>门店管理</li>
+					<li><a href="stores.html">全部门店</a></li>
+					<li class="active">更新门店</li>
 				</ol>
 			</section>
 
@@ -59,71 +59,51 @@
 						<!-- Input addon -->
 						<div class="box box-primary">
 							<div class="box-header with-border">
-								<h3 class="box-title">更新商品</h3>
+								<h3 class="box-title">添加门店</h3>
 							</div>
+							<input type="hidden" class="form-control" id="store-id" />
 							<div class="box-body">
-<!-- 								<div class="form-group"> -->
-<!-- 									<div class="input-group"> -->
-<!-- 										<span class="input-group-addon">商品分类</span> <select -->
-<!-- 											id="category-parent" class="form-control"> -->
-<!-- 										</select> <select id="category-child" class="form-control"> -->
-<!-- 										</select> -->
-<!-- 									</div> -->
-<!-- 								</div> -->
-								<input type="hidden" id="product-id" />
 								<div class="form-group">
-									<div class="input-group">
-										<span class="input-group-addon">商品名称</span> <input type="text"
-											class="form-control" id="productName" placeholder="输入商品名称" />
+									<div class="input-group ">
+										<div class="input-group-addon  success">门店名称</div>
+										<input type="text" class="form-control" id="storeName"
+											placeholder="输入门店名称" />
 									</div>
 								</div>
 								<div class="form-group">
 									<div class="input-group">
-										<div class="input-group-addon">商品数量</div>
-										<input type="number" class="form-control" id="productNum"
-											placeholder="输入商品数量" /> <span class="input-group-addon">件</span>
+										<div class="input-group-addon">门店地址</div>
+										<input type="text" class="form-control" id="storeAddress"
+											placeholder="输入门店地址" />
 									</div>
 								</div>
 								<div class="form-group">
 									<div class="input-group">
-										<div class="input-group-addon">商品单价</div>
-										<input type="number" class="form-control" id="unitPrice"
-											placeholder="输入商品单价" /> <span class="input-group-addon">元</span>
+										<div class="input-group-addon">联&ensp;系&ensp;人</div>
+										<input type="text" class="form-control" id="contacts"
+											placeholder="输入门店联系人" />
 									</div>
 								</div>
 								<div class="form-group">
 									<div class="input-group">
-										<div class="input-group-addon">零&ensp;售&ensp;价</div>
-										<input type="number" class="form-control" id="sale-price"
-											placeholder="输入商品零售价" /> <span class="input-group-addon">元</span>
+										<div class="input-group-addon">联系方式</div>
+										<input type="text" class="form-control" id="callNumber"
+											placeholder="输入门店联系方式" />
 									</div>
 								</div>
-								<div class="form-group">
-									<div class="input-group">
-										<div class="input-group-addon">计价单位</div>
-										<input type="text" class="form-control" id="productUnit"
-											placeholder="输入计价单位" />
-									</div>
-								</div>
-<!-- 								<div class="form-group"> -->
-<!-- 									<div class="input-group"> -->
-<!-- 										<div class="input-group-addon">商品产地</div> -->
-<!-- 										<input type="text" class="form-control" id="productPlace" -->
-<!-- 											placeholder="输入商品产地" /> -->
-<!-- 									</div> -->
-<!-- 								</div> -->
 								<div class="form-group">
 									<div class="input-group">
 										<div class="input-group-addon">备注信息</div>
-										<textarea class="form-control" rows="5" cols="" id="remark"
+										<textarea class="form-control" rows="5" cols="" id="beizhu"
 											placeholder="输入备注信息"></textarea>
 									</div>
 								</div>
 								<div class="form-group">
-									<button type="button"
+									<button type='button'
 										class="btn btn-primary btn-block btn-flat"
-										onclick="updateProductPre();">更新</button>
+										onclick="updateMenDianPre();">更新</button>
 								</div>
+
 
 								<!-- /input-group -->
 							</div>
@@ -162,46 +142,35 @@
 		loadHeader();
 		loadFooter();
 		loadNav();
-		navActive($('#product-li'));
+		navActive($('#store-li'));
+// 		navActive($('#add-store-li'));
 	</script>
 	<!-- AdminLTE App -->
 	<script src="./dist/js/adminlte.js"></script>
 	<!-- AdminLTE for demo purposes -->
 	<script src="./dist/js/demo.js"></script>
 	<script src="./js/loading/jquery.mloading.js"></script>
-	<script src="./js/module/product.js"></script>
-	<script type="text/javascript" src="./js/module/category.js"></script>
-	<!-- Page-Level Demo Scripts - Tables - Use for reference -->
-	<script>
-		// 	    $(document).ready(function() {
-		// 	        //$('#dataTables-example').dataTable();
-		// 	        //$('#product-li').toggleClass('active').children('ul').collapse('toggle');
-		// 	        getProducts(1);
-		// 	    });
-		$(function() {
-// 			getCategories(1);
-			initProductDetail(JSON.parse(decodeURI(getQueryString('product'))));
+	<script type="text/javascript" src="./js/module/store.js"></script>
+	<!-- Page-Level Demo Scripts - Forms - Use for reference -->
+	<script type="text/javascript">
+		$(function(){
+			console.log(getQueryString('store'));
+			initStoreDetail(JSON.parse(decodeURI(getQueryString('store'))));
 		});
+		function updateMenDianPre() {
+			var storeName = document.getElementById("storeName").value;
+			var storeAddress = document.getElementById("storeAddress").value;
+			var contacts = document.getElementById("contacts").value;
+			var callNumber = document.getElementById("callNumber").value;
+			var beizhu = document.getElementById("beizhu").value;
 
-		function updateProductPre() {
-			var productName = document.getElementById("productName").value;
-			var productNum = document.getElementById("productNum").value;
-			var productPrice = document.getElementById("unitPrice").value;
-			var salePrice = document.getElementById("sale-price").value;
-			var productUnit = document.getElementById("productUnit").value;
-// 			var productPlace = document.getElementById("productPlace").value;
-			var remark = document.getElementById("remark").value;
-
-			if (productName == "" || productNum == "" || productPrice == ""
-					|| productUnit == "" || salePrice == "") {
+			if (storeName == "" || storeAddress == "" || callNumber == "" || contacts == "") {
 				alert("信息填写不完整");
 			} else {
-				updateProduct($("#product-id").val(), parseInt($("#category-child").val()), remark,
-						productName, productNum, productPrice, productUnit,
-						null, salePrice);
+				updateStore($('#store-id').val(), storeName, storeAddress, contacts, callNumber,
+						beizhu);
 			}
 		}
 	</script>
-
 </body>
 </html>

@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.print.attribute.HashAttributeSet;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -19,7 +17,6 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 
 import com.supply.entity.PageInfo;
-import com.supply.entity.po.ProductPo;
 import com.supply.entity.po.StorePo;
 import com.supply.management.module.store.repository.StoreRepository;
 import com.supply.management.util.TimeUtil;
@@ -30,7 +27,9 @@ public class StoreRepositoryJdbcImpl implements StoreRepository
 
 	private static final String SQL_SAVE = "INSERT INTO t_store (store_name, store_place, contacts, contact_way, description, create_time) values(:store_name, :store_place, :contacts, :contact_way, :description, :create_time)";
 	
-	private static final String SQL_QUERY = "SELECT id, store_name, store_place, contacts, contact_way, balance, description, create_time FROM t_store WHERE status=0 ORDER BY create_time DESC LIMIT :start, :num";
+	private static final String SQL_QUERY = "SELECT s.id store_id, s.store_name store_name, s.store_place store_place, s.contacts contacts, s.contact_way contact_way, s.balance balance, s.description description, s.create_time create_time, SUM(o.total_price) total_price FROM t_store s LEFT JOIN" + 
+			" t_order o ON s.id = o.store_id AND o.status = 0 WHERE s.status = 0" + 
+			" GROUP BY s.id ORDER BY s.create_time DESC LIMIT :start, :num";
 	
 	private static final String SQL_COUNT = "SELECT COUNT(id) FROM t_store WHERE status = 0";
 	
@@ -90,6 +89,7 @@ public class StoreRepositoryJdbcImpl implements StoreRepository
 			store.setBalance(rowSet.getBigDecimal("balance"));
 			store.setDescription(rowSet.getString("description"));
 			store.setCreateTime(rowSet.getTimestamp("create_time"));
+			store.setOrderTotalPrice(rowSet.getBigDecimal("total_price"));
 			stores.add(store);
 		}
 		return stores;

@@ -22,6 +22,7 @@ public class StoreDto extends BaseDto
 	private BigDecimal balance;
 	private String description;
 	private Timestamp createTime;
+	private BigDecimal orderTotalPrice;
 	
 	public long getId()
 	{
@@ -88,6 +89,14 @@ public class StoreDto extends BaseDto
 	public void setContactWay(String contactWay)
 	{
 		this.contactWay = contactWay;
+	}
+	public BigDecimal getOrderTotalPrice()
+	{
+		return orderTotalPrice;
+	}
+	public void setOrderTotalPrice(BigDecimal orderTotalPrice)
+	{
+		this.orderTotalPrice = orderTotalPrice;
 	}
 	
 	

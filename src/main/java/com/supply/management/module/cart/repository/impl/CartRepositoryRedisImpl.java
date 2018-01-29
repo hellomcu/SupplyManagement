@@ -1,14 +1,11 @@
 package com.supply.management.module.cart.repository.impl;
 
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.servlet.RequestToViewNameTranslator;
 
-import com.supply.entity.po.CartDetailPo;
 import com.supply.entity.po.CartPo;
 import com.supply.management.module.cart.repository.CartRepository;
 

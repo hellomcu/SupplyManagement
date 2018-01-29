@@ -136,6 +136,9 @@ function getMyCart() {
 		if (data.code != 1) {
 			alert(data.message);
 		} else {
+			if (data.data === null) {
+				return;
+			}
 			initCartList(data.data);
 		}
 	});

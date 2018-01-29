@@ -57,7 +57,7 @@ function initData(data) {
 		var stock = x.insertCell(4);
 		var c = x.insertCell(5);
 		y.innerHTML = "<a href='product_detail.html?product="
-				+ encodeURIComponent(JSON.stringify(list[i])) + "'>"
+				+ encodeURI(encodeURI(JSON.stringify(list[i]))) + "'>"
 				+ list[i].productName + "</a>";
 		console.log(JSON.stringify(list[i]));
 		//z.innerHTML = list[i].productPlace;
@@ -107,18 +107,21 @@ function deleteProduct(id) {
 			}
 		});
 
+	} else {
+
 	}
 }
 
 function initProductDetail(product) {
 	$('#product-id').val(product.id);
+	//console.log($.parseHTML(product.productName));
 	$('#productName').val(product.productName);
 	$('#productNum').val(product.productNum);
 	$('#unitPrice').val(product.productPrice);
 	$('#productUnit').val(product.productUnit);
 	$('#sale-price').val(product.salePrice);
 	//$('#productPlace').val(product.productPlace);
-	$('#remark').val(product.description);
+	$('#remark').html(product.description);
 }
 
 function updateProduct(id, categoryId, remark, productName, productNum,
