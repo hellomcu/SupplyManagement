@@ -107,8 +107,6 @@ function deleteProduct(id) {
 			}
 		});
 
-	} else {
-
 	}
 }
 
@@ -120,7 +118,7 @@ function initProductDetail(product) {
 	$('#productUnit').val(product.productUnit);
 	$('#sale-price').val(product.salePrice);
 	//$('#productPlace').val(product.productPlace);
-	$('#remark').html(product.description);
+	$('#remark').val(product.description);
 }
 
 function updateProduct(id, categoryId, remark, productName, productNum,
