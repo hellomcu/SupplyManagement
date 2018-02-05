@@ -25,7 +25,7 @@ public class RedisConfig
 	public JedisPoolConfig jedisPoolConfig()
 	{
 		JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
-		jedisPoolConfig.setMaxIdle(env.getRequiredProperty("redis.maxIdel", Integer.class));
+		jedisPoolConfig.setMaxIdle(env.getRequiredProperty("redis.maxIdle", Integer.class));
 		jedisPoolConfig.setMaxWaitMillis(env.getRequiredProperty("redis.maxWait", Integer.class));
 		jedisPoolConfig.setTestOnBorrow(env.getRequiredProperty("redis.testOnBorrow", Boolean.class));
 	
